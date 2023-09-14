@@ -9,6 +9,7 @@ import UIKit
 import PhotosUI
 
 class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,9 +39,12 @@ extension CameraViewController: PHPickerViewControllerDelegate {
                     if UIImagePickerController.isSourceTypeAvailable(.camera) {
                         let smallImage = self.resizeImage(image: image, width: 320)
                         let imageView =  UIImageView(image: smallImage)
-                        imageView.frame = CGRect(x: 0, y: 120, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width*4/3)
+                        imageView.frame = CGRect(x: 0, y: 123, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width*4/3)
                         imageView.alpha = 0.3
                         //開啟相機
+                        imageCameraPicker.cameraOverlayView?.addSubview(imageView)
+                        imageCameraPicker.cameraOverlayView?.translatesAutoresizingMaskIntoConstraints = false
+                        imageCameraPicker.cameraOverlayView?.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive
                         self.show(imageCameraPicker, sender: self)
                     }
                 }
@@ -49,6 +53,7 @@ extension CameraViewController: PHPickerViewControllerDelegate {
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.originalImage] as? UIImage else { return }
+
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         dismiss(animated: true, completion: nil)
     }
