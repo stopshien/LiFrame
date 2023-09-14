@@ -10,7 +10,6 @@ import CoreImage
 import CoreImage.CIFilterBuiltins
 
 class EditViewController: UIViewController {
-   
     // 亮度、對比、飽和度被包在 CIColorControls filter 中，所以我們建立 filter 時要指定是 CIColorControls
     let filter = CIFilter(name: "CIColorControls")
     // 要修的圖從前面傳過來的
@@ -32,19 +31,7 @@ class EditViewController: UIViewController {
         slider.addTarget(self, action: #selector(brightEdit), for: .valueChanged)
         return slider
     }()
-    @objc func brightEdit() {
-        let context = CIContext()
-        // 要修的圖轉成CIImage
-        guard let editImage = editImage else { return }
-        let ciImage = CIImage(image: editImage) // editedImage是從主頁傳遞過來的照片
-        filter?.setValue(ciImage, forKey: kCIInputImageKey)
-        filter?.setValue(editLightSlider.value, forKey: kCIInputBrightnessKey)
-        if let outputImage = filter?.outputImage, let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
-        let newImage = UIImage(cgImage: cgImage)
-        editImageView.image = newImage
-        }
-    }
-    // TODO: 調整對比的 slider
+
     // 調整對比的 slider
     let editContrastSlider: UISlider = {
         let slider = UISlider()
@@ -56,18 +43,6 @@ class EditViewController: UIViewController {
         slider.addTarget(self, action: #selector(contrastEdit), for: .valueChanged)
         return slider
     }()
-    @objc func contrastEdit() {
-        let context = CIContext()
-        // 要修的圖轉成CIImage
-        guard let editImage = editImage else { return }
-        let ciImage = CIImage(image: editImage) // editedImage是從主頁傳遞過來的照片
-        filter?.setValue(ciImage, forKey: kCIInputImageKey)
-        filter?.setValue(editLightSlider.value, forKey: kCIInputContrastKey)
-        if let outputImage = filter?.outputImage, let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
-        let newImage = UIImage(cgImage: cgImage)
-        editImageView.image = newImage
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,6 +66,29 @@ class EditViewController: UIViewController {
             editContrastSlider.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             editContrastSlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8)
         ])
-
+    }
+    @objc func brightEdit() {
+        let context = CIContext()
+        // 要修的圖轉成CIImage
+        guard let editImage = editImage else { return }
+        let ciImage = CIImage(image: editImage) // editedImage是從主頁傳遞過來的照片
+        filter?.setValue(ciImage, forKey: kCIInputImageKey)
+        filter?.setValue(editLightSlider.value, forKey: kCIInputBrightnessKey)
+        if let outputImage = filter?.outputImage, let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
+        let newImage = UIImage(cgImage: cgImage)
+        editImageView.image = newImage
+        }
+    }
+    @objc func contrastEdit() {
+        let context = CIContext()
+        // 要修的圖轉成CIImage
+        guard let editImage = editImage else { return }
+        let ciImage = CIImage(image: editImage) // editedImage是從主頁傳遞過來的照片
+        filter?.setValue(ciImage, forKey: kCIInputImageKey)
+        filter?.setValue(editContrastSlider.value, forKey: kCIInputContrastKey)
+        if let outputImage = filter?.outputImage, let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
+        let newImage = UIImage(cgImage: cgImage)
+        editImageView.image = newImage
+        }
     }
 }
