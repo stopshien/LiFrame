@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5BE77D9A14657668B1ACE5E8 /* Pods_LiFrame.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92FCACB1F0E27BBB7AC857F2 /* Pods_LiFrame.framework */; };
 		6A30F7C42AB1AAF800D5A672 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A30F7C32AB1AAF800D5A672 /* AppDelegate.swift */; };
 		6A30F7C62AB1AAF800D5A672 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A30F7C52AB1AAF800D5A672 /* SceneDelegate.swift */; };
-		6A30F7C82AB1AAF800D5A672 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A30F7C72AB1AAF800D5A672 /* ViewController.swift */; };
+		6A30F7C82AB1AAF800D5A672 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A30F7C72AB1AAF800D5A672 /* CameraViewController.swift */; };
 		6A30F7CB2AB1AAF800D5A672 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A30F7C92AB1AAF800D5A672 /* Main.storyboard */; };
 		6A30F7CD2AB1AAF900D5A672 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A30F7CC2AB1AAF900D5A672 /* Assets.xcassets */; };
 		6A30F7D02AB1AAF900D5A672 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A30F7CE2AB1AAF900D5A672 /* LaunchScreen.storyboard */; };
@@ -19,11 +20,14 @@
 		6A30F7C02AB1AAF800D5A672 /* LiFrame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiFrame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A30F7C32AB1AAF800D5A672 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6A30F7C52AB1AAF800D5A672 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		6A30F7C72AB1AAF800D5A672 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6A30F7C72AB1AAF800D5A672 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		6A30F7CA2AB1AAF800D5A672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6A30F7CC2AB1AAF900D5A672 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6A30F7CF2AB1AAF900D5A672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6A30F7D12AB1AAF900D5A672 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		92FCACB1F0E27BBB7AC857F2 /* Pods_LiFrame.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiFrame.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAA9F219A3B866FDDB1754D8 /* Pods-LiFrame.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiFrame.debug.xcconfig"; path = "Target Support Files/Pods-LiFrame/Pods-LiFrame.debug.xcconfig"; sourceTree = "<group>"; };
+		EA4B4BFFDFDC965B404C4989 /* Pods-LiFrame.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiFrame.release.xcconfig"; path = "Target Support Files/Pods-LiFrame/Pods-LiFrame.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +35,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BE77D9A14657668B1ACE5E8 /* Pods_LiFrame.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		507A2B1EBEB2BFE49FF2A5C5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				92FCACB1F0E27BBB7AC857F2 /* Pods_LiFrame.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6A30F7B72AB1AAF800D5A672 = {
 			isa = PBXGroup;
 			children = (
 				6A30F7C22AB1AAF800D5A672 /* LiFrame */,
 				6A30F7C12AB1AAF800D5A672 /* Products */,
+				FFA61E736FDB66392DE696C9 /* Pods */,
+				507A2B1EBEB2BFE49FF2A5C5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,13 +73,30 @@
 			children = (
 				6A30F7C32AB1AAF800D5A672 /* AppDelegate.swift */,
 				6A30F7C52AB1AAF800D5A672 /* SceneDelegate.swift */,
-				6A30F7C72AB1AAF800D5A672 /* ViewController.swift */,
+				6A80EFA42AB1E45900C90754 /* Camera */,
 				6A30F7C92AB1AAF800D5A672 /* Main.storyboard */,
 				6A30F7CC2AB1AAF900D5A672 /* Assets.xcassets */,
 				6A30F7CE2AB1AAF900D5A672 /* LaunchScreen.storyboard */,
 				6A30F7D12AB1AAF900D5A672 /* Info.plist */,
 			);
 			path = LiFrame;
+			sourceTree = "<group>";
+		};
+		6A80EFA42AB1E45900C90754 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				6A30F7C72AB1AAF800D5A672 /* CameraViewController.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		FFA61E736FDB66392DE696C9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AAA9F219A3B866FDDB1754D8 /* Pods-LiFrame.debug.xcconfig */,
+				EA4B4BFFDFDC965B404C4989 /* Pods-LiFrame.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +106,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6A30F7D42AB1AAF900D5A672 /* Build configuration list for PBXNativeTarget "LiFrame" */;
 			buildPhases = (
+				FB2CFD39FD0862F1A409EAA7 /* [CP] Check Pods Manifest.lock */,
 				6A30F7BC2AB1AAF800D5A672 /* Sources */,
 				6A30F7BD2AB1AAF800D5A672 /* Frameworks */,
 				6A30F7BE2AB1AAF800D5A672 /* Resources */,
+				C0EE0D037289B46A7298DAF7 /* [CP] Embed Pods Frameworks */,
+				6A80EFA32AB1B85700C90754 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -133,12 +168,71 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6A80EFA32AB1B85700C90754 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		C0EE0D037289B46A7298DAF7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LiFrame/Pods-LiFrame-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LiFrame/Pods-LiFrame-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LiFrame/Pods-LiFrame-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FB2CFD39FD0862F1A409EAA7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LiFrame-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		6A30F7BC2AB1AAF800D5A672 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A30F7C82AB1AAF800D5A672 /* ViewController.swift in Sources */,
+				6A30F7C82AB1AAF800D5A672 /* CameraViewController.swift in Sources */,
 				6A30F7C42AB1AAF800D5A672 /* AppDelegate.swift in Sources */,
 				6A30F7C62AB1AAF800D5A672 /* SceneDelegate.swift in Sources */,
 			);
@@ -216,7 +310,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -270,7 +364,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -282,6 +376,7 @@
 		};
 		6A30F7D52AB1AAF900D5A672 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AAA9F219A3B866FDDB1754D8 /* Pods-LiFrame.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -310,6 +405,7 @@
 		};
 		6A30F7D62AB1AAF900D5A672 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA4B4BFFDFDC965B404C4989 /* Pods-LiFrame.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

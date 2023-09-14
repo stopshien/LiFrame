@@ -1,0 +1,6 @@
+framework module Pods_LiFrame {
+  umbrella header "Pods-LiFrame-umbrella.h"
+
+  export *
+  module * { export * }
+}
