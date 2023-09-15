@@ -17,6 +17,7 @@
 		6A80EFA82AB3143900C90754 /* EditPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFA72AB3143900C90754 /* EditPhotoViewController.swift */; };
 		6A80EFAA2AB3162E00C90754 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFA92AB3162E00C90754 /* EditViewController.swift */; };
 		6A80EFAC2AB3663C00C90754 /* EditExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFAB2AB3663B00C90754 /* EditExtension.swift */; };
+		6A80EFAE2AB4684A00C90754 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A80EFAD2AB4684A00C90754 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		6A80EFA72AB3143900C90754 /* EditPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPhotoViewController.swift; sourceTree = "<group>"; };
 		6A80EFA92AB3162E00C90754 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		6A80EFAB2AB3663B00C90754 /* EditExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExtension.swift; sourceTree = "<group>"; };
+		6A80EFAD2AB4684A00C90754 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		92FCACB1F0E27BBB7AC857F2 /* Pods_LiFrame.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiFrame.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAA9F219A3B866FDDB1754D8 /* Pods-LiFrame.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiFrame.debug.xcconfig"; path = "Target Support Files/Pods-LiFrame/Pods-LiFrame.debug.xcconfig"; sourceTree = "<group>"; };
 		EA4B4BFFDFDC965B404C4989 /* Pods-LiFrame.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiFrame.release.xcconfig"; path = "Target Support Files/Pods-LiFrame/Pods-LiFrame.release.xcconfig"; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				6A30F7CC2AB1AAF900D5A672 /* Assets.xcassets */,
 				6A30F7CE2AB1AAF900D5A672 /* LaunchScreen.storyboard */,
 				6A30F7D12AB1AAF900D5A672 /* Info.plist */,
+				6A80EFAD2AB4684A00C90754 /* GoogleService-Info.plist */,
 			);
 			path = LiFrame;
 			sourceTree = "<group>";
@@ -178,6 +181,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A30F7D02AB1AAF900D5A672 /* LaunchScreen.storyboard in Resources */,
+				6A80EFAE2AB4684A00C90754 /* GoogleService-Info.plist in Resources */,
 				6A30F7CD2AB1AAF900D5A672 /* Assets.xcassets in Resources */,
 				6A30F7CB2AB1AAF800D5A672 /* Main.storyboard in Resources */,
 			);
