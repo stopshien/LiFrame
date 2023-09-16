@@ -107,7 +107,6 @@ extension CameraViewController: PHPickerViewControllerDelegate {
     @objc func tappedShutter() {
         imageCameraPicker.cameraDevice = .rear
         imageCameraPicker.takePicture()
-        layerImageView?.removeFromSuperview()
     }
     @objc func tappedFlash() {
         flashButton.isSelected.toggle()
@@ -118,6 +117,7 @@ extension CameraViewController: PHPickerViewControllerDelegate {
         }
     }
     @objc func tappedCancel() {
+        layerImageView?.removeFromSuperview()
         dismiss(animated: true)
     }
 }

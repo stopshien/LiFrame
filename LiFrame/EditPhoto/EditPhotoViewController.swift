@@ -12,9 +12,11 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
-
+    @IBAction func lutButton(_ sender: Any) {
+    }
+    @IBAction func syncEditButton(_ sender: Any) {
+    }
     @IBAction func choosePhoto(_ sender: Any) {
         var configuration = PHPickerConfiguration()
         configuration.filter = .images
@@ -23,9 +25,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         picker.delegate = self
         present(picker, animated: true)
     }
-    
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        //        picker.dismiss(animated: true)
         let itemProviders = results.map(\.itemProvider)
         if let itemProvider = itemProviders.first, itemProvider.canLoadObject(ofClass: UIImage.self) {
             itemProvider.loadObject(ofClass: UIImage.self) {[weak self] (image, error) in
@@ -40,4 +40,3 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         }
     }
 }
-
