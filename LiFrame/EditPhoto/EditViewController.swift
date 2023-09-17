@@ -10,9 +10,8 @@ import CoreImage
 import CoreImage.CIFilterBuiltins
 
 class EditViewController: UIViewController {
-    //如果是直接給予 userDefault，在 nil 的時候無法進行 append
+    // 如果是直接給予 userDefault，在 nil 的時候無法進行 append
     var luts = [Lut]()
-    
     // 亮度、對比、飽和度被包在 CIColorControls filter 中，所以我們建立 filter 時要指定是 CIColorControls
     let filter = CIFilter(name: "CIColorControls")
     // 要修的圖從前面傳過來的
@@ -44,7 +43,6 @@ class EditViewController: UIViewController {
         slider.isContinuous = true
         return slider
     }()
-    
     let lutSaveButton: UIButton = {
        let button = UIButton()
         button.setTitle("儲存風格檔", for: .normal)
@@ -80,7 +78,8 @@ class EditViewController: UIViewController {
         NSLayoutConstraint.activate([
             editImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
             editImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            editImageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
+            editImageView.heightAnchor.constraint(equalTo: editImageView.widthAnchor, multiplier: 4/3),
+            editImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             editLightSlider.topAnchor.constraint(equalTo: editImageView.bottomAnchor, constant: 50),
             editLightSlider.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             editLightSlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
@@ -93,9 +92,16 @@ class EditViewController: UIViewController {
     }
     @objc func brightEdit() {
         let context = CIContext()
-        // 要修的圖轉成CIImage
         guard let editImage = editImage else { return }
-        let ciImage = CIImage(image: editImage) // editedImage是從主頁傳遞過來的照片
+        // 要修的圖轉成CIImage
+        // 需要處理轉向設定
+        var ciImage = CIImage(image: editImage)
+            if let orientation = editImage.toCGImagePropertyOrientation() {
+                ciImage = CIImage(image: editImage, options: [CIImageOption.applyOrientationProperty: true])
+                ciImage = ciImage?.oriented(orientation)
+            } else {
+                ciImage = CIImage(image: editImage)
+            }
         filter?.setValue(ciImage, forKey: kCIInputImageKey)
         filter?.setValue(editLightSlider.value, forKey: kCIInputBrightnessKey)
         if let outputImage = filter?.outputImage, let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
@@ -105,9 +111,16 @@ class EditViewController: UIViewController {
     }
     @objc func contrastEdit() {
         let context = CIContext()
-        // 要修的圖轉成CIImage
         guard let editImage = editImage else { return }
-        let ciImage = CIImage(image: editImage) // editedImage是從主頁傳遞過來的照片
+        // 要修的圖轉成CIImage
+        // 需要處理轉向設定
+        var ciImage = CIImage(image: editImage)
+            if let orientation = editImage.toCGImagePropertyOrientation() {
+                ciImage = CIImage(image: editImage, options: [CIImageOption.applyOrientationProperty: true])
+                ciImage = ciImage?.oriented(orientation)
+            } else {
+                ciImage = CIImage(image: editImage)
+            }
         filter?.setValue(ciImage, forKey: kCIInputImageKey)
         filter?.setValue(editContrastSlider.value, forKey: kCIInputContrastKey)
         if let outputImage = filter?.outputImage, let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
@@ -149,19 +162,16 @@ class EditViewController: UIViewController {
            alertController,
            animated: true,
            completion: nil)
-        
     }
     // 儲存 Lut 對象
     func saveLutToUserDefeault(_ lut: Lut) {
         let userDefaults = UserDefaults.standard
-        
         // 將 Lut 對象轉換為字典
         let lutData: [String: Any] = [
             "name": lut.name,
             "brightness": lut.bright,
             "contrast": lut.contrast
         ]
-        
         // 儲存字典到 UserDefaults
         if var savedLuts = userDefaults.array(forKey: "luts") as? [[String: Any]] {
             savedLuts.append(lutData)
