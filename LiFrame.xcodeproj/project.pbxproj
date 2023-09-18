@@ -107,6 +107,7 @@
 				6A80EFA42AB1E45900C90754 /* Camera */,
 				6A80EFA62AB3141D00C90754 /* EditPhoto */,
 				6A80EFBA2AB6F13B00C90754 /* Community */,
+				6AF1EC992AB8497E00071983 /* Map */,
 				6A30F7C92AB1AAF800D5A672 /* Main.storyboard */,
 				6A30F7CC2AB1AAF900D5A672 /* Assets.xcassets */,
 				6A30F7CE2AB1AAF900D5A672 /* LaunchScreen.storyboard */,
@@ -189,6 +190,13 @@
 				6A80EFC32AB7092000C90754 /* Posts.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		6AF1EC992AB8497E00071983 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Map;
 			sourceTree = "<group>";
 		};
 		FFA61E736FDB66392DE696C9 /* Pods */ = {

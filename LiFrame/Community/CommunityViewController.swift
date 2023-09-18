@@ -9,7 +9,7 @@ import UIKit
 import FirebaseFirestore
 
 class CommunityViewController: UIViewController {
-    var postsArray: [Posts] = []{
+    var postsArray: [Posts] = [] {
         didSet{
             communityTableView.reloadData()
         }
