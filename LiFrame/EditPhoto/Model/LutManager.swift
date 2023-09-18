@@ -7,8 +7,8 @@
 
 import Foundation
 import PhotosUI
-class Manager {
-    static let shared = Manager()
+class LutManager {
+    static let shared = LutManager()
     private init() {}
     // 讀取 Lut 對象
     func loadLuts() -> [Lut]? {
@@ -29,8 +29,15 @@ class Manager {
     // 修圖
     func applyBrightnessAndContrast(_ image: UIImage, brightness: Float, contrast: Float) -> UIImage? {
         let filter = CIFilter(name: "CIColorControls")
-        let ciImage = CIImage(image: image)
-
+//        let ciImage = CIImage(image: image)
+        // 需要處理轉向設定
+        var ciImage = CIImage(image: image)
+            if let orientation = image.toCGImagePropertyOrientation() {
+                ciImage = CIImage(image: image, options: [CIImageOption.applyOrientationProperty: true])
+                ciImage = ciImage?.oriented(orientation)
+            } else {
+                ciImage = CIImage(image: image)
+            }
         filter?.setValue(ciImage, forKey: kCIInputImageKey)
         filter?.setValue(brightness, forKey: kCIInputBrightnessKey)
         filter?.setValue(contrast, forKey: kCIInputContrastKey)
@@ -41,10 +48,9 @@ class Manager {
                 return UIImage(cgImage: cgImage)
             }
         }
-
         return nil
     }
-
+    // 儲存相片至相簿
     func saveImagesToPhotoLibrary(_ images: [UIImage]) {
         PHPhotoLibrary.shared().performChanges {
             for image in images {
