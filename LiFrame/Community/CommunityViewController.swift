@@ -35,24 +35,25 @@ class CommunityViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         postsArray = []
-        let db = Manager.shared.db
+        let db = FirebaseManager.shared.db
         db.collection("posts").order(by: "createdTime").getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
                 for document in querySnapshot!.documents {
                     if let title = document.data()["title"] as? String,
-                       let author = document.data()["author"] as? [String:String],
+                       let author = document.data()["author"] as? [String: String],
                        let content = document.data()["content"] as? String,
                        let category = document.data()["category"] as? String,
                        let time = document.data()["createdTime"] as? Double
                     {
-                        let timeInterval:TimeInterval = TimeInterval(time)
+                        let image = document.data()["photoURL"] as? String
+                        let timeInterval: TimeInterval = TimeInterval(time)
                         let date = Date(timeIntervalSince1970: timeInterval)
                         let dformatter = DateFormatter()
                         dformatter.dateFormat = "yyyy.MM.dd HH:mm"
                         guard let name = author["name"] else { return }
-                        let post = Posts(title: title, name: "\(name)", createdTime: "\(dformatter.string(from: date))", category: category, content: content)
+                        let post = Posts(title: title, name: "\(name)", createdTime: "\(dformatter.string(from: date))", category: category, content: content, image: image)
                         self.postsArray.insert(post, at: 0)
                     }
                 }
@@ -65,12 +66,12 @@ class CommunityViewController: UIViewController {
     }
     func setButtonUI() {
         NSLayoutConstraint.activate([
-            addPostButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-            addPostButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
-            addPostButton.widthAnchor.constraint(equalToConstant: 70),
-            addPostButton.heightAnchor.constraint(equalToConstant: 70)
+            addPostButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            addPostButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            addPostButton.widthAnchor.constraint(equalToConstant: 50),
+            addPostButton.heightAnchor.constraint(equalToConstant: 50)
         ])
-        addPostButton.layer.cornerRadius = 35
+        addPostButton.layer.cornerRadius = 25
         addPostButton.clipsToBounds = true
     }
 }

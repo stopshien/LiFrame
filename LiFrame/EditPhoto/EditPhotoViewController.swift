@@ -20,7 +20,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         singleEditPicker.delegate = self
     }
     override func viewWillAppear(_ animated: Bool) {
-        if let luts = Manager.shared.loadLuts() {
+        if let luts = LutManager.shared.loadLuts() {
             self.luts = luts
         } else {
             luts = []
@@ -65,11 +65,11 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
                         // 處理光線和對比，替換下面的數值為您想要的值
                         let brightness: Float = currentLut.bright
                         let contrast: Float = currentLut.contrast
-                        if let processedImage = Manager.shared.applyBrightnessAndContrast(image, brightness: brightness, contrast: contrast) {
+                        if let processedImage = LutManager.shared.applyBrightnessAndContrast(image, brightness: brightness, contrast: contrast) {
                             processedImages.append(processedImage)
                         }
                             if processedImages.count == itemProviders.count {
-                                Manager.shared.saveImagesToPhotoLibrary(processedImages)
+                                LutManager.shared.saveImagesToPhotoLibrary(processedImages)
                         }
                     }
                 }

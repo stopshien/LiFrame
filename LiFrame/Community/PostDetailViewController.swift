@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class PostDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var postDetail: Posts?
@@ -20,15 +21,26 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        2
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = postDetailTableView.dequeueReusableCell(withIdentifier: "PostDetailTableViewCell", for: indexPath) as? PostDetailTableViewCell,
-        let postDetail = postDetail else { return PostDetailTableViewCell() }
-        cell.titleLabel.text = postDetail.title
-        cell.createTimeLabel.text = postDetail.createdTime
-        cell.contentLabel.text = postDetail.content
-        cell.posterNameLabel.text = postDetail.name
-        return cell
+        if indexPath.row == 0 {
+            if let cell = postDetailTableView.dequeueReusableCell(withIdentifier: "PostDetailTableViewCell", for: indexPath) as? PostDetailTableViewCell,
+               let postDetail = postDetail {
+                cell.titleLabel.text = postDetail.title
+                cell.createTimeLabel.text = postDetail.createdTime
+                cell.contentLabel.text = postDetail.content
+                cell.posterNameLabel.text = postDetail.name
+                return cell
+            }
+        } else {
+            if let cell = postDetailTableView.dequeueReusableCell(withIdentifier: "PostImageViewTableViewCell", for: indexPath) as? PostImageViewTableViewCell,
+               let postDetail = postDetail,
+               let image = postDetail.image {
+                cell.postImageView.kf.setImage(with: URL(string: image))
+                return cell
+            }
+        }
+        return UITableViewCell()
     }
 }

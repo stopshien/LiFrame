@@ -7,10 +7,8 @@
 
 import Foundation
 import PhotosUI
-import FirebaseFirestore
-class Manager {
-    static let shared = Manager()
-    let db = Firestore.firestore()
+class LutManager {
+    static let shared = LutManager()
     private init() {}
     // 讀取 Lut 對象
     func loadLuts() -> [Lut]? {

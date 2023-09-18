@@ -12,4 +12,5 @@ struct Posts {
     let createdTime: String
     let category: String
     let content: String
+    let image: String?
 }

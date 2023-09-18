@@ -17,8 +17,10 @@ pod 'FirebaseAnalytics'
 # For example, to use Firebase Authentication and Cloud Firestore
 pod 'FirebaseAuth'
 pod 'FirebaseFirestore'
+pod 'FirebaseStorage'
 
 pod 'SwiftLint'
+pod 'Kingfisher', '~> 7.0'
 
 
 end

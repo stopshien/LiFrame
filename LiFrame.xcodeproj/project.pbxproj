@@ -18,7 +18,7 @@
 		6A80EFAA2AB3162E00C90754 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFA92AB3162E00C90754 /* EditViewController.swift */; };
 		6A80EFAE2AB4684A00C90754 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A80EFAD2AB4684A00C90754 /* GoogleService-Info.plist */; };
 		6A80EFB02AB46EC500C90754 /* Lut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFAF2AB46EC500C90754 /* Lut.swift */; };
-		6A80EFB22AB4957F00C90754 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFB12AB4957F00C90754 /* Manager.swift */; };
+		6A80EFB22AB4957F00C90754 /* LutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFB12AB4957F00C90754 /* LutManager.swift */; };
 		6A80EFB52AB57C7500C90754 /* LutsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFB42AB57C7500C90754 /* LutsCollectionViewCell.swift */; };
 		6A80EFB92AB6AD8C00C90754 /* UIImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFB82AB6AD8C00C90754 /* UIImageExt.swift */; };
 		6A80EFBC2AB6F19800C90754 /* CommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFBB2AB6F19800C90754 /* CommunityViewController.swift */; };
@@ -27,6 +27,8 @@
 		6A80EFC42AB7092000C90754 /* Posts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFC32AB7092000C90754 /* Posts.swift */; };
 		6A80EFC62AB70F6800C90754 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFC52AB70F6800C90754 /* PostDetailViewController.swift */; };
 		6A80EFC82AB720DF00C90754 /* PostDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFC72AB720DF00C90754 /* PostDetailTableViewCell.swift */; };
+		6AF1EC962AB82A2B00071983 /* PostImageViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1EC952AB82A2B00071983 /* PostImageViewTableViewCell.swift */; };
+		6AF1EC982AB8421C00071983 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1EC972AB8421C00071983 /* FirebaseManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,7 +44,7 @@
 		6A80EFA92AB3162E00C90754 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		6A80EFAD2AB4684A00C90754 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6A80EFAF2AB46EC500C90754 /* Lut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lut.swift; sourceTree = "<group>"; };
-		6A80EFB12AB4957F00C90754 /* Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
+		6A80EFB12AB4957F00C90754 /* LutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LutManager.swift; sourceTree = "<group>"; };
 		6A80EFB42AB57C7500C90754 /* LutsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LutsCollectionViewCell.swift; sourceTree = "<group>"; };
 		6A80EFB82AB6AD8C00C90754 /* UIImageExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExt.swift; sourceTree = "<group>"; };
 		6A80EFBB2AB6F19800C90754 /* CommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityViewController.swift; sourceTree = "<group>"; };
@@ -51,6 +53,8 @@
 		6A80EFC32AB7092000C90754 /* Posts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Posts.swift; sourceTree = "<group>"; };
 		6A80EFC52AB70F6800C90754 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		6A80EFC72AB720DF00C90754 /* PostDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewCell.swift; sourceTree = "<group>"; };
+		6AF1EC952AB82A2B00071983 /* PostImageViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageViewTableViewCell.swift; sourceTree = "<group>"; };
+		6AF1EC972AB8421C00071983 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		92FCACB1F0E27BBB7AC857F2 /* Pods_LiFrame.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiFrame.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAA9F219A3B866FDDB1754D8 /* Pods-LiFrame.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiFrame.debug.xcconfig"; path = "Target Support Files/Pods-LiFrame/Pods-LiFrame.debug.xcconfig"; sourceTree = "<group>"; };
 		EA4B4BFFDFDC965B404C4989 /* Pods-LiFrame.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiFrame.release.xcconfig"; path = "Target Support Files/Pods-LiFrame/Pods-LiFrame.release.xcconfig"; sourceTree = "<group>"; };
@@ -142,7 +146,8 @@
 		6A80EFB62AB590E700C90754 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				6A80EFB82AB6AD8C00C90754 /* UIImageExt.swift */,
+				6A80EFB12AB4957F00C90754 /* LutManager.swift */,
+				6A80EFAF2AB46EC500C90754 /* Lut.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -150,8 +155,8 @@
 		6A80EFB72AB5912100C90754 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				6A80EFB12AB4957F00C90754 /* Manager.swift */,
-				6A80EFAF2AB46EC500C90754 /* Lut.swift */,
+				6A80EFB82AB6AD8C00C90754 /* UIImageExt.swift */,
+				6AF1EC972AB8421C00071983 /* FirebaseManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -172,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				6A80EFBE2AB6F1E200C90754 /* CommunityTableViewCell.swift */,
+				6AF1EC952AB82A2B00071983 /* PostImageViewTableViewCell.swift */,
 				6A80EFC72AB720DF00C90754 /* PostDetailTableViewCell.swift */,
 			);
 			path = View;
@@ -332,10 +338,11 @@
 				6A80EFC62AB70F6800C90754 /* PostDetailViewController.swift in Sources */,
 				6A80EFAA2AB3162E00C90754 /* EditViewController.swift in Sources */,
 				6A80EFBF2AB6F1E200C90754 /* CommunityTableViewCell.swift in Sources */,
+				6AF1EC962AB82A2B00071983 /* PostImageViewTableViewCell.swift in Sources */,
 				6A30F7C82AB1AAF800D5A672 /* CameraViewController.swift in Sources */,
 				6A30F7C42AB1AAF800D5A672 /* AppDelegate.swift in Sources */,
 				6A80EFC42AB7092000C90754 /* Posts.swift in Sources */,
-				6A80EFB22AB4957F00C90754 /* Manager.swift in Sources */,
+				6A80EFB22AB4957F00C90754 /* LutManager.swift in Sources */,
 				6A30F7C62AB1AAF800D5A672 /* SceneDelegate.swift in Sources */,
 				6A80EFB92AB6AD8C00C90754 /* UIImageExt.swift in Sources */,
 				6A80EFC82AB720DF00C90754 /* PostDetailTableViewCell.swift in Sources */,
@@ -343,6 +350,7 @@
 				6A80EFB02AB46EC500C90754 /* Lut.swift in Sources */,
 				6A80EFBC2AB6F19800C90754 /* CommunityViewController.swift in Sources */,
 				6A80EFB52AB57C7500C90754 /* LutsCollectionViewCell.swift in Sources */,
+				6AF1EC982AB8421C00071983 /* FirebaseManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

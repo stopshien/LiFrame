@@ -61,7 +61,7 @@ class EditViewController: UIViewController {
         view.addSubview(lutSaveButton)
         setAutoLayout()
         setTarget()
-        if let luts = Manager.shared.loadLuts() {
+        if let luts = LutManager.shared.loadLuts() {
             self.luts = luts
         } else {
             luts = []
