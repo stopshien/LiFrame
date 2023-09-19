@@ -7,23 +7,66 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5BE77D9A14657668B1ACE5E8 /* Pods_LiFrame.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92FCACB1F0E27BBB7AC857F2 /* Pods_LiFrame.framework */; };
 		6A30F7C42AB1AAF800D5A672 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A30F7C32AB1AAF800D5A672 /* AppDelegate.swift */; };
 		6A30F7C62AB1AAF800D5A672 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A30F7C52AB1AAF800D5A672 /* SceneDelegate.swift */; };
-		6A30F7C82AB1AAF800D5A672 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A30F7C72AB1AAF800D5A672 /* ViewController.swift */; };
+		6A30F7C82AB1AAF800D5A672 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A30F7C72AB1AAF800D5A672 /* CameraViewController.swift */; };
 		6A30F7CB2AB1AAF800D5A672 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A30F7C92AB1AAF800D5A672 /* Main.storyboard */; };
 		6A30F7CD2AB1AAF900D5A672 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A30F7CC2AB1AAF900D5A672 /* Assets.xcassets */; };
 		6A30F7D02AB1AAF900D5A672 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A30F7CE2AB1AAF900D5A672 /* LaunchScreen.storyboard */; };
+		6A80EFA82AB3143900C90754 /* EditPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFA72AB3143900C90754 /* EditPhotoViewController.swift */; };
+		6A80EFAA2AB3162E00C90754 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFA92AB3162E00C90754 /* EditViewController.swift */; };
+		6A80EFAE2AB4684A00C90754 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A80EFAD2AB4684A00C90754 /* GoogleService-Info.plist */; };
+		6A80EFB02AB46EC500C90754 /* Lut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFAF2AB46EC500C90754 /* Lut.swift */; };
+		6A80EFB22AB4957F00C90754 /* LutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFB12AB4957F00C90754 /* LutManager.swift */; };
+		6A80EFB52AB57C7500C90754 /* LutsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFB42AB57C7500C90754 /* LutsCollectionViewCell.swift */; };
+		6A80EFB92AB6AD8C00C90754 /* UIImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFB82AB6AD8C00C90754 /* UIImageExt.swift */; };
+		6A80EFBC2AB6F19800C90754 /* CommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFBB2AB6F19800C90754 /* CommunityViewController.swift */; };
+		6A80EFBF2AB6F1E200C90754 /* CommunityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFBE2AB6F1E200C90754 /* CommunityTableViewCell.swift */; };
+		6A80EFC12AB6F70B00C90754 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFC02AB6F70B00C90754 /* PostViewController.swift */; };
+		6A80EFC42AB7092000C90754 /* Posts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFC32AB7092000C90754 /* Posts.swift */; };
+		6A80EFC62AB70F6800C90754 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFC52AB70F6800C90754 /* PostDetailViewController.swift */; };
+		6A80EFC82AB720DF00C90754 /* PostDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFC72AB720DF00C90754 /* PostDetailTableViewCell.swift */; };
+		6AF1EC962AB82A2B00071983 /* PostImageViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1EC952AB82A2B00071983 /* PostImageViewTableViewCell.swift */; };
+		6AF1EC982AB8421C00071983 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1EC972AB8421C00071983 /* FirebaseManager.swift */; };
+		6AF1EC9B2AB84FE000071983 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1EC9A2AB84FE000071983 /* MapViewController.swift */; };
+		6AF1ECA02AB9540F00071983 /* Whether.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1EC9F2AB9540F00071983 /* Whether.swift */; };
+		6AF1ECA42AB9663900071983 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1ECA32AB9663900071983 /* City.swift */; };
+		6AF1ECA72AB9C91E00071983 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1ECA62AB9C91E00071983 /* APIManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6A30F7C02AB1AAF800D5A672 /* LiFrame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiFrame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A30F7C32AB1AAF800D5A672 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6A30F7C52AB1AAF800D5A672 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		6A30F7C72AB1AAF800D5A672 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6A30F7C72AB1AAF800D5A672 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		6A30F7CA2AB1AAF800D5A672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6A30F7CC2AB1AAF900D5A672 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6A30F7CF2AB1AAF900D5A672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6A30F7D12AB1AAF900D5A672 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6A80EFA72AB3143900C90754 /* EditPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPhotoViewController.swift; sourceTree = "<group>"; };
+		6A80EFA92AB3162E00C90754 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		6A80EFAD2AB4684A00C90754 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6A80EFAF2AB46EC500C90754 /* Lut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lut.swift; sourceTree = "<group>"; };
+		6A80EFB12AB4957F00C90754 /* LutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LutManager.swift; sourceTree = "<group>"; };
+		6A80EFB42AB57C7500C90754 /* LutsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LutsCollectionViewCell.swift; sourceTree = "<group>"; };
+		6A80EFB82AB6AD8C00C90754 /* UIImageExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExt.swift; sourceTree = "<group>"; };
+		6A80EFBB2AB6F19800C90754 /* CommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityViewController.swift; sourceTree = "<group>"; };
+		6A80EFBE2AB6F1E200C90754 /* CommunityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityTableViewCell.swift; sourceTree = "<group>"; };
+		6A80EFC02AB6F70B00C90754 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		6A80EFC32AB7092000C90754 /* Posts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Posts.swift; sourceTree = "<group>"; };
+		6A80EFC52AB70F6800C90754 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
+		6A80EFC72AB720DF00C90754 /* PostDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewCell.swift; sourceTree = "<group>"; };
+		6AF1EC952AB82A2B00071983 /* PostImageViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageViewTableViewCell.swift; sourceTree = "<group>"; };
+		6AF1EC972AB8421C00071983 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		6AF1EC9A2AB84FE000071983 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		6AF1EC9F2AB9540F00071983 /* Whether.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Whether.swift; sourceTree = "<group>"; };
+		6AF1ECA32AB9663900071983 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		6AF1ECA52AB9C6FE00071983 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		6AF1ECA62AB9C91E00071983 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		92FCACB1F0E27BBB7AC857F2 /* Pods_LiFrame.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiFrame.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAA9F219A3B866FDDB1754D8 /* Pods-LiFrame.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiFrame.debug.xcconfig"; path = "Target Support Files/Pods-LiFrame/Pods-LiFrame.debug.xcconfig"; sourceTree = "<group>"; };
+		EA4B4BFFDFDC965B404C4989 /* Pods-LiFrame.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiFrame.release.xcconfig"; path = "Target Support Files/Pods-LiFrame/Pods-LiFrame.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +74,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BE77D9A14657668B1ACE5E8 /* Pods_LiFrame.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		507A2B1EBEB2BFE49FF2A5C5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				92FCACB1F0E27BBB7AC857F2 /* Pods_LiFrame.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6A30F7B72AB1AAF800D5A672 = {
 			isa = PBXGroup;
 			children = (
 				6A30F7C22AB1AAF800D5A672 /* LiFrame */,
 				6A30F7C12AB1AAF800D5A672 /* Products */,
+				FFA61E736FDB66392DE696C9 /* Pods */,
+				507A2B1EBEB2BFE49FF2A5C5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,13 +112,122 @@
 			children = (
 				6A30F7C32AB1AAF800D5A672 /* AppDelegate.swift */,
 				6A30F7C52AB1AAF800D5A672 /* SceneDelegate.swift */,
-				6A30F7C72AB1AAF800D5A672 /* ViewController.swift */,
+				6A80EFB72AB5912100C90754 /* Model */,
+				6A80EFA42AB1E45900C90754 /* Camera */,
+				6A80EFA62AB3141D00C90754 /* EditPhoto */,
+				6A80EFBA2AB6F13B00C90754 /* Community */,
+				6AF1EC992AB8497E00071983 /* Map */,
 				6A30F7C92AB1AAF800D5A672 /* Main.storyboard */,
 				6A30F7CC2AB1AAF900D5A672 /* Assets.xcassets */,
 				6A30F7CE2AB1AAF900D5A672 /* LaunchScreen.storyboard */,
 				6A30F7D12AB1AAF900D5A672 /* Info.plist */,
+				6A80EFAD2AB4684A00C90754 /* GoogleService-Info.plist */,
+				6AF1ECA52AB9C6FE00071983 /* Secrets.xcconfig */,
 			);
 			path = LiFrame;
+			sourceTree = "<group>";
+		};
+		6A80EFA42AB1E45900C90754 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				6A30F7C72AB1AAF800D5A672 /* CameraViewController.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		6A80EFA62AB3141D00C90754 /* EditPhoto */ = {
+			isa = PBXGroup;
+			children = (
+				6A80EFA72AB3143900C90754 /* EditPhotoViewController.swift */,
+				6A80EFA92AB3162E00C90754 /* EditViewController.swift */,
+				6A80EFB32AB55E8B00C90754 /* View */,
+				6A80EFB62AB590E700C90754 /* Model */,
+			);
+			path = EditPhoto;
+			sourceTree = "<group>";
+		};
+		6A80EFB32AB55E8B00C90754 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6A80EFB42AB57C7500C90754 /* LutsCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6A80EFB62AB590E700C90754 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6A80EFB12AB4957F00C90754 /* LutManager.swift */,
+				6A80EFAF2AB46EC500C90754 /* Lut.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6A80EFB72AB5912100C90754 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6A80EFB82AB6AD8C00C90754 /* UIImageExt.swift */,
+				6AF1EC972AB8421C00071983 /* FirebaseManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6A80EFBA2AB6F13B00C90754 /* Community */ = {
+			isa = PBXGroup;
+			children = (
+				6A80EFBB2AB6F19800C90754 /* CommunityViewController.swift */,
+				6A80EFC02AB6F70B00C90754 /* PostViewController.swift */,
+				6A80EFC52AB70F6800C90754 /* PostDetailViewController.swift */,
+				6A80EFBD2AB6F1BD00C90754 /* View */,
+				6A80EFC22AB7090E00C90754 /* Model */,
+			);
+			path = Community;
+			sourceTree = "<group>";
+		};
+		6A80EFBD2AB6F1BD00C90754 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6A80EFBE2AB6F1E200C90754 /* CommunityTableViewCell.swift */,
+				6AF1EC952AB82A2B00071983 /* PostImageViewTableViewCell.swift */,
+				6A80EFC72AB720DF00C90754 /* PostDetailTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6A80EFC22AB7090E00C90754 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6A80EFC32AB7092000C90754 /* Posts.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6AF1EC992AB8497E00071983 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				6AF1EC9A2AB84FE000071983 /* MapViewController.swift */,
+				6AF1EC9C2AB94F6E00071983 /* Model */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		6AF1EC9C2AB94F6E00071983 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6AF1ECA32AB9663900071983 /* City.swift */,
+				6AF1EC9F2AB9540F00071983 /* Whether.swift */,
+				6AF1ECA62AB9C91E00071983 /* APIManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		FFA61E736FDB66392DE696C9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AAA9F219A3B866FDDB1754D8 /* Pods-LiFrame.debug.xcconfig */,
+				EA4B4BFFDFDC965B404C4989 /* Pods-LiFrame.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +237,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6A30F7D42AB1AAF900D5A672 /* Build configuration list for PBXNativeTarget "LiFrame" */;
 			buildPhases = (
+				FB2CFD39FD0862F1A409EAA7 /* [CP] Check Pods Manifest.lock */,
 				6A30F7BC2AB1AAF800D5A672 /* Sources */,
 				6A30F7BD2AB1AAF800D5A672 /* Frameworks */,
 				6A30F7BE2AB1AAF800D5A672 /* Resources */,
+				C0EE0D037289B46A7298DAF7 /* [CP] Embed Pods Frameworks */,
+				6A80EFA32AB1B85700C90754 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -126,6 +292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A30F7D02AB1AAF900D5A672 /* LaunchScreen.storyboard in Resources */,
+				6A80EFAE2AB4684A00C90754 /* GoogleService-Info.plist in Resources */,
 				6A30F7CD2AB1AAF900D5A672 /* Assets.xcassets in Resources */,
 				6A30F7CB2AB1AAF800D5A672 /* Main.storyboard in Resources */,
 			);
@@ -133,14 +300,91 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6A80EFA32AB1B85700C90754 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		C0EE0D037289B46A7298DAF7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LiFrame/Pods-LiFrame-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LiFrame/Pods-LiFrame-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LiFrame/Pods-LiFrame-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FB2CFD39FD0862F1A409EAA7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LiFrame-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		6A30F7BC2AB1AAF800D5A672 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A30F7C82AB1AAF800D5A672 /* ViewController.swift in Sources */,
+				6A80EFC12AB6F70B00C90754 /* PostViewController.swift in Sources */,
+				6A80EFC62AB70F6800C90754 /* PostDetailViewController.swift in Sources */,
+				6A80EFAA2AB3162E00C90754 /* EditViewController.swift in Sources */,
+				6A80EFBF2AB6F1E200C90754 /* CommunityTableViewCell.swift in Sources */,
+				6AF1EC962AB82A2B00071983 /* PostImageViewTableViewCell.swift in Sources */,
+				6A30F7C82AB1AAF800D5A672 /* CameraViewController.swift in Sources */,
+				6AF1ECA72AB9C91E00071983 /* APIManager.swift in Sources */,
 				6A30F7C42AB1AAF800D5A672 /* AppDelegate.swift in Sources */,
+				6A80EFC42AB7092000C90754 /* Posts.swift in Sources */,
+				6A80EFB22AB4957F00C90754 /* LutManager.swift in Sources */,
 				6A30F7C62AB1AAF800D5A672 /* SceneDelegate.swift in Sources */,
+				6AF1ECA02AB9540F00071983 /* Whether.swift in Sources */,
+				6A80EFB92AB6AD8C00C90754 /* UIImageExt.swift in Sources */,
+				6A80EFC82AB720DF00C90754 /* PostDetailTableViewCell.swift in Sources */,
+				6A80EFA82AB3143900C90754 /* EditPhotoViewController.swift in Sources */,
+				6AF1EC9B2AB84FE000071983 /* MapViewController.swift in Sources */,
+				6A80EFB02AB46EC500C90754 /* Lut.swift in Sources */,
+				6A80EFBC2AB6F19800C90754 /* CommunityViewController.swift in Sources */,
+				6A80EFB52AB57C7500C90754 /* LutsCollectionViewCell.swift in Sources */,
+				6AF1EC982AB8421C00071983 /* FirebaseManager.swift in Sources */,
+				6AF1ECA42AB9663900071983 /* City.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,6 +412,7 @@
 /* Begin XCBuildConfiguration section */
 		6A30F7D22AB1AAF900D5A672 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6AF1ECA52AB9C6FE00071983 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -216,7 +461,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -228,6 +473,7 @@
 		};
 		6A30F7D32AB1AAF900D5A672 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6AF1ECA52AB9C6FE00071983 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -270,7 +516,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -282,6 +528,7 @@
 		};
 		6A30F7D52AB1AAF900D5A672 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AAA9F219A3B866FDDB1754D8 /* Pods-LiFrame.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -290,11 +537,14 @@
 				DEVELOPMENT_TEAM = T2T367NW35;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LiFrame/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "需要您的同意才能使用相機";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "需要您的同意才能訪問相簿";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要您的同意才能使用相簿";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -310,6 +560,7 @@
 		};
 		6A30F7D62AB1AAF900D5A672 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA4B4BFFDFDC965B404C4989 /* Pods-LiFrame.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -318,11 +569,14 @@
 				DEVELOPMENT_TEAM = T2T367NW35;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LiFrame/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "需要您的同意才能使用相機";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "需要您的同意才能訪問相簿";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要您的同意才能使用相簿";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
