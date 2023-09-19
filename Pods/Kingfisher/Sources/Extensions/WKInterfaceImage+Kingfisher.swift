@@ -191,7 +191,7 @@ extension KingfisherWrapper where Base: WKInterfaceImage {
             return box?.value
         }
         set {
-            let box = newValue.map { Box($0) }
+            let box = newValue.cities { Box($0) }
             setRetainedAssociatedObject(base, &taskIdentifierKey, box)
         }
     }

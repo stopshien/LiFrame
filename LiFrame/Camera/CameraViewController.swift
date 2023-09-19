@@ -64,19 +64,8 @@ extension CameraViewController: PHPickerViewControllerDelegate {
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.originalImage] as? UIImage else { return }
-
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
     }
-//    // 重新調整大小
-//    func resizeImage(image: UIImage, width: CGFloat) -> UIImage {
-//            let size = CGSize(width: width, height:
-//                image.size.height * width / image.size.width)
-//            let renderer = UIGraphicsImageRenderer(size: size)
-//            let newImage = renderer.image { (context) in
-//                image.draw(in: renderer.format.bounds)
-//            }
-//            return newImage
-//    }
     func setButtonsUI() {
         let shutter: UIButton = {
             let button = UIButton()
@@ -94,8 +83,6 @@ extension CameraViewController: PHPickerViewControllerDelegate {
             button.addTarget(self, action: #selector(tappedCancel), for: .touchUpInside)
             button.frame = CGRect(x: 200, y: 650, width: 50, height: 50)
             button.tintColor = .white
-//            let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 200))
-//            button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
             return button
         }()
         imageCameraPicker.cameraFlashMode = .off

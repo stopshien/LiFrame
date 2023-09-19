@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Map view configurations" minToolsVersion="14.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -186,17 +187,32 @@
             </objects>
             <point key="canvasLocation" x="2834.3511450381679" y="1361.9718309859156"/>
         </scene>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="9sf-NY-rv4">
             <objects>
-                <viewController id="80B-wo-loP" sceneMemberID="viewController">
+                <viewController id="80B-wo-loP" customClass="MapViewController" customModule="LiFrame" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hF2-Z0-LQE">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PvF-xW-Ixu">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <standardMapConfiguration key="preferredConfiguration"/>
+                            </mapView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="NKL-Kl-CQu"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="NKL-Kl-CQu" firstAttribute="trailing" secondItem="PvF-xW-Ixu" secondAttribute="trailing" id="JEr-7x-VRe"/>
+                            <constraint firstAttribute="bottom" secondItem="PvF-xW-Ixu" secondAttribute="bottom" id="TUL-z3-mYb"/>
+                            <constraint firstItem="PvF-xW-Ixu" firstAttribute="leading" secondItem="NKL-Kl-CQu" secondAttribute="leading" id="YVH-rr-G4K"/>
+                            <constraint firstItem="PvF-xW-Ixu" firstAttribute="top" secondItem="hF2-Z0-LQE" secondAttribute="top" id="mVM-tz-qjm"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="b6Z-g6-H44"/>
+                    <connections>
+                        <outlet property="mapView" destination="PvF-xW-Ixu" id="aJE-V6-JnS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kcT-SN-Ob9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

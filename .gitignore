@@ -120,4 +120,6 @@ iOSInjectionProject/
 
 GoogleService-Info.plist
 
+Secrets.xcconfig
+
 # End of https://www.toptal.com/developers/gitignore/api/swift,macos
