@@ -333,7 +333,7 @@ extension KingfisherWrapper where Base: NSButton {
             return box?.value
         }
         set {
-            let box = newValue.map { Box($0) }
+            let box = newValue.cities { Box($0) }
             setRetainedAssociatedObject(base, &taskIdentifierKey, box)
         }
     }
@@ -349,7 +349,7 @@ extension KingfisherWrapper where Base: NSButton {
             return box?.value
         }
         set {
-            let box = newValue.map { Box($0) }
+            let box = newValue.cities { Box($0) }
             setRetainedAssociatedObject(base, &alternateTaskIdentifierKey, box)
         }
     }

@@ -29,6 +29,10 @@
 		6A80EFC82AB720DF00C90754 /* PostDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFC72AB720DF00C90754 /* PostDetailTableViewCell.swift */; };
 		6AF1EC962AB82A2B00071983 /* PostImageViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1EC952AB82A2B00071983 /* PostImageViewTableViewCell.swift */; };
 		6AF1EC982AB8421C00071983 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1EC972AB8421C00071983 /* FirebaseManager.swift */; };
+		6AF1EC9B2AB84FE000071983 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1EC9A2AB84FE000071983 /* MapViewController.swift */; };
+		6AF1ECA02AB9540F00071983 /* Whether.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1EC9F2AB9540F00071983 /* Whether.swift */; };
+		6AF1ECA42AB9663900071983 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1ECA32AB9663900071983 /* City.swift */; };
+		6AF1ECA72AB9C91E00071983 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1ECA62AB9C91E00071983 /* APIManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +59,11 @@
 		6A80EFC72AB720DF00C90754 /* PostDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewCell.swift; sourceTree = "<group>"; };
 		6AF1EC952AB82A2B00071983 /* PostImageViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageViewTableViewCell.swift; sourceTree = "<group>"; };
 		6AF1EC972AB8421C00071983 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		6AF1EC9A2AB84FE000071983 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		6AF1EC9F2AB9540F00071983 /* Whether.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Whether.swift; sourceTree = "<group>"; };
+		6AF1ECA32AB9663900071983 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		6AF1ECA52AB9C6FE00071983 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		6AF1ECA62AB9C91E00071983 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		92FCACB1F0E27BBB7AC857F2 /* Pods_LiFrame.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiFrame.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAA9F219A3B866FDDB1754D8 /* Pods-LiFrame.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiFrame.debug.xcconfig"; path = "Target Support Files/Pods-LiFrame/Pods-LiFrame.debug.xcconfig"; sourceTree = "<group>"; };
 		EA4B4BFFDFDC965B404C4989 /* Pods-LiFrame.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiFrame.release.xcconfig"; path = "Target Support Files/Pods-LiFrame/Pods-LiFrame.release.xcconfig"; sourceTree = "<group>"; };
@@ -113,6 +122,7 @@
 				6A30F7CE2AB1AAF900D5A672 /* LaunchScreen.storyboard */,
 				6A30F7D12AB1AAF900D5A672 /* Info.plist */,
 				6A80EFAD2AB4684A00C90754 /* GoogleService-Info.plist */,
+				6AF1ECA52AB9C6FE00071983 /* Secrets.xcconfig */,
 			);
 			path = LiFrame;
 			sourceTree = "<group>";
@@ -195,8 +205,20 @@
 		6AF1EC992AB8497E00071983 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				6AF1EC9A2AB84FE000071983 /* MapViewController.swift */,
+				6AF1EC9C2AB94F6E00071983 /* Model */,
 			);
 			path = Map;
+			sourceTree = "<group>";
+		};
+		6AF1EC9C2AB94F6E00071983 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6AF1ECA32AB9663900071983 /* City.swift */,
+				6AF1EC9F2AB9540F00071983 /* Whether.swift */,
+				6AF1ECA62AB9C91E00071983 /* APIManager.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		FFA61E736FDB66392DE696C9 /* Pods */ = {
@@ -348,17 +370,21 @@
 				6A80EFBF2AB6F1E200C90754 /* CommunityTableViewCell.swift in Sources */,
 				6AF1EC962AB82A2B00071983 /* PostImageViewTableViewCell.swift in Sources */,
 				6A30F7C82AB1AAF800D5A672 /* CameraViewController.swift in Sources */,
+				6AF1ECA72AB9C91E00071983 /* APIManager.swift in Sources */,
 				6A30F7C42AB1AAF800D5A672 /* AppDelegate.swift in Sources */,
 				6A80EFC42AB7092000C90754 /* Posts.swift in Sources */,
 				6A80EFB22AB4957F00C90754 /* LutManager.swift in Sources */,
 				6A30F7C62AB1AAF800D5A672 /* SceneDelegate.swift in Sources */,
+				6AF1ECA02AB9540F00071983 /* Whether.swift in Sources */,
 				6A80EFB92AB6AD8C00C90754 /* UIImageExt.swift in Sources */,
 				6A80EFC82AB720DF00C90754 /* PostDetailTableViewCell.swift in Sources */,
 				6A80EFA82AB3143900C90754 /* EditPhotoViewController.swift in Sources */,
+				6AF1EC9B2AB84FE000071983 /* MapViewController.swift in Sources */,
 				6A80EFB02AB46EC500C90754 /* Lut.swift in Sources */,
 				6A80EFBC2AB6F19800C90754 /* CommunityViewController.swift in Sources */,
 				6A80EFB52AB57C7500C90754 /* LutsCollectionViewCell.swift in Sources */,
 				6AF1EC982AB8421C00071983 /* FirebaseManager.swift in Sources */,
+				6AF1ECA42AB9663900071983 /* City.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,6 +412,7 @@
 /* Begin XCBuildConfiguration section */
 		6A30F7D22AB1AAF900D5A672 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6AF1ECA52AB9C6FE00071983 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -446,6 +473,7 @@
 		};
 		6A30F7D32AB1AAF900D5A672 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6AF1ECA52AB9C6FE00071983 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

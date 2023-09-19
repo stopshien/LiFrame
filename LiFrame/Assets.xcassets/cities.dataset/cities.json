@@ -1,0 +1,114 @@
+{
+    "cities": [
+        {
+            "name": "基隆市",
+            "latitudinal": "25.127603",
+            "longitudinal": "121.739212"
+        },
+        {
+            "name": "臺北市",
+            "latitudinal": "25.033964",
+            "longitudinal": "121.564472"
+        },
+        {
+            "name": "新北市",
+            "latitudinal": "25.016983",
+            "longitudinal": "121.462787"
+        },
+        {
+            "name": "桃園市",
+            "latitudinal": "24.993628",
+            "longitudinal": "121.300979"
+        },
+        {
+            "name": "新竹市",
+            "latitudinal": "24.803176",
+            "longitudinal": "120.965692"
+        },
+        {
+            "name": "新竹縣",
+            "latitudinal": "24.839651",
+            "longitudinal": "121.017218"
+        },
+        {
+            "name": "苗栗縣",
+            "latitudinal": "24.560159",
+            "longitudinal": "120.821419"
+        },
+        {
+            "name": "臺中市",
+            "latitudinal": "24.163986",
+            "longitudinal": "120.673648"
+        },
+        {
+            "name": "彰化縣",
+            "latitudinal": "24.066944",
+            "longitudinal": "120.513889"
+        },
+        {
+            "name": "南投縣",
+            "latitudinal": "23.919619",
+            "longitudinal": "120.677504"
+        },
+        {
+            "name": "雲林縣",
+            "latitudinal": "23.709203",
+            "longitudinal": "120.431381"
+        },
+        {
+            "name": "嘉義市",
+            "latitudinal": "23.481846",
+            "longitudinal": "120.447257"
+        },
+        {
+            "name": "嘉義縣",
+            "latitudinal": "23.495076",
+            "longitudinal": "120.431008"
+        },
+        {
+            "name": "臺南市",
+            "latitudinal": "22.998601",
+            "longitudinal": "120.187817"
+        },
+        {
+            "name": "高雄市",
+            "latitudinal": "22.627278",
+            "longitudinal": "120.301435"
+        },
+        {
+            "name": "屏東縣",
+            "latitudinal": "22.54973",
+            "longitudinal": "120.548584"
+        },
+        {
+            "name": "臺東縣",
+            "latitudinal": "22.750252",
+            "longitudinal": "121.15036"
+        },
+        {
+            "name": "花蓮縣",
+            "latitudinal": "23.987158",
+            "longitudinal": "121.601571"
+        },
+        {
+            "name": "宜蘭縣",
+            "latitudinal": "24.69295",
+            "longitudinal": "121.719899"
+        },
+        {
+            "name": "澎湖縣",
+            "latitudinal": "23.558924",
+            "longitudinal": "119.589647"
+        },
+        {
+            "name": "金門縣",
+            "latitudinal": "24.416667",
+            "longitudinal": "118.316667"
+        },
+        {
+            "name": "連江縣",
+            "latitudinal": "26.153611",
+            "longitudinal": "119.958611"
+        }
+    ]
+}

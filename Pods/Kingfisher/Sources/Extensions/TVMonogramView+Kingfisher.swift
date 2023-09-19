@@ -195,7 +195,7 @@ extension KingfisherWrapper where Base: TVMonogramView {
             return box?.value
         }
         set {
-            let box = newValue.map { Box($0) }
+            let box = newValue.cities { Box($0) }
             setRetainedAssociatedObject(base, &taskIdentifierKey, box)
         }
     }
