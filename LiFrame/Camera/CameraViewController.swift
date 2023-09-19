@@ -71,7 +71,7 @@ extension CameraViewController: PHPickerViewControllerDelegate {
             let button = UIButton()
             button.setImage(UIImage(systemName: "camera.circle"), for: .normal)
             button.addTarget(self, action: #selector(tappedShutter), for: .touchUpInside)
-            button.frame = CGRect(x: 200, y: 600, width: 50, height: 50)
+            button.frame = CGRect(x: 150, y: 600, width: 50, height: 50)
             button.tintColor = .white
             let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 200))
             button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
@@ -81,7 +81,7 @@ extension CameraViewController: PHPickerViewControllerDelegate {
             let button = UIButton()
             button.setTitle("Cancel", for: .normal)
             button.addTarget(self, action: #selector(tappedCancel), for: .touchUpInside)
-            button.frame = CGRect(x: 200, y: 650, width: 50, height: 50)
+            button.frame = CGRect(x: 200, y: 600, width: 100, height: 50)
             button.tintColor = .white
             return button
         }()
