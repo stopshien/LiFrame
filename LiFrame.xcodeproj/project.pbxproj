@@ -33,6 +33,7 @@
 		6AF1ECA02AB9540F00071983 /* Whether.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1EC9F2AB9540F00071983 /* Whether.swift */; };
 		6AF1ECA42AB9663900071983 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1ECA32AB9663900071983 /* City.swift */; };
 		6AF1ECA72AB9C91E00071983 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1ECA62AB9C91E00071983 /* APIManager.swift */; };
+		6AF1ECA92ABB253500071983 /* UIColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1ECA82ABB253500071983 /* UIColorExt.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		6AF1ECA32AB9663900071983 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		6AF1ECA52AB9C6FE00071983 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		6AF1ECA62AB9C91E00071983 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		6AF1ECA82ABB253500071983 /* UIColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExt.swift; sourceTree = "<group>"; };
 		92FCACB1F0E27BBB7AC857F2 /* Pods_LiFrame.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiFrame.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAA9F219A3B866FDDB1754D8 /* Pods-LiFrame.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiFrame.debug.xcconfig"; path = "Target Support Files/Pods-LiFrame/Pods-LiFrame.debug.xcconfig"; sourceTree = "<group>"; };
 		EA4B4BFFDFDC965B404C4989 /* Pods-LiFrame.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiFrame.release.xcconfig"; path = "Target Support Files/Pods-LiFrame/Pods-LiFrame.release.xcconfig"; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				6A80EFB82AB6AD8C00C90754 /* UIImageExt.swift */,
+				6AF1ECA82ABB253500071983 /* UIColorExt.swift */,
 				6AF1EC972AB8421C00071983 /* FirebaseManager.swift */,
 			);
 			path = Model;
@@ -383,6 +386,7 @@
 				6A80EFB02AB46EC500C90754 /* Lut.swift in Sources */,
 				6A80EFBC2AB6F19800C90754 /* CommunityViewController.swift in Sources */,
 				6A80EFB52AB57C7500C90754 /* LutsCollectionViewCell.swift in Sources */,
+				6AF1ECA92ABB253500071983 /* UIColorExt.swift in Sources */,
 				6AF1EC982AB8421C00071983 /* FirebaseManager.swift in Sources */,
 				6AF1ECA42AB9663900071983 /* City.swift in Sources */,
 			);
