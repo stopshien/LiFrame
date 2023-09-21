@@ -17,17 +17,6 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jPt-yp-o9M">
-                                <rect key="frame" x="94" y="244" width="204" height="104"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Camera"/>
-                                <connections>
-                                    <action selector="choosePhotoToCamera:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2t5-tx-rlw"/>
-                                </connections>
-                            </button>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
@@ -82,11 +71,11 @@
             </objects>
             <point key="canvasLocation" x="2834.3511450381679" y="682.3943661971831"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="mr3-Gk-ebk">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dXR-MV-1Yy" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="2TA-Lq-OKy"/>
+                    <tabBarItem key="tabBarItem" title="" image="camera" catalog="system" selectedImage="camera.fill" id="2TA-Lq-OKy"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="8b1-Pj-wBy">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -101,11 +90,11 @@
             </objects>
             <point key="canvasLocation" x="1909.1603053435115" y="3.5211267605633805"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="oZL-0J-rpl">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YRc-V6-6Xp" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="qBl-ee-07M"/>
+                    <tabBarItem key="tabBarItem" title="" image="dial.low" catalog="system" selectedImage="dial.medium.fill" id="qBl-ee-07M"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JbQ-4x-Pll">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -218,11 +207,11 @@
             </objects>
             <point key="canvasLocation" x="2834.3511450381679" y="2084.5070422535214"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="adI-ci-ox9">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="s0B-q4-WLi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="AaO-VD-eW1"/>
+                    <tabBarItem key="tabBarItem" title="" image="speaker.wave.2.bubble.left" catalog="system" selectedImage="speaker.wave.2.bubble.left.fill" id="AaO-VD-eW1"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="QGZ-UK-2S8">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -237,11 +226,11 @@
             </objects>
             <point key="canvasLocation" x="1907.6335877862596" y="1361.9718309859156"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="Vdz-tG-nXJ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4XM-Xp-xv2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="CA3-dc-ZJF"/>
+                    <tabBarItem key="tabBarItem" title="" image="mappin.circle" catalog="system" selectedImage="mappin.circle.fill" id="CA3-dc-ZJF"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ike-Uz-Lcc">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -261,10 +250,12 @@
             <objects>
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="7cz-e6-Vjn" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Lyf-Qk-bHT">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Lyf-Qk-bHT">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" systemColor="systemGray2Color"/>
                     </tabBar>
                     <connections>
                         <segue destination="dXR-MV-1Yy" kind="relationship" relationship="viewControllers" id="LkY-4G-eXg"/>
@@ -476,13 +467,28 @@
             <point key="canvasLocation" x="3788.5496183206105" y="1776.7605633802818"/>
         </scene>
     </scenes>
+    <color key="tintColor" systemColor="separatorColor"/>
     <resources>
+        <image name="camera" catalog="system" width="128" height="93"/>
+        <image name="camera.fill" catalog="system" width="128" height="93"/>
+        <image name="dial.low" catalog="system" width="128" height="109"/>
+        <image name="dial.medium.fill" catalog="system" width="128" height="109"/>
+        <image name="mappin.circle" catalog="system" width="128" height="123"/>
+        <image name="mappin.circle.fill" catalog="system" width="128" height="123"/>
         <image name="photo" catalog="system" width="128" height="93"/>
+        <image name="speaker.wave.2.bubble.left" catalog="system" width="128" height="110"/>
+        <image name="speaker.wave.2.bubble.left.fill" catalog="system" width="128" height="110"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
+        <systemColor name="separatorColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
