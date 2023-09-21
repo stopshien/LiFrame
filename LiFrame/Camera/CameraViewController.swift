@@ -73,7 +73,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         button.isSelected = false
         button.setImage(UIImage(systemName: "bolt.slash.fill"), for: .normal)
         button.setImage(UIImage(systemName: "bolt.fill"), for: .selected)
-        button.frame = CGRect(x: 50, y: Int(fullScreenSize.height*0.8), width: 50, height: 50)
+        button.translatesAutoresizingMaskIntoConstraints = false
+//        button.frame = CGRect(x: 50, y: Int(fullScreenSize.height*0.8), width: 50, height: 50)
         button.backgroundColor = .black
         button.tintColor = .white
         button.layer.cornerRadius = 20
@@ -83,25 +84,27 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         return button
     }()
-    let shutter: UIButton = {
+    let shutterButton: UIButton = {
         let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "camera.circle"), for: .normal)
         button.setImage(UIImage(systemName: "camera.circle.fill"), for: .highlighted)
-        button.frame = CGRect(x: Int(fullScreenSize.width/2-50), y: Int(fullScreenSize.height*0.65), width: 100, height: 100)
+//        button.frame = CGRect(x: Int(fullScreenSize.width/2-50), y: Int(fullScreenSize.height*0.65), width: 100, height: 100)
         button.backgroundColor = .black
         button.tintColor = .white
         button.layer.cornerRadius = 20
         button.layer.borderColor = UIColor.white.cgColor
         button.layer.borderWidth = 5
-        let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 200))
+        let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 100))
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         return button
     }()
-    let cancel: UIButton = {
+    let cancelButton: UIButton = {
         let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "figure.walk"), for: .normal)
         button.setImage(UIImage(systemName: "figure.wave"), for: .highlighted)
-        button.frame = CGRect(x: Int(fullScreenSize.width-100), y: Int(fullScreenSize.height*0.8), width: 50, height: 50)
+//        button.frame = CGRect(x: Int(fullScreenSize.width-100), y: Int(fullScreenSize.height*0.8), width: 50, height: 50)
         button.backgroundColor = .black
         button.tintColor = .white
         button.layer.cornerRadius = 20
@@ -117,14 +120,14 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         configuration.filter = .images
         setLayout()
         flashButton.addTarget(self, action: #selector(tappedFlash), for: .touchUpInside)
-        shutter.addTarget(self, action: #selector(tappedShutter), for: .touchUpInside)
-        cancel.addTarget(self, action: #selector(tappedCancel), for: .touchUpInside)
+        shutterButton.addTarget(self, action: #selector(tappedShutter), for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(tappedCancel), for: .touchUpInside)
         liFrameCamera.addTarget(self, action: #selector(choosePhoto), for: .touchUpInside)
         originalCamera.addTarget(self, action: #selector(intoOriginalCamera), for: .touchUpInside)
         seePhotoLibrary.addTarget(self, action: #selector(intoLibaray), for: .touchUpInside)
     }
     @objc func intoLibaray() {
-        configuration.selectionLimit = 1
+        configuration.selectionLimit = 0
         let pickerForOriginal = PHPickerViewController(configuration: configuration)
         pickerForOriginal.view.tag = 2
         pickerForOriginal.delegate = self
@@ -134,6 +137,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         // 設定相機
         imageCameraPicker.sourceType = .camera
         setCameraUI()
+        setCameraLayout()
         imageCameraPicker.delegate = self
         imageCameraPicker.showsCameraControls = false
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
@@ -142,6 +146,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
     }
     @objc func choosePhoto() {
+        configuration.selectionLimit = 1
         let liFramePicker = PHPickerViewController(configuration: configuration)
         liFramePicker.view.tag = 1
         liFramePicker.delegate = self
@@ -182,26 +187,38 @@ extension CameraViewController: PHPickerViewControllerDelegate {
                 [weak self] (image, error) in
                 DispatchQueue.main.async {
                     guard let self = self, let image = image as? UIImage else { return }
+                    // 假設您有一個 UIImage 的實例叫做 image
+                    var unrotatedImage = image.rotateImage(image, withOrientation: .left)
+                    if image.imageOrientation == .left {
+                        unrotatedImage = image.rotateImage(image, withOrientation: .left)
+                    } else if image.imageOrientation == .right {
+                        unrotatedImage = image.rotateImage(image, withOrientation: .right)
+                    }
                     if picker.view.tag == 1 {
                     // 設定相機
                     self.imageCameraPicker.sourceType = .camera
                     self.setCameraUI()
+                    self.setCameraLayout()
                     self.imageCameraPicker.delegate = self
                     self.imageCameraPicker.showsCameraControls = false
                         if UIImagePickerController.isSourceTypeAvailable(.camera) {
-                            let imageView =  UIImageView(image: image)
+                            let imageView =  UIImageView(image: unrotatedImage)
                             let screenSize = UIScreen.main.bounds
-                            imageView.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.width/3*4)
                             self.layerImageView = imageView
                             guard let layerImageView = self.layerImageView else { return }
-                            layerImageView.alpha = 0.3
+                            layerImageView.alpha = 0.5
                             // 開啟相機
-                            self.imageCameraPicker.cameraOverlayView?.addSubview(layerImageView)
-                            self.imageCameraPicker.cameraOverlayView?.translatesAutoresizingMaskIntoConstraints = false
-                        } else {
-                            self.dismiss(animated: true)
+                            if let layer = self.imageCameraPicker.cameraOverlayView {
+                                layer.addSubview(layerImageView)
+                                layerImageView.translatesAutoresizingMaskIntoConstraints = false
+                                layerImageView.topAnchor.constraint(equalTo: layer.topAnchor).isActive = true
+                                layerImageView.widthAnchor.constraint(equalTo: layer.widthAnchor).isActive = true
+                                layerImageView.heightAnchor.constraint(equalTo: layer.widthAnchor, multiplier: 4/3).isActive = true
+                            }
                         }
                         self.show(self.imageCameraPicker, sender: self)
+                    } else {
+                        self.dismiss(animated: true)
                     }
                 }
             }
@@ -212,14 +229,28 @@ extension CameraViewController: PHPickerViewControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.originalImage] as? UIImage else { return }
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-        dismiss(animated: true)
     }
     func setCameraUI() {
         imageCameraPicker.cameraFlashMode = .off
         flashButton.isSelected = false
-        imageCameraPicker.view.addSubview(shutter)
+        imageCameraPicker.view.addSubview(shutterButton)
         imageCameraPicker.view.addSubview(flashButton)
-        imageCameraPicker.view.addSubview(cancel)
+        imageCameraPicker.view.addSubview(cancelButton)
+    }
+    func setCameraLayout() {
+        NSLayoutConstraint.activate([
+            shutterButton.centerYAnchor.constraint(equalTo: imageCameraPicker.view.centerYAnchor, constant: 250),
+            shutterButton.centerXAnchor.constraint(equalTo: imageCameraPicker.view.centerXAnchor),
+            shutterButton.widthAnchor.constraint(equalTo: imageCameraPicker.view.widthAnchor, multiplier: 0.3),
+            flashButton.trailingAnchor.constraint(equalTo: shutterButton.leadingAnchor, constant: -40),
+            flashButton.bottomAnchor.constraint(equalTo: shutterButton.bottomAnchor),
+            flashButton.widthAnchor.constraint(equalTo: imageCameraPicker.view.widthAnchor, multiplier: 0.15),
+            flashButton.heightAnchor.constraint(equalTo: imageCameraPicker.view.widthAnchor, multiplier: 0.15),
+            cancelButton.leadingAnchor.constraint(equalTo: shutterButton.trailingAnchor, constant: 40),
+            cancelButton.bottomAnchor.constraint(equalTo: shutterButton.bottomAnchor),
+            cancelButton.widthAnchor.constraint(equalTo: imageCameraPicker.view.widthAnchor, multiplier: 0.15),
+            cancelButton.heightAnchor.constraint(equalTo: imageCameraPicker.view.widthAnchor, multiplier: 0.15)
+        ])
     }
     @objc func tappedShutter() {
         imageCameraPicker.cameraDevice = .rear
