@@ -130,7 +130,8 @@ extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSourc
                     // 處理光線和對比，替換下面的數值為您想要的值
                     let brightness: Float = currentLut.bright
                     let contrast: Float = currentLut.contrast
-                    if let processedImage = LutManager.shared.applyBrightnessAndContrast(image, brightness: brightness, contrast: contrast) {
+                    let saturation: Float = currentLut.saturation
+                    if let processedImage = LutManager.shared.applyBrightnessAndContrast(image, brightness: brightness, contrast: contrast, saturation: saturation) {
                         processedImages.append(processedImage)
                     }
                     if processedImages.count == itemProviders.count {
@@ -141,6 +142,7 @@ extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         }
         defer {
             CMHUD.success(in: view)
+            dismiss(animated: true)
             dismiss(animated: true)
         }
     }

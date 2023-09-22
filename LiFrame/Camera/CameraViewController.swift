@@ -17,7 +17,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("查看相簿", for: .normal)
-        button.setTitleColor(.darkGray, for: .normal)
+        button.setTitleColor(.mainColor, for: .normal)
         button.backgroundColor = .white
         button.clipsToBounds = true
         button.layer.cornerRadius = 10

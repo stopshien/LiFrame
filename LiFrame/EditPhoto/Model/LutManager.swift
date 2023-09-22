@@ -18,16 +18,17 @@ class LutManager {
             return savedLuts.compactMap { lutData in
                 guard let name = lutData["name"] as? String,
                       let brightness = lutData["brightness"] as? Float,
-                      let contrast = lutData["contrast"] as? Float else {
+                      let contrast = lutData["contrast"] as? Float,
+                      let saturation = lutData["saturation"] as? Float else {
                     return nil
                 }
-                return Lut(name: name, bright: brightness, contrast: contrast)
+                return Lut(name: name, bright: brightness, contrast: contrast, saturation: saturation)
             }
         }
         return []
     }
     // 修圖
-    func applyBrightnessAndContrast(_ image: UIImage, brightness: Float, contrast: Float) -> UIImage? {
+    func applyBrightnessAndContrast(_ image: UIImage, brightness: Float, contrast: Float, saturation: Float) -> UIImage? {
         let filter = CIFilter(name: "CIColorControls")
 //        let ciImage = CIImage(image: image)
         // 需要處理轉向設定
@@ -41,6 +42,7 @@ class LutManager {
         filter?.setValue(ciImage, forKey: kCIInputImageKey)
         filter?.setValue(brightness, forKey: kCIInputBrightnessKey)
         filter?.setValue(contrast, forKey: kCIInputContrastKey)
+        filter?.setValue(saturation, forKey: kCIInputSaturationKey)
 
         if let outputImage = filter?.outputImage {
             let context = CIContext()

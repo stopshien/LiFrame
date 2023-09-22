@@ -60,20 +60,30 @@ class EditViewController: UIViewController {
         button.setTitle("儲存風格檔", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.tintColor = .black
+        button.backgroundColor = .white
+        button.layer.borderColor = UIColor.gray.cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 5
+        button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     let saveButton: UIButton = {
         let button = UIButton()
-        button.setTitle("儲存", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitle("儲存照片", for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .lightGray
+        button.layer.borderColor = UIColor.gray.cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 5
+        button.clipsToBounds = true
         return button
     }()
     let brightLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "光線"
+        label.text = "亮度"
         label.textAlignment = .center
         label.textColor = .black
         return label
@@ -140,10 +150,12 @@ class EditViewController: UIViewController {
             editContrastSlider.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 30),
             editContrastSlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
             lutSaveButton.topAnchor.constraint(equalTo: editContrastSlider.bottomAnchor, constant: 30),
-            lutSaveButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            lutSaveButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60),
             lutSaveButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -110),
+            lutSaveButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
             saveButton.centerYAnchor.constraint(equalTo: lutSaveButton.centerYAnchor),
-            saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100),
+            saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -60),
+            saveButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
             brightLabel.centerYAnchor.constraint(equalTo: editLightSlider.centerYAnchor),
             brightLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
             brightLabel.trailingAnchor.constraint(equalTo: editLightSlider.leadingAnchor, constant: -10),
@@ -241,7 +253,7 @@ class EditViewController: UIViewController {
              (action: UIAlertAction!) -> Void in
                  guard let textField = alertController.textFields?[0].text,
                        textField != "" else { return }
-                 let lut = Lut(name: textField, bright: self.editLightSlider.value, contrast: self.editContrastSlider.value)
+                 let lut = Lut(name: textField, bright: self.editLightSlider.value, contrast: self.editContrastSlider.value, saturation: self.editSaturationSlider.value)
                  self.luts.append(lut)
                  self.saveLutToUserDefeault(lut)
                  CMHUD.success(in: self.view)
@@ -262,7 +274,8 @@ class EditViewController: UIViewController {
         let lutData: [String: Any] = [
             "name": lut.name,
             "brightness": lut.bright,
-            "contrast": lut.contrast
+            "contrast": lut.contrast,
+            "saturation": lut.saturation
         ]
         // 儲存字典到 UserDefaults
         if var savedLuts = userDefaults.array(forKey: "luts") as? [[String: Any]] {
