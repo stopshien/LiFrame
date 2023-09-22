@@ -14,7 +14,7 @@ class LutManager {
     func loadLuts() -> [Lut]? {
         let userDefaults = UserDefaults.standard
         if let savedLuts = userDefaults.array(forKey: "luts") as? [[String: Any]] {
-            // compactMap 不處理 nil 值得 map
+            // compactMap 不處理 nil 值的 map
             return savedLuts.compactMap { lutData in
                 guard let name = lutData["name"] as? String,
                       let brightness = lutData["brightness"] as? Float,

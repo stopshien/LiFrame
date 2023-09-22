@@ -32,7 +32,6 @@ class EditViewController: UIViewController {
         slider.isContinuous = true
         return slider
     }()
-
     // 調整對比的 slider
     let editContrastSlider: UISlider = {
         let slider = UISlider()
@@ -54,6 +53,7 @@ class EditViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "相機"
         view.backgroundColor = .white
         view.addSubview(editImageView)
         view.addSubview(editLightSlider)

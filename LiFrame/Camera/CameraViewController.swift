@@ -74,7 +74,6 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         button.setImage(UIImage(systemName: "bolt.slash.fill"), for: .normal)
         button.setImage(UIImage(systemName: "bolt.fill"), for: .selected)
         button.translatesAutoresizingMaskIntoConstraints = false
-//        button.frame = CGRect(x: 50, y: Int(fullScreenSize.height*0.8), width: 50, height: 50)
         button.backgroundColor = .black
         button.tintColor = .white
         button.layer.cornerRadius = 20
@@ -89,7 +88,6 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "camera.circle"), for: .normal)
         button.setImage(UIImage(systemName: "camera.circle.fill"), for: .highlighted)
-//        button.frame = CGRect(x: Int(fullScreenSize.width/2-50), y: Int(fullScreenSize.height*0.65), width: 100, height: 100)
         button.backgroundColor = .black
         button.tintColor = .white
         button.layer.cornerRadius = 20
@@ -104,7 +102,6 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "figure.walk"), for: .normal)
         button.setImage(UIImage(systemName: "figure.wave"), for: .highlighted)
-//        button.frame = CGRect(x: Int(fullScreenSize.width-100), y: Int(fullScreenSize.height*0.8), width: 50, height: 50)
         button.backgroundColor = .black
         button.tintColor = .white
         button.layer.cornerRadius = 20
@@ -115,7 +112,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "相機"
+        navigationItem.title = "相機"
         // 相簿選擇相片
         configuration.filter = .images
         setLayout()
@@ -128,10 +125,10 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     @objc func intoLibaray() {
         configuration.selectionLimit = 0
-        let pickerForOriginal = PHPickerViewController(configuration: configuration)
-        pickerForOriginal.view.tag = 2
-        pickerForOriginal.delegate = self
-        present(pickerForOriginal, animated: true)
+        let pickerForLibrary = PHPickerViewController(configuration: configuration)
+        pickerForLibrary.view.tag = 2
+        pickerForLibrary.delegate = self
+        present(pickerForLibrary, animated: true)
     }
     @objc func intoOriginalCamera() {
         // 設定相機
