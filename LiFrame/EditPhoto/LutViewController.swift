@@ -7,6 +7,7 @@
 
 import UIKit
 import PhotosUI
+import CMHUD
 
 class LutViewController: UIViewController, PHPickerViewControllerDelegate {
     var luts = [Lut]()
@@ -139,6 +140,7 @@ extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSourc
             }
         }
         defer {
+            CMHUD.success(in: view)
             dismiss(animated: true)
         }
     }

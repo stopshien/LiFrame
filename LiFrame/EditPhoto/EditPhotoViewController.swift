@@ -9,8 +9,6 @@ import UIKit
 import PhotosUI
 
 class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate {
-    var luts = [Lut]()
-    var currentLut: Lut?
     var configuration = PHPickerConfiguration()
     lazy var singleEditPicker = PHPickerViewController(configuration: configuration)
     let editPhotoButton: UIButton = {
