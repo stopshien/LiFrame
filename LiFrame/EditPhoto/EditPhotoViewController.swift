@@ -21,9 +21,9 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         button.setTitleColor(.gray, for: .highlighted)
         button.titleLabel?.textAlignment = .center
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .black
+        button.backgroundColor = .PointColor
         button.tintColor = .white
-        button.layer.borderColor = UIColor.gray.cgColor
+        button.layer.borderColor = UIColor.systemGray5.cgColor
         button.layer.borderWidth = 5
         let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 50))
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
@@ -39,9 +39,9 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         button.setTitleColor(.systemGray6, for: .highlighted)
         button.titleLabel?.textAlignment = .center
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .white
-        button.tintColor = .black
-        button.layer.borderColor = UIColor.gray.cgColor
+        button.backgroundColor = .mainColor
+        button.tintColor = .PointColor
+        button.layer.borderColor = UIColor.systemGray5.cgColor
         button.layer.borderWidth = 5
         let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 50))
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
@@ -53,13 +53,13 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         button.setTitle("相簿", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
 //        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 18)
-        button.setTitleColor(.systemGray6, for: .normal)
+        button.setTitleColor(.PointColor, for: .normal)
         button.setTitleColor(.gray, for: .highlighted)
         button.titleLabel?.textAlignment = .center
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .lightGray
+        button.backgroundColor = .secondColor
         button.tintColor = .white
-        button.layer.borderColor = UIColor.gray.cgColor
+        button.layer.borderColor = UIColor.systemGray5.cgColor
         button.layer.borderWidth = 5
         let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 50))
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
@@ -68,8 +68,8 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     // 生命週期
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "修圖"
-        view.backgroundColor = .systemGray4
+        navigationItem.title = ""
+        view.backgroundColor = .mainColor
         configuration.filter = .images
         singleEditPicker.delegate = self
         setEditPhotoViewLayout()

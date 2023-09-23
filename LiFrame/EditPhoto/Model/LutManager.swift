@@ -28,7 +28,7 @@ class LutManager {
         return []
     }
     // 修圖
-    func applyBrightnessAndContrast(_ image: UIImage, brightness: Float, contrast: Float, saturation: Float) -> UIImage? {
+    func applyLutToImage(_ image: UIImage, brightness: Float, contrast: Float, saturation: Float) -> UIImage? {
         let filter = CIFilter(name: "CIColorControls")
 //        let ciImage = CIImage(image: image)
         // 需要處理轉向設定

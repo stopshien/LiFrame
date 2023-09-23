@@ -45,7 +45,7 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 10 // 行之間的最小間距
         layout.minimumInteritemSpacing = 0 // 元素之間的最小間距
-        layout.itemSize = CGSize(width: 80, height: 80)
+        layout.itemSize = CGSize(width: 100, height: 110)
         // 註冊 cell 類型
         collectionView.register(LutsCollectionViewCell.self, forCellWithReuseIdentifier: "LutsCollectionViewCell")
         return collectionView
@@ -63,13 +63,13 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
             backview.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1),
             backview.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
             lutView.bottomAnchor.constraint(equalTo: backview.bottomAnchor),
-            lutView.heightAnchor.constraint(equalTo: backview.heightAnchor, multiplier: 0.3),
+            lutView.heightAnchor.constraint(equalTo: backview.heightAnchor, multiplier: 0.35),
             lutView.widthAnchor.constraint(equalTo: backview.widthAnchor),
             // 設置 collectionView 的約束
             lutsCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor), // 水平居中
             lutsCollectionView.centerYAnchor.constraint(equalTo: lutView.centerYAnchor, constant: -20),
             lutsCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
-            lutsCollectionView.heightAnchor.constraint(equalTo: lutView.heightAnchor, multiplier: 0.5),
+            lutsCollectionView.heightAnchor.constraint(equalTo: lutView.heightAnchor, multiplier: 0.55),
             dismissButton.topAnchor.constraint(equalTo: backview.topAnchor, constant: 50),
             dismissButton.trailingAnchor.constraint(equalTo: backview.trailingAnchor, constant: -30),
             dismissButton.widthAnchor.constraint(equalToConstant: 30),
@@ -95,14 +95,15 @@ extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         luts.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LutsCollectionViewCell", for: indexPath) as? LutsCollectionViewCell else { return LutsCollectionViewCell() }
-
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LutsCollectionViewCell", for: indexPath) as? LutsCollectionViewCell,
+              let demoImage = UIImage(named: "mianImage")else { return LutsCollectionViewCell() }
+        let demoForLutImage = LutManager.shared.applyLutToImage(demoImage, brightness: luts[indexPath.row].bright, contrast: luts[indexPath.row].contrast, saturation: luts[indexPath.row].saturation)
+        cell.lutImageView.image = demoForLutImage
         cell.lutLabel.text = luts[indexPath.row].name
-        cell.lutLabel.backgroundColor = .white
-        cell.lutLabel.layer.cornerRadius = 40
-        cell.lutLabel.clipsToBounds = true
-        cell.lutLabel.layer.borderColor = UIColor.black.cgColor
-        cell.lutLabel.layer.borderWidth = 1
+        cell.backgroundColor = .clear
+        cell.lutImageView.layer.cornerRadius = 5
+        cell.lutImageView.layer.borderColor = UIColor.black.cgColor
+        cell.lutImageView.layer.borderWidth = 1
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -114,6 +115,7 @@ extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         present(pickerForSync, animated: true)
     }
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        guard !results.isEmpty else { return dismiss(animated: true) }
         var processedImages: [UIImage] = []
         let semaphore = DispatchSemaphore(value: 1)
         let itemProviders = results.map(\.itemProvider)
@@ -131,7 +133,7 @@ extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSourc
                     let brightness: Float = currentLut.bright
                     let contrast: Float = currentLut.contrast
                     let saturation: Float = currentLut.saturation
-                    if let processedImage = LutManager.shared.applyBrightnessAndContrast(image, brightness: brightness, contrast: contrast, saturation: saturation) {
+                    if let processedImage = LutManager.shared.applyLutToImage(image, brightness: brightness, contrast: contrast, saturation: saturation) {
                         processedImages.append(processedImage)
                     }
                     if processedImages.count == itemProviders.count {
@@ -142,7 +144,6 @@ extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         }
         defer {
             CMHUD.success(in: view)
-            dismiss(animated: true)
             dismiss(animated: true)
         }
     }
