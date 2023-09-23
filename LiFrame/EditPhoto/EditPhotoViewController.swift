@@ -11,6 +11,12 @@ import PhotosUI
 class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate {
     var configuration = PHPickerConfiguration()
     lazy var singleEditPicker = PHPickerViewController(configuration: configuration)
+    let backgroundView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        imageView.image = UIImage(named: "backgroundImage")
+        return imageView
+    }()
     let editPhotoButton: UIButton = {
         let button = UIButton()
         button.isSelected = false
@@ -32,10 +38,10 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     let syncEditButton: UIButton = {
         let button = UIButton()
         button.isSelected = false
-        button.setTitle("同步化", for: .normal)
+        button.setTitle("風格檔", for: .normal)
 //        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 20)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(UIColor.PointColor, for: .normal)
         button.setTitleColor(.systemGray6, for: .highlighted)
         button.titleLabel?.textAlignment = .center
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -68,6 +74,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     // 生命週期
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(backgroundView)
         navigationItem.title = ""
         view.backgroundColor = .mainColor
         configuration.filter = .images
@@ -131,3 +138,4 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         dismiss(animated: true)
     }
 }
+

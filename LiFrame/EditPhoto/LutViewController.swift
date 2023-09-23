@@ -101,9 +101,7 @@ extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         cell.lutImageView.image = demoForLutImage
         cell.lutLabel.text = luts[indexPath.row].name
         cell.backgroundColor = .clear
-        cell.lutImageView.layer.cornerRadius = 5
-        cell.lutImageView.layer.borderColor = UIColor.black.cgColor
-        cell.lutImageView.layer.borderWidth = 1
+        cell.lutImageView.layer.cornerRadius = 10
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -116,6 +114,7 @@ extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSourc
     }
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         guard !results.isEmpty else { return dismiss(animated: true) }
+        CMHUD.loading(in: picker.view)
         var processedImages: [UIImage] = []
         let semaphore = DispatchSemaphore(value: 1)
         let itemProviders = results.map(\.itemProvider)

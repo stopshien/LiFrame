@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseFirestore
+import CMHUD
 
 class CommunityViewController: UIViewController {
     var postsArray: [Posts] = [] {
@@ -34,6 +35,7 @@ class CommunityViewController: UIViewController {
         setButtonUI()
     }
     override func viewWillAppear(_ animated: Bool) {
+        CMHUD.loading(in: view)
         postsArray = []
         let db = FirebaseManager.shared.db
         db.collection("posts").order(by: "createdTime").getDocuments() { (querySnapshot, err) in
@@ -55,6 +57,7 @@ class CommunityViewController: UIViewController {
                         guard let name = author["name"] else { return }
                         let post = Posts(title: title, name: "\(name)", createdTime: "\(dformatter.string(from: date))", category: category, content: content, image: image)
                         self.postsArray.insert(post, at: 0)
+                        CMHUD.hide(from: self.view)
                     }
                 }
             }
@@ -84,7 +87,7 @@ extension CommunityViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = communityTableView.dequeueReusableCell(withIdentifier: "CommunityTableViewCell", for: indexPath) as? CommunityTableViewCell else { return CommunityTableViewCell() }
-        cell.titleLabel.text = postsArray[indexPath.row].title
+        cell.titleLabel.text = "【 \(postsArray[indexPath.row].category) 】\(postsArray[indexPath.row].title)"
         cell.createTimeLabel.text = postsArray[indexPath.row].createdTime
         return cell
     }

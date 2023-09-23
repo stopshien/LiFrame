@@ -8,9 +8,10 @@
 import Foundation
 import UIKit
 extension UIColor {
-    static let mainColor = UIColor.init(hexString: "#554236")
+    static let mainColor = UIColor.init(hexString: "#FC9F4D")
     static let secondColor = UIColor.init(hexString: "#D7C4BB")
     static let PointColor = UIColor.init(hexString: "#554236")
+    static let backgroundColorSet = UIColor.init(hexString: "#554236")
 
     convenience init(hexString: String) {
         var hexString = hexString.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()

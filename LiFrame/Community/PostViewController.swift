@@ -10,6 +10,7 @@ import FirebaseCore
 import FirebaseFirestore
 import FirebaseStorage
 import Kingfisher
+import CMHUD
 
 class PostViewController: UIViewController {
     let semaphore = DispatchSemaphore(value: 0)
@@ -74,6 +75,7 @@ class PostViewController: UIViewController {
            completion: nil)
     }
     func addData(title: String, content: String, category: String, image: UIImage?) {
+        CMHUD.loading(in: view)
         let db = FirebaseManager.shared.db
         let posts = db.collection("posts")
         let document = posts.document()
@@ -109,6 +111,7 @@ class PostViewController: UIViewController {
                                     print("Error adding document: \(error.localizedDescription)")
                                 } else {
                                     self.navigationController?.popViewController(animated: true)
+                                    CMHUD.hide(from: self.view)
                                     print("Document added successfully!")
                                 }
                             }
