@@ -114,7 +114,6 @@ extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSourc
     }
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         guard !results.isEmpty else { return dismiss(animated: true) }
-        CMHUD.loading(in: picker.view)
         var processedImages: [UIImage] = []
         let semaphore = DispatchSemaphore(value: 1)
         let itemProviders = results.map(\.itemProvider)

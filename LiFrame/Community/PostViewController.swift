@@ -19,13 +19,16 @@ class PostViewController: UIViewController {
     @IBOutlet weak var imageButtonOutlet: UIButton!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var categoryTextField: UITextField!
-    @IBOutlet weak var contentTextView: UITextView! {
+    @IBOutlet weak var contentTextView: UITextView!
+    @IBOutlet weak var tapButtonOutlet: UIButton! {
         didSet {
-            contentTextView.layer.borderWidth = 1
-            contentTextView.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
+            tapButtonOutlet.backgroundColor = .gray
+            tapButtonOutlet.setTitleColor(.white, for: .normal)
+            tapButtonOutlet.tintColor = .white
+            tapButtonOutlet.clipsToBounds = true
+            tapButtonOutlet.layer.cornerRadius = 10
         }
     }
-    @IBOutlet weak var tapButtonOutlet: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
 //        navigationItem.hidesBackButton = true
