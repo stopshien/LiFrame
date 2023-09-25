@@ -70,7 +70,7 @@ class MapViewController: UIViewController {
             print("API key does not exist")
             return
         }
-        let baseURL = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/A-B0063-001?Authorization=\(key)&limit=3&format=JSON&CountyName=\(city)&Date=\(todayDate)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        let baseURL = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/A-B0063-001?Authorization=\(key)&limit=1&format=JSON&CountyName=\(city)&Date=\(todayDate)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         if let baseURL = baseURL,
            let url = URL(string: baseURL) {
            let request = URLRequest(url: url)
@@ -79,9 +79,9 @@ class MapViewController: UIViewController {
                     do {
                         let result = try JSONDecoder().decode(Whether.self, from: data)
                         DispatchQueue.main.async {
-                            self.moonLabel.text = "\(result.records.locations.location[0].time[0].moonSetTime) - " + "\(result.records.locations.location[0].time[0].moonRiseTime)"
+                            self.moonLabel.text = "\(result.records.locations.location[0].time[0].moonRiseTime) - " + "\(result.records.locations.location[0].time[0].moonSetTime)"
                         }
-                        print("===",result.records.locations.location[0].time[0].moonRiseTime)
+                        print("===",result.records.locations.location[0].time[0])
                     } catch {
                         print(error)
                     }
@@ -97,7 +97,7 @@ class MapViewController: UIViewController {
                      self.citiesArray = cities.cities
                      for city in citiesArray {
                          if let latitudinal = Double(city.latitudinal),
-                            let longitude = Double(city.longitudinal){
+                            let longitude = Double(city.longitudinal) {
                              let pin = MKPointAnnotation()
                              let coordinate = CLLocation(latitude: latitudinal, longitude: longitude).coordinate
                              pin.coordinate = coordinate
@@ -120,6 +120,21 @@ extension MapViewController: MKMapViewDelegate {
            let title = annotaiotn.title,
            let newTitle = title {
             fectch(city: newTitle)
+            let coordinate = CLLocation(latitude: annotaiotn.coordinate.latitude, longitude: annotaiotn.coordinate.longitude)
+            mapView.centerToLocation(coordinate)
+
         }
     }
+}
+private extension MKMapView {
+  func centerToLocation(
+    _ location: CLLocation,
+    regionRadius: CLLocationDistance = 100000
+  ) {
+    let coordinateRegion = MKCoordinateRegion(
+      center: location.coordinate,
+      latitudinalMeters: regionRadius,
+      longitudinalMeters: regionRadius)
+    setRegion(coordinateRegion, animated: true)
+  }
 }

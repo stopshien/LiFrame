@@ -42,11 +42,11 @@
             </objects>
             <point key="canvasLocation" x="2834.3511450381679" y="682.3943661971831"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--camera-->
         <scene sceneID="mr3-Gk-ebk">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dXR-MV-1Yy" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="camera" catalog="system" selectedImage="camera.fill" id="2TA-Lq-OKy"/>
+                    <tabBarItem key="tabBarItem" title="camera" image="camera" catalog="system" selectedImage="camera.fill" id="2TA-Lq-OKy"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="8b1-Pj-wBy">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -61,11 +61,11 @@
             </objects>
             <point key="canvasLocation" x="1909.1603053435115" y="3.5211267605633805"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Edit-->
         <scene sceneID="oZL-0J-rpl">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YRc-V6-6Xp" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="dial.low" catalog="system" selectedImage="dial.medium.fill" id="qBl-ee-07M"/>
+                    <tabBarItem key="tabBarItem" title="Edit" image="dial.low" catalog="system" selectedImage="dial.medium.fill" id="qBl-ee-07M"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JbQ-4x-Pll">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -191,11 +191,11 @@
             </objects>
             <point key="canvasLocation" x="2834.3511450381679" y="2084.5070422535214"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Post-->
         <scene sceneID="adI-ci-ox9">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="s0B-q4-WLi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="speaker.wave.2.bubble.left" catalog="system" selectedImage="speaker.wave.2.bubble.left.fill" id="AaO-VD-eW1"/>
+                    <tabBarItem key="tabBarItem" title="Post" image="speaker.wave.2.bubble.left" catalog="system" selectedImage="speaker.wave.2.bubble.left.fill" id="AaO-VD-eW1"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="QGZ-UK-2S8">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -210,11 +210,11 @@
             </objects>
             <point key="canvasLocation" x="1907.6335877862596" y="1361.9718309859156"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Moon-->
         <scene sceneID="Vdz-tG-nXJ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4XM-Xp-xv2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="mappin.circle" catalog="system" selectedImage="mappin.circle.fill" id="CA3-dc-ZJF"/>
+                    <tabBarItem key="tabBarItem" title="Moon" image="mappin.circle" catalog="system" selectedImage="mappin.circle.fill" id="CA3-dc-ZJF"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ike-Uz-Lcc">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>

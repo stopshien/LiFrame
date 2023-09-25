@@ -17,7 +17,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("查看相簿", for: .normal)
-        button.setTitleColor(.mainColor, for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.backgroundColor = .white
         button.clipsToBounds = true
         button.layer.cornerRadius = 10
@@ -29,8 +29,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("直接拍攝", for: .normal)
-        button.setTitleColor(.darkGray, for: .normal)
-        button.backgroundColor = .white
+        button.setTitleColor(.black, for: .normal)
+        button.backgroundColor = .mainColor
         button.clipsToBounds = true
         button.layer.cornerRadius = 10
         button.layer.borderColor = UIColor.black.cgColor
@@ -41,10 +41,10 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "選擇照片作為模板"
-        label.textColor = .white
-        label.backgroundColor = .black
+        label.textColor = .black
+        label.backgroundColor = .clear
         label.textAlignment = .center
-        label.layer.borderWidth = 1
+        label.layer.borderWidth = 0
         label.layer.borderColor = UIColor.white.cgColor
         label.layer.cornerRadius = 8
         return label
@@ -54,18 +54,26 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("+", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 70, weight: .bold)
-        button.setTitleColor(.darkGray, for: .normal)
-        button.backgroundColor = .white
+        button.setTitleColor(.gray, for: .normal)
+        button.backgroundColor = .clear
+        button.layer.borderColor = UIColor.gray.cgColor
+        button.layer.borderWidth = 3
         button.clipsToBounds = true
         return button
     }()
+    let backgroundView2: UIImageView = {
+        let imageView = UIImageView()
+        imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        imageView.image = UIImage(named: "backgroundImage")
+        return imageView
+    }()
     let backgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = .black
+        view.backgroundColor = .clear
         view.alpha = 0.9
-        view.layer.cornerRadius = 5
+        view.layer.cornerRadius = 0
         view.clipsToBounds = true
-        view.frame = CGRect(x: 0, y: Int(fullScreenSize.height/4) , width: Int(fullScreenSize.width), height: Int(fullScreenSize.height/3))
+        view.frame = CGRect(x: 0, y: 0 , width: Int(fullScreenSize.width), height: Int(fullScreenSize.height))
         return view
     }()
     let flashButton: UIButton = {
@@ -150,25 +158,25 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         present(liFramePicker, animated: true)
     }
     func setLayout() {
-        view.backgroundColor = .systemGray4
+        view.addSubview(backgroundView2)
         view.addSubview(backgroundView)
         backgroundView.addSubview(liFrameCamera)
         backgroundView.addSubview(addPhotoLabel)
-        view.addSubview(seePhotoLibrary)
-        view.addSubview(originalCamera)
+        backgroundView.addSubview(seePhotoLibrary)
+        backgroundView.addSubview(originalCamera)
         NSLayoutConstraint.activate([
             liFrameCamera.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
-            liFrameCamera.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor, constant: -30),
+            liFrameCamera.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor, constant: -80),
             liFrameCamera.widthAnchor.constraint(equalTo: backgroundView.widthAnchor, multiplier: 1/2.5),
             liFrameCamera.heightAnchor.constraint(equalTo: backgroundView.widthAnchor, multiplier: 1/2.5),
             addPhotoLabel.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
             addPhotoLabel.widthAnchor.constraint(equalTo: liFrameCamera.widthAnchor, multiplier: 1),
-            addPhotoLabel.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor, constant: 80),
-            originalCamera.topAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 100),
-            originalCamera.widthAnchor.constraint(equalTo: liFrameCamera.widthAnchor),
+            addPhotoLabel.topAnchor.constraint(equalTo: liFrameCamera.bottomAnchor, constant: 30),
+            originalCamera.topAnchor.constraint(equalTo: addPhotoLabel.bottomAnchor, constant: 80),
+            originalCamera.widthAnchor.constraint(equalTo: liFrameCamera.widthAnchor, multiplier: 1.5),
             originalCamera.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             seePhotoLibrary.topAnchor.constraint(equalTo: originalCamera.bottomAnchor, constant: 30),
-            seePhotoLibrary.widthAnchor.constraint(equalTo: liFrameCamera.widthAnchor),
+            seePhotoLibrary.widthAnchor.constraint(equalTo: liFrameCamera.widthAnchor, multiplier: 1.5),
             seePhotoLibrary.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         liFrameCamera.layer.cornerRadius = backgroundView.frame.width/2/2.5
