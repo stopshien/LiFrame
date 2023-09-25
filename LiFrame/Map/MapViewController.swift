@@ -77,9 +77,11 @@ class MapViewController: UIViewController {
              URLSession.shared.dataTask(with: request) { data, response, error in
                 if let data = data,let content = String(data: data, encoding: .utf8) {
                     do {
-                        let result = try JSONDecoder().decode(Whether.self, from: data)
+                        let result = try JSONDecoder().decode(Weather.self, from: data)
                         DispatchQueue.main.async {
-                            self.moonLabel.text = "\(result.records.locations.location[0].time[0].moonRiseTime) - " + "\(result.records.locations.location[0].time[0].moonSetTime)"
+                            let moonRiseTime = result.records.locations.location[0].time[0].moonRiseTime
+                            let moonSetTime = result.records.locations.location[0].time[0].moonSetTime
+                            self.moonLabel.text =  "\(moonRiseTime) - " + "\(moonSetTime)"
                         }
                         print("===",result.records.locations.location[0].time[0])
                     } catch {

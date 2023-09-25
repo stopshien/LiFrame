@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Whether
-struct Whether: Codable {
+struct Weather: Codable {
     let success: String
     let result: Result
     let records: Records
