@@ -7,7 +7,9 @@
 
 import UIKit
 import MapKit
+import WeatherKit
 class MapViewController: UIViewController {
+    let weatherService = WeatherService()
     var citiesArray = [City]()
     let dateFormatter = DateFormatter()
     let miniView: UIView = {
@@ -49,10 +51,10 @@ class MapViewController: UIViewController {
     }
     func setMiniViewLayout() {
         NSLayoutConstraint.activate([
-            miniView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -120),
-            miniView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100),
-            miniView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100),
-            miniView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
+            miniView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+            miniView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            miniView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            miniView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3),
             moonLabel.bottomAnchor.constraint(equalTo: miniView.bottomAnchor, constant: -10),
             moonLabel.centerXAnchor.constraint(equalTo: miniView.centerXAnchor),
             moonLabel.heightAnchor.constraint(equalTo: miniView.heightAnchor, multiplier: 0.3),
@@ -124,8 +126,20 @@ extension MapViewController: MKMapViewDelegate {
             fectch(city: newTitle)
             let coordinate = CLLocation(latitude: annotaiotn.coordinate.latitude, longitude: annotaiotn.coordinate.longitude)
             mapView.centerToLocation(coordinate)
-
+            getWeather(location: coordinate)
         }
+    }
+    func getWeather(location: CLLocation) {
+        Task {
+            do {
+                let result = try await weatherService.weather(for: location)
+                print(result.currentWeather)
+
+            } catch {
+                 print(String(describing: error))
+            }
+        }
+
     }
 }
 private extension MKMapView {
