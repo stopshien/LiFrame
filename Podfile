@@ -22,5 +22,6 @@ pod 'FirebaseStorage'
 pod 'SwiftLint'
 pod 'Kingfisher', '~> 7.0'
 
+pod "CMHUD"
 
 end

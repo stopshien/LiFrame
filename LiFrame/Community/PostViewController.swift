@@ -10,6 +10,7 @@ import FirebaseCore
 import FirebaseFirestore
 import FirebaseStorage
 import Kingfisher
+import CMHUD
 
 class PostViewController: UIViewController {
     let semaphore = DispatchSemaphore(value: 0)
@@ -18,13 +19,16 @@ class PostViewController: UIViewController {
     @IBOutlet weak var imageButtonOutlet: UIButton!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var categoryTextField: UITextField!
-    @IBOutlet weak var contentTextView: UITextView! {
+    @IBOutlet weak var contentTextView: UITextView!
+    @IBOutlet weak var tapButtonOutlet: UIButton! {
         didSet {
-            contentTextView.layer.borderWidth = 1
-            contentTextView.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
+            tapButtonOutlet.backgroundColor = .gray
+            tapButtonOutlet.setTitleColor(.white, for: .normal)
+            tapButtonOutlet.tintColor = .white
+            tapButtonOutlet.clipsToBounds = true
+            tapButtonOutlet.layer.cornerRadius = 10
         }
     }
-    @IBOutlet weak var tapButtonOutlet: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
 //        navigationItem.hidesBackButton = true
@@ -74,6 +78,7 @@ class PostViewController: UIViewController {
            completion: nil)
     }
     func addData(title: String, content: String, category: String, image: UIImage?) {
+        CMHUD.loading(in: view)
         let db = FirebaseManager.shared.db
         let posts = db.collection("posts")
         let document = posts.document()
@@ -109,6 +114,7 @@ class PostViewController: UIViewController {
                                     print("Error adding document: \(error.localizedDescription)")
                                 } else {
                                     self.navigationController?.popViewController(animated: true)
+                                    CMHUD.hide(from: self.view)
                                     print("Document added successfully!")
                                 }
                             }

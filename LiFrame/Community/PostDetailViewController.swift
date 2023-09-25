@@ -28,9 +28,9 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             if let cell = postDetailTableView.dequeueReusableCell(withIdentifier: "PostDetailTableViewCell", for: indexPath) as? PostDetailTableViewCell,
                let postDetail = postDetail {
                 cell.titleLabel.text = postDetail.title
-                cell.createTimeLabel.text = postDetail.createdTime
+                cell.createTimeLabel.text = "發布時間：\(postDetail.createdTime)"
                 cell.contentLabel.text = postDetail.content
-                cell.posterNameLabel.text = postDetail.name
+                cell.posterNameLabel.text = "由\(postDetail.name)發布"
                 return cell
             }
         } else {
