@@ -11,4 +11,5 @@ struct Lut {
     let name: String
     let bright: Float
     let contrast: Float
+    let saturation: Float
 }
