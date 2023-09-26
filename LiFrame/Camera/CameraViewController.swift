@@ -120,7 +120,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "相機"
+        navigationItem.title = ""
         // 相簿選擇相片
         configuration.filter = .images
         setLayout()

@@ -73,7 +73,7 @@ class EditViewController: UIViewController {
         button.setTitle("儲存照片", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .lightGray
+        button.backgroundColor = .backgroundColorSet
         button.layer.borderColor = UIColor.gray.cgColor
         button.layer.borderWidth = 1
         button.layer.cornerRadius = 5
@@ -106,8 +106,8 @@ class EditViewController: UIViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "相機"
-        view.backgroundColor = .white
+        navigationItem.title = ""
+        view.backgroundColor = .secondColor
         view.addSubview(editImageView)
         view.addSubview(editLightSlider)
         view.addSubview(editSaturationSlider)

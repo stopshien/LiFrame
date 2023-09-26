@@ -38,10 +38,9 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     let syncEditButton: UIButton = {
         let button = UIButton()
         button.isSelected = false
-        button.setTitle("\nLut Photos", for: .normal)
+        button.setTitle("Lut Photos", for: .normal)
         button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 20)
 //        button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
-        button.setImage(UIImage(systemName: "photo"), for: .normal)
         button.setTitleColor(UIColor.PointColor, for: .normal)
         button.setTitleColor(.systemGray6, for: .highlighted)
         button.titleLabel?.textAlignment = .center
@@ -57,7 +56,8 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     let seeLibraryButton: UIButton = {
         let button = UIButton()
         button.isSelected = false
-        button.setTitle("Album", for: .normal)
+//        button.setTitle("Album", for: .normal)
+        button.setImage(UIImage(systemName: "photo"), for: .normal)
 //        button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
         button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 18)
         button.setTitleColor(.PointColor, for: .normal)

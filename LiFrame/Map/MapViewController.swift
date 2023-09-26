@@ -9,14 +9,14 @@ import UIKit
 import MapKit
 import WeatherKit
 class MapViewController: UIViewController {
-    
+    lazy var constraint = miniView.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 0)
     let weatherService = WeatherService()
     var citiesArray = [City]()
     let dateFormatter = DateFormatter()
     let miniView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemGray2
+        view.backgroundColor = .backgroundColorSet
         view.clipsToBounds = true
         view.alpha = 0.9
         view.layer.cornerRadius = 30
@@ -43,7 +43,7 @@ class MapViewController: UIViewController {
     let moonImage: UIImageView = {
        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.tintColor = .black
+        imageView.tintColor = .white
         imageView.contentMode = .scaleAspectFit
         imageView.size(40)
         imageView.backgroundColor = .clear
@@ -62,7 +62,7 @@ class MapViewController: UIViewController {
     let tempImage: UIImageView = {
        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.tintColor = .black
+        imageView.tintColor = .white
         imageView.contentMode = .scaleAspectFit
         imageView.size(40)
         imageView.image = UIImage(systemName: "thermometer.sun")
@@ -80,7 +80,7 @@ class MapViewController: UIViewController {
     let cloudImage: UIImageView = {
        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.tintColor = .black
+        imageView.tintColor = .white
         imageView.contentMode = .scaleAspectFit
         imageView.size(40)
         imageView.image = UIImage(systemName: "smoke")
@@ -99,17 +99,22 @@ class MapViewController: UIViewController {
         miniView.addSubview(cloudLabel)
         miniView.addSubview(cloudImage)
         setMiniViewLayout()
-//        fetchMoonApi(city: "臺北市")
         cityNameLabel.text = "請點選城市"
         citiesToMap()
         moonImage.isHidden = true
         cloudImage.isHidden = true
         tempImage.isHidden = true
+        
+        NSLayoutConstraint.activate([
+        constraint,
+        miniView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 0),
+        miniView.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: 0),
+        miniView.heightAnchor.constraint(equalTo: mapView.heightAnchor, multiplier: 0.3)
+        ])
     }
     func setMiniViewLayout() {
         let screenSize = UIScreen.main.bounds
         NSLayoutConstraint.activate([
-            
             cityNameLabel.topAnchor.constraint(equalTo: miniView.topAnchor, constant: 10),
             cityNameLabel.centerXAnchor.constraint(equalTo: miniView.centerXAnchor),
             moonImage.topAnchor.constraint(equalTo: cityNameLabel.bottomAnchor, constant: 10),
@@ -145,7 +150,7 @@ class MapViewController: UIViewController {
                         DispatchQueue.main.async {
                             let moonRiseTime = result.records.locations.location[0].time[0].moonRiseTime
                             let moonSetTime = result.records.locations.location[0].time[0].moonSetTime
-                            self.moonLabel.text =  "\(moonRiseTime) - " + "\(moonSetTime)"
+                            self.moonLabel.text = "\(moonRiseTime) - " + "\(moonSetTime)    "
                             self.cityNameLabel.text = city
                         }
                         print("===",result.records.locations.location[0].time[0])
@@ -182,7 +187,15 @@ class MapViewController: UIViewController {
 }
 
 extension MapViewController: MKMapViewDelegate {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        mapView.resignFirstResponder()
+        UIView.animate(withDuration: 0.6) {
+            self.constraint.constant = 0
+            self.mapView.layoutIfNeeded()
+        }
+    }
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+ 
         if let annotaiotn = view.annotation,
            let title = annotaiotn.title,
            let newTitle = title {
@@ -193,17 +206,10 @@ extension MapViewController: MKMapViewDelegate {
             moonImage.isHidden = false
             cloudImage.isHidden = false
             tempImage.isHidden = false
-//            self.constrain.isActive = false
-            var constraint = miniView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 120)
-            NSLayoutConstraint.activate([
-                constraint,
-            miniView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 0),
-            miniView.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: 0),
-            miniView.heightAnchor.constraint(equalTo: mapView.heightAnchor, multiplier: 0.3)
-            ])
+
             mapView.layoutIfNeeded()
-            UIView.animate(withDuration: 2) {
-                constraint.constant = -30
+            UIView.animate(withDuration: 0.6) {
+                self.constraint.constant = -300
                 self.mapView.layoutIfNeeded()
             }
         }
