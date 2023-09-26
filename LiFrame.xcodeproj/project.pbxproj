@@ -28,10 +28,11 @@
 		6A80EFC62AB70F6800C90754 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFC52AB70F6800C90754 /* PostDetailViewController.swift */; };
 		6A80EFC82AB720DF00C90754 /* PostDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFC72AB720DF00C90754 /* PostDetailTableViewCell.swift */; };
 		6AD578AE2ABC7B5F005BE528 /* LutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD578AD2ABC7B5F005BE528 /* LutViewController.swift */; };
+		6AD578B62AC19820005BE528 /* Moon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD578B52AC19820005BE528 /* Moon.swift */; };
 		6AF1EC962AB82A2B00071983 /* PostImageViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1EC952AB82A2B00071983 /* PostImageViewTableViewCell.swift */; };
 		6AF1EC982AB8421C00071983 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1EC972AB8421C00071983 /* FirebaseManager.swift */; };
 		6AF1EC9B2AB84FE000071983 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1EC9A2AB84FE000071983 /* MapViewController.swift */; };
-		6AF1ECA02AB9540F00071983 /* Whether.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1EC9F2AB9540F00071983 /* Whether.swift */; };
+		6AF1ECA02AB9540F00071983 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1EC9F2AB9540F00071983 /* Weather.swift */; };
 		6AF1ECA42AB9663900071983 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1ECA32AB9663900071983 /* City.swift */; };
 		6AF1ECA72AB9C91E00071983 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1ECA62AB9C91E00071983 /* APIManager.swift */; };
 		6AF1ECA92ABB253500071983 /* UIColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1ECA82ABB253500071983 /* UIColorExt.swift */; };
@@ -60,10 +61,12 @@
 		6A80EFC52AB70F6800C90754 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		6A80EFC72AB720DF00C90754 /* PostDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewCell.swift; sourceTree = "<group>"; };
 		6AD578AD2ABC7B5F005BE528 /* LutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LutViewController.swift; sourceTree = "<group>"; };
+		6AD578B52AC19820005BE528 /* Moon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moon.swift; sourceTree = "<group>"; };
+		6AD578B72AC1C0A7005BE528 /* LiFrame.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LiFrame.entitlements; sourceTree = "<group>"; };
 		6AF1EC952AB82A2B00071983 /* PostImageViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageViewTableViewCell.swift; sourceTree = "<group>"; };
 		6AF1EC972AB8421C00071983 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		6AF1EC9A2AB84FE000071983 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		6AF1EC9F2AB9540F00071983 /* Whether.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Whether.swift; sourceTree = "<group>"; };
+		6AF1EC9F2AB9540F00071983 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		6AF1ECA32AB9663900071983 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		6AF1ECA52AB9C6FE00071983 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		6AF1ECA62AB9C91E00071983 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
@@ -114,6 +117,7 @@
 		6A30F7C22AB1AAF800D5A672 /* LiFrame */ = {
 			isa = PBXGroup;
 			children = (
+				6AD578B72AC1C0A7005BE528 /* LiFrame.entitlements */,
 				6A30F7C32AB1AAF800D5A672 /* AppDelegate.swift */,
 				6A30F7C52AB1AAF800D5A672 /* SceneDelegate.swift */,
 				6A80EFB72AB5912100C90754 /* Model */,
@@ -221,7 +225,8 @@
 			isa = PBXGroup;
 			children = (
 				6AF1ECA32AB9663900071983 /* City.swift */,
-				6AF1EC9F2AB9540F00071983 /* Whether.swift */,
+				6AF1EC9F2AB9540F00071983 /* Weather.swift */,
+				6AD578B52AC19820005BE528 /* Moon.swift */,
 				6AF1ECA62AB9C91E00071983 /* APIManager.swift */,
 			);
 			path = Model;
@@ -381,7 +386,7 @@
 				6A80EFC42AB7092000C90754 /* Posts.swift in Sources */,
 				6A80EFB22AB4957F00C90754 /* LutManager.swift in Sources */,
 				6A30F7C62AB1AAF800D5A672 /* SceneDelegate.swift in Sources */,
-				6AF1ECA02AB9540F00071983 /* Whether.swift in Sources */,
+				6AF1ECA02AB9540F00071983 /* Weather.swift in Sources */,
 				6A80EFB92AB6AD8C00C90754 /* UIImageExt.swift in Sources */,
 				6A80EFC82AB720DF00C90754 /* PostDetailTableViewCell.swift in Sources */,
 				6A80EFA82AB3143900C90754 /* EditPhotoViewController.swift in Sources */,
@@ -392,6 +397,7 @@
 				6A80EFB52AB57C7500C90754 /* LutsCollectionViewCell.swift in Sources */,
 				6AF1ECA92ABB253500071983 /* UIColorExt.swift in Sources */,
 				6AF1EC982AB8421C00071983 /* FirebaseManager.swift in Sources */,
+				6AD578B62AC19820005BE528 /* Moon.swift in Sources */,
 				6AF1ECA42AB9663900071983 /* City.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -469,7 +475,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -524,7 +530,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -540,6 +546,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LiFrame/LiFrame.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = T2T367NW35;
@@ -553,6 +560,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -575,6 +583,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LiFrame/LiFrame.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = T2T367NW35;
@@ -588,6 +597,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
