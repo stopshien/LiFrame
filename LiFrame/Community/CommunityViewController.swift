@@ -34,6 +34,7 @@ class CommunityViewController: UIViewController {
         communityTableView.delegate = self
         view.addSubview(addPostButton)
         setButtonUI()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "LogOut", style: .plain, target: self, action: #selector(tapLogOut))
     }
     override func viewWillAppear(_ animated: Bool) {
         CMHUD.loading(in: view)
@@ -64,18 +65,16 @@ class CommunityViewController: UIViewController {
             }
         }
     }
+    @objc func tapLogOut() {
+        UserDefaults.standard.removeObject(forKey: "UserAppleID")
+    }
     @objc func tappedPostButton() {
-        // TODO: - 判斷使否已登入
-        // 已經可以拿到儲存在 userDefault 的 user data
-        let userDefaults = UserDefaults.standard
-        if let userData = userDefaults.dictionary(forKey: "UserDataFromApple") {
-            print("====",userData)
-            if let userEmail = userData["email"],
-               let userID = userData["user"] as? String {
-                print(userID)
+        // 判斷使否已經登入,userData 都存在 UserData 中
+            if let userID = UserData.shared.userDataFromUserDefault?.id {
                 checkCredentialState(withUserID: userID)
+            } else {
+                checkCredentialState(withUserID: "")
             }
-        }
     }
     func setButtonUI() {
         NSLayoutConstraint.activate([

@@ -16,7 +16,6 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         postDetailTableView.dataSource = self
         postDetailTableView.delegate = self
     }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         1
     }

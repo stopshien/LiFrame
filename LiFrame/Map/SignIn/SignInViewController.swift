@@ -42,30 +42,30 @@ extension SignInViewController: ASAuthorizationControllerDelegate {
     /// 授權成功
        /// - Parameters:
        ///   - controller: _
-       ///   - authorization: _
-       func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-           if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-               print("user: \(appleIDCredential.user)")
-               print("fullName: \(String(describing: appleIDCredential.fullName))")
-               print("Email: \(String(describing: appleIDCredential.email))")
-               print("realUserStatus: \(String(describing: appleIDCredential.realUserStatus))")
+    ///   - authorization: _
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            print("user: \(appleIDCredential.user)")
+            print("fullName: \(String(describing: appleIDCredential.fullName))")
+            print("Email: \(String(describing: appleIDCredential.email))")
+            print("realUserStatus: \(String(describing: appleIDCredential.realUserStatus))")
             // 將資料存進 userDefault
-               let userDefaults = UserDefaults.standard
-               if let fullName = appleIDCredential.fullName,
-                  let appleEmail = appleIDCredential.email {
-                   let userAppleID = appleIDCredential.user
-                   let name = String(describing: fullName)
-                   let email = String(describing: appleEmail)
-                   let userDataFromApple: [String: String] = [
-                    "user": userAppleID,
+            let userDefaults = UserDefaults.standard
+            if let fullName = appleIDCredential.fullName,
+               let appleEmail = appleIDCredential.email,
+               let name = fullName.givenName {
+                let userDataFromApple: [String: String] = [
                     "fullName": name,
-                    "email": email
-                   ]
-                   userDefaults.set(userDataFromApple, forKey: "UserDataFromApple")
-                   navigationController?.popToRootViewController(animated: true)
-               }
-           }
-       }
+                    "email": appleEmail
+                ]
+                userDefaults.set(userDataFromApple, forKey: "UserDataFromApple")
+            }
+            //因為apple除了第一次登入後只會提供 ID，所以獨立存取日後提供登入登出。
+            let userAppleID = ["user": appleIDCredential.user]
+            userDefaults.set(userAppleID, forKey: "UserAppleID")
+            navigationController?.popToRootViewController(animated: true)
+        }
+    }
          /// 授權失敗
          /// - Parameters:
          ///   - controller: _
