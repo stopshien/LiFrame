@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseFirestore
 import CMHUD
+import AuthenticationServices
 
 class CommunityViewController: UIViewController {
     var postsArray: [Posts] = [] {
@@ -22,7 +23,7 @@ class CommunityViewController: UIViewController {
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.tintColor = .white
         button.backgroundColor = .black
-        button.addTarget(self, action: #selector(tappedButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(tappedPostButton), for: .touchUpInside)
         let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 30))
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         return button
@@ -63,9 +64,18 @@ class CommunityViewController: UIViewController {
             }
         }
     }
-    @objc func tappedButton() {
-        guard let postVC = storyboard?.instantiateViewController(identifier: "PostViewController") else { return }
-        navigationController?.pushViewController(postVC, animated: true)
+    @objc func tappedPostButton() {
+        // TODO: - 判斷使否已登入
+        // 已經可以拿到儲存在 userDefault 的 user data
+        let userDefaults = UserDefaults.standard
+        if let userData = userDefaults.dictionary(forKey: "UserDataFromApple") {
+            print("====",userData)
+            if let userEmail = userData["email"],
+               let userID = userData["user"] as? String {
+                print(userID)
+                checkCredentialState(withUserID: userID)
+            }
+        }
     }
     func setButtonUI() {
         NSLayoutConstraint.activate([
@@ -76,6 +86,35 @@ class CommunityViewController: UIViewController {
         ])
         addPostButton.layer.cornerRadius = 25
         addPostButton.clipsToBounds = true
+    }
+    func checkCredentialState(withUserID userID: String) {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        appleIDProvider.getCredentialState(forUserID: userID) { (credentialState, error) in
+            switch credentialState {
+            case .authorized:
+                DispatchQueue.main.async {
+                    // 登入狀態，切換到 po 文頁面
+                    guard let postVC = self.storyboard?.instantiateViewController(identifier: "PostViewController") else { return }
+                    self.navigationController?.pushViewController(postVC, animated: true)
+                }
+                print("Login")
+            case .revoked:
+                DispatchQueue.main.async {
+                    // 尚未登入，顯示登入畫面
+                    self.navigationController?.pushViewController(SignInViewController.shared, animated: true)
+                }
+                print("not login")
+            case .notFound:
+                DispatchQueue.main.async {
+                    // 尚未登入，顯示登入畫面
+                    self.navigationController?.pushViewController(SignInViewController.shared, animated: true)
+                }
+                print("not found")
+                // 無此用戶
+            default:
+                break
+            }
+        }
     }
 }
 extension CommunityViewController: UITableViewDelegate, UITableViewDataSource {

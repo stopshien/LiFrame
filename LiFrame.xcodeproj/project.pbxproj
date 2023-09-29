@@ -15,6 +15,7 @@
 		6A30F7CD2AB1AAF900D5A672 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A30F7CC2AB1AAF900D5A672 /* Assets.xcassets */; };
 		6A30F7D02AB1AAF900D5A672 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A30F7CE2AB1AAF900D5A672 /* LaunchScreen.storyboard */; };
 		6A714EF62AC44C250019FA93 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A714EF52AC44C250019FA93 /* SignInViewController.swift */; };
+		6A7C1E7E2AC54CD800E1FAFE /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7C1E7D2AC54CD800E1FAFE /* Users.swift */; };
 		6A80EFA82AB3143900C90754 /* EditPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFA72AB3143900C90754 /* EditPhotoViewController.swift */; };
 		6A80EFAA2AB3162E00C90754 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFA92AB3162E00C90754 /* EditViewController.swift */; };
 		6A80EFAE2AB4684A00C90754 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A80EFAD2AB4684A00C90754 /* GoogleService-Info.plist */; };
@@ -49,6 +50,7 @@
 		6A30F7CF2AB1AAF900D5A672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6A30F7D12AB1AAF900D5A672 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6A714EF52AC44C250019FA93 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		6A7C1E7D2AC54CD800E1FAFE /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		6A80EFA72AB3143900C90754 /* EditPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPhotoViewController.swift; sourceTree = "<group>"; };
 		6A80EFA92AB3162E00C90754 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		6A80EFAD2AB4684A00C90754 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				6A80EFC32AB7092000C90754 /* Posts.swift */,
+				6A7C1E7D2AC54CD800E1FAFE /* Users.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A7C1E7E2AC54CD800E1FAFE /* Users.swift in Sources */,
 				6A80EFC12AB6F70B00C90754 /* PostViewController.swift in Sources */,
 				6A80EFC62AB70F6800C90754 /* PostDetailViewController.swift in Sources */,
 				6A80EFAA2AB3162E00C90754 /* EditViewController.swift in Sources */,
