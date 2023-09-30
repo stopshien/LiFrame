@@ -10,18 +10,19 @@ import FirebaseFirestore
 class FirebaseManager {
     static let shared = FirebaseManager()
     let db = Firestore.firestore()
-    func pushToFirebaseForUser(documentData: [String: Any]) {
-        var newDocumentData = documentData
+    func pushToFirebaseForUser(documentData: [String: Any], appleID: String) {
         let users = db.collection("users")
-        let document = users.document()
-        let id = document.documentID
-        newDocumentData["documentID"] = id
-        document.setData(newDocumentData)
-        UserDefaults.standard.set(id, forKey: "documentID")
+        let document = users.document(appleID)
+        document.getDocument { documentSnapshot, error in
+            guard let documentSnapshot = documentSnapshot, documentSnapshot.exists else {
+                document.setData(documentData)
+                return
+            }
+        }
     }
     func editUserDataForFirebase(key: String, value: String) {
         let users = db.collection("users")
-        if let documentID = UserData.shared.userDataFromUserDefault?.documentID {
+        if let documentID = UserData.shared.userDataFromUserDefault?.id {
             let document = users.document(documentID)
             let data = [key: value]
             document.updateData(data)

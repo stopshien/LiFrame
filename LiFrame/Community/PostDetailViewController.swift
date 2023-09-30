@@ -17,16 +17,30 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         postDetailTableView.delegate = self
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "...", style: .plain, target: self, action: #selector(pressMore))
     }
+    // TODO: - 從firebase 拿黑名單
     @objc func pressMore() {
         let controller = UIAlertController(title: "黑名單", message: nil, preferredStyle: .actionSheet)
-           let addBlackLitAction = UIAlertAction(title: "加入黑名單", style: .default) { action in
-               print(self.postDetail?.appleID)
+           let addBlackListAction = UIAlertAction(title: "加入黑名單", style: .default) { action in
+               if let blockUserAppleID = self.postDetail?.appleID {
+                   var blackList = [String]()
+                   if let list = UserData.shared.userDataFromUserDefault?.blackList {
+                       blackList = list
+                   }
+                   if !blackList.contains(blockUserAppleID) {
+                       blackList.append(blockUserAppleID)
+                       UserDefaults.standard.set(blackList, forKey: "blackList")
+                   } else {
+                       // 移出黑名單
+                       print("已經在黑名單了")
+                   }
+                   print(UserData.shared.userDataFromUserDefault?.blackList)
+               }
            }
-           controller.addAction(addBlackLitAction)
-        let watchBlackLitAction = UIAlertAction(title: "查看黑名單", style: .default) { action in
+           controller.addAction(addBlackListAction)
+        let watchBlackListAction = UIAlertAction(title: "查看黑名單", style: .default) { action in
             print(action.title)
         }
-        controller.addAction(watchBlackLitAction)
+        controller.addAction(watchBlackListAction)
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         controller.addAction(cancelAction)
         present(controller, animated: true)

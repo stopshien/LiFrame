@@ -51,6 +51,11 @@ extension SignInViewController: ASAuthorizationControllerDelegate {
             print("realUserStatus: \(String(describing: appleIDCredential.realUserStatus))")
             // 將資料存進 userDefault
             let userDefaults = UserDefaults.standard
+            //因為apple除了第一次登入後只會提供 ID，所以獨立存取日後提供登入登出。
+            let userAppleID = ["appleID": appleIDCredential.user]
+            userDefaults.set(userAppleID, forKey: "UserAppleID")
+            FirebaseManager.shared.pushToFirebaseForUser(documentData: userAppleID, appleID: appleIDCredential.user)
+            //存取來自 apple 的姓名、信箱
             if let fullName = appleIDCredential.fullName,
                let appleEmail = appleIDCredential.email,
                let name = fullName.givenName {
@@ -58,13 +63,10 @@ extension SignInViewController: ASAuthorizationControllerDelegate {
                     "fullName": name,
                     "email": appleEmail
                 ]
-                FirebaseManager.shared.pushToFirebaseForUser(documentData: userDataFromApple)
                 userDefaults.set(userDataFromApple, forKey: "UserDataFromApple")
+                FirebaseManager.shared.editUserDataForFirebase(key: "fullName", value: name)
+                FirebaseManager.shared.editUserDataForFirebase(key: "email", value: appleEmail)
             }
-            //因為apple除了第一次登入後只會提供 ID，所以獨立存取日後提供登入登出。
-            let userAppleID = ["user": appleIDCredential.user]
-            userDefaults.set(userAppleID, forKey: "UserAppleID")
-            FirebaseManager.shared.editUserDataForFirebase(key: "appleID", value: appleIDCredential.user)
             navigationController?.popToRootViewController(animated: true)
         }
     }

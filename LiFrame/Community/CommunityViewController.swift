@@ -41,8 +41,9 @@ class CommunityViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         CMHUD.loading(in: view)
         postsArray = []
-        var blackLits = ["001521.3fb511b454544829b50a0f7d35447c15.1306"]
         let db = FirebaseManager.shared.db
+        var blackLits = ["001521.3fb511b454544829b50a0f7d35447c15.1306"]
+        
         db.collection("posts").whereField("author.id", notIn: blackLits).getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
