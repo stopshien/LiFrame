@@ -26,13 +26,15 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                    if let list = UserData.shared.userDataFromUserDefault?.blackList {
                        blackList = list
                    }
-                   if !blackList.contains(blockUserAppleID) {
-                       blackList.append(blockUserAppleID)
-                       UserDefaults.standard.set(blackList, forKey: "blackList")
+                   if blackList.contains(blockUserAppleID) {
+                       blackList = blackList.filter { $0 != blockUserAppleID }
+                       print("移除黑名單")
                    } else {
                        // 移出黑名單
+                       blackList.append(blockUserAppleID)
                        print("已經在黑名單了")
                    }
+                   UserDefaults.standard.set(blackList, forKey: "blackList")
                    print(UserData.shared.userDataFromUserDefault?.blackList)
                }
            }
