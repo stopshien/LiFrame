@@ -10,5 +10,6 @@ struct Users {
     let name: String
     let email: String
     let id: String
+    let documentID: String
     let blackList: [String] = []
 }

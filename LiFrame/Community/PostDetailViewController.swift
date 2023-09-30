@@ -15,6 +15,21 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         super.viewDidLoad()
         postDetailTableView.dataSource = self
         postDetailTableView.delegate = self
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "...", style: .plain, target: self, action: #selector(pressMore))
+    }
+    @objc func pressMore() {
+        let controller = UIAlertController(title: "黑名單", message: nil, preferredStyle: .actionSheet)
+           let addBlackLitAction = UIAlertAction(title: "加入黑名單", style: .default) { action in
+               print(self.postDetail?.appleID)
+           }
+           controller.addAction(addBlackLitAction)
+        let watchBlackLitAction = UIAlertAction(title: "查看黑名單", style: .default) { action in
+            print(action.title)
+        }
+        controller.addAction(watchBlackLitAction)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        controller.addAction(cancelAction)
+        present(controller, animated: true)
     }
     func numberOfSections(in tableView: UITableView) -> Int {
         1

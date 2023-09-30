@@ -58,11 +58,13 @@ extension SignInViewController: ASAuthorizationControllerDelegate {
                     "fullName": name,
                     "email": appleEmail
                 ]
+                FirebaseManager.shared.pushToFirebaseForUser(documentData: userDataFromApple)
                 userDefaults.set(userDataFromApple, forKey: "UserDataFromApple")
             }
             //因為apple除了第一次登入後只會提供 ID，所以獨立存取日後提供登入登出。
             let userAppleID = ["user": appleIDCredential.user]
             userDefaults.set(userAppleID, forKey: "UserAppleID")
+            FirebaseManager.shared.editUserDataForFirebase(key: "appleID", value: appleIDCredential.user)
             navigationController?.popToRootViewController(animated: true)
         }
     }

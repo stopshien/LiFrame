@@ -16,6 +16,7 @@ class CommunityViewController: UIViewController {
             communityTableView.reloadData()
         }
     }
+    let dformatter = DateFormatter()
     @IBOutlet weak var communityTableView: UITableView!
     let addPostButton: UIButton = {
         let button = UIButton()
@@ -35,12 +36,14 @@ class CommunityViewController: UIViewController {
         view.addSubview(addPostButton)
         setButtonUI()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "LogOut", style: .plain, target: self, action: #selector(tapLogOut))
+        dformatter.dateFormat = "yyyy.MM.dd HH:mm"
     }
     override func viewWillAppear(_ animated: Bool) {
         CMHUD.loading(in: view)
         postsArray = []
+        var blackLits = ["001521.3fb511b454544829b50a0f7d35447c15.1306"]
         let db = FirebaseManager.shared.db
-        db.collection("posts").order(by: "createdTime").getDocuments() { (querySnapshot, err) in
+        db.collection("posts").whereField("author.id", notIn: blackLits).getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
@@ -49,20 +52,19 @@ class CommunityViewController: UIViewController {
                        let author = document.data()["author"] as? [String: String],
                        let content = document.data()["content"] as? String,
                        let category = document.data()["category"] as? String,
-                       let time = document.data()["createdTime"] as? Double
-                    {
+                       let time = document.data()["createdTime"] as? Double {
                         let image = document.data()["photoURL"] as? String
                         let timeInterval: TimeInterval = TimeInterval(time)
                         let date = Date(timeIntervalSince1970: timeInterval)
-                        let dformatter = DateFormatter()
-                        dformatter.dateFormat = "yyyy.MM.dd HH:mm"
-                        guard let name = author["name"] else { return }
-                        let post = Posts(title: title, name: "\(name)", createdTime: "\(dformatter.string(from: date))", category: category, content: content, image: image)
+                        guard let name = author["name"],
+                              let appleID = author["id"] else { return }
+                        let post = Posts(appleID: appleID, title: title, name: "\(name)", createdTime: "\(self.dformatter.string(from: date))", category: category, content: content, image: image)
                         self.postsArray.insert(post, at: 0)
-                        CMHUD.hide(from: self.view)
                     }
                 }
             }
+            self.postsArray.sort { $0.createdTime > $1.createdTime }
+            CMHUD.hide(from: self.view)
         }
     }
     @objc func tapLogOut() {
