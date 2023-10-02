@@ -12,17 +12,16 @@ class UserData {
     var userDataFromUserDefault: Users? {
         let userDefaults = UserDefaults.standard
         if let userData = userDefaults.dictionary(forKey: "UserDataFromApple"),
-           let userID = userDefaults.dictionary(forKey: "UserAppleID"),
-           let blackList = userDefaults.dictionary(forKey: "blackList"),
-           let documentID = userDefaults.string(forKey: "documentID") {
+           let userID = userDefaults.dictionary(forKey: "UserAppleID"){
             if let userEmail = userData["email"] as? String,
                let userFullName = userData["fullName"] as? String,
                let ID = userID["appleID"] as? String {
-                if let blackListName = blackList["blockedName"] as? String,
+                if let blackList = userDefaults.dictionary(forKey: "blackList"),
+                   let blackListName = blackList["blockedName"] as? String,
                    let blackListAppleID = blackList["blockedAppleID"] as? String {
-                    return Users(name: userFullName, email: userEmail, id: ID, documentID: documentID, blackList: [BlackList(blockedName: blackListName, blockedAppleID: blackListAppleID)])
+                    return Users(name: userFullName, email: userEmail, id: ID, documentID: ID, blackList: [BlackList(blockedName: blackListName, blockedAppleID: blackListAppleID)])
                 } else {
-                    return Users(name: userFullName, email: userEmail, id: ID, documentID: documentID)
+                    return Users(name: userFullName, email: userEmail, id: ID, documentID: ID)
                 }
             }
         }

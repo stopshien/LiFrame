@@ -50,6 +50,14 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
         collectionView.register(LutsCollectionViewCell.self, forCellWithReuseIdentifier: "LutsCollectionViewCell")
         return collectionView
     }()
+    let haveNoLutsLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "尚未加入風格檔"
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        return label
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         lutsCollectionView.delegate = self
@@ -58,6 +66,7 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
         view.addSubview(lutView)
         view.addSubview(lutsCollectionView) // 將 collectionView 添加到視圖中
         backview.addSubview(dismissButton)
+        lutsCollectionView.addSubview(haveNoLutsLabel)
         NSLayoutConstraint.activate([
             backview.topAnchor.constraint(equalTo: view.topAnchor),
             backview.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1),
@@ -73,7 +82,9 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
             dismissButton.topAnchor.constraint(equalTo: backview.topAnchor, constant: 50),
             dismissButton.trailingAnchor.constraint(equalTo: backview.trailingAnchor, constant: -30),
             dismissButton.widthAnchor.constraint(equalToConstant: 30),
-            dismissButton.heightAnchor.constraint(equalToConstant: 30)
+            dismissButton.heightAnchor.constraint(equalToConstant: 30),
+            haveNoLutsLabel.centerXAnchor.constraint(equalTo: lutsCollectionView.centerXAnchor),
+            haveNoLutsLabel.centerYAnchor.constraint(equalTo: lutsCollectionView.centerYAnchor)
         ])
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -81,6 +92,11 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
             self.luts = luts
         } else {
             luts = []
+        }
+        if luts.count == 0 {
+            haveNoLutsLabel.isHidden = false
+        } else {
+            haveNoLutsLabel.isHidden = true
         }
     }
     @objc func tappedDismiss() {
