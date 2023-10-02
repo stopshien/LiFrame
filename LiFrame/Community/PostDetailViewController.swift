@@ -10,35 +10,27 @@ import Kingfisher
 
 class PostDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var postDetail: Posts?
-    var blackList: [BlackList] = []{
-        didSet {
-            UserData.shared.getUserDataFromFirebase { user in
-                if let black = user?.blackList {
-                    self.blackList = black
-                }
-            }
-        }
-    }
+    var blackList: [BlackList] = []
     @IBOutlet weak var postDetailTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
         postDetailTableView.dataSource = self
         postDetailTableView.delegate = self
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "...", style: .plain, target: self, action: #selector(pressMore))
+        UserData.shared.getUserDataFromFirebase { user in
+            if let black = user?.blackList {
+                self.blackList = black
+            }
+        }
     }
     // TODO: - 從firebase 拿黑名單
     @objc func pressMore() {
-        let semaphore = DispatchSemaphore(value: 0)
         let controller = UIAlertController(title: "黑名單", message: nil, preferredStyle: .actionSheet)
            let addBlackListAction = UIAlertAction(title: "加入黑名單", style: .default) { action in
                if let blockUserAppleID = self.postDetail?.appleID,
                   let userName = self.postDetail?.name {
-                  
                    let wannaBlockUser = BlackList(blockedName: userName, blockedAppleID: blockUserAppleID)
-                   if self.blackList.contains(where: { $0.blockedName == wannaBlockUser.blockedName && $0.blockedAppleID == wannaBlockUser.blockedAppleID }) {
-                       self.blackList = self.blackList.filter { $0.blockedName != wannaBlockUser.blockedName || $0.blockedAppleID != wannaBlockUser.blockedAppleID }
-                       print("移除黑名單")
-                   } else {
+                   if !self.blackList.contains(where: { $0.blockedName == wannaBlockUser.blockedName && $0.blockedAppleID == wannaBlockUser.blockedAppleID }) {
                        self.blackList.append(wannaBlockUser)
                        print("加進黑名單")
                        print(self.blackList)
@@ -49,7 +41,6 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                            "blockedAppleID": blackList.blockedAppleID
                        ]
                    }
-//                UserDefaults.standard.set(blackListForUserDefault, forKey: "blackList")
                    FirebaseManager().updateBlackListForFirebase(key: "blacklist", value: blackListDictArray)
                    print(UserData.shared.userDataFromUserDefault?.blackList)
                }

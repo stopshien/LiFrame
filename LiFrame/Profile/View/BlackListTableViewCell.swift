@@ -10,8 +10,8 @@ import UIKit
 class BlackListTableViewCell: UITableViewCell {
     let blackName: UILabel = {
         let label = UILabel()
-        label.textColor = .blue
-        label.font = UIFont.systemFont(ofSize: 30)
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -19,7 +19,7 @@ class BlackListTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubview(blackName)
         NSLayoutConstraint.activate([
-            blackName.centerXAnchor.constraint(equalTo: centerXAnchor),
+            blackName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             blackName.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
@@ -29,7 +29,6 @@ class BlackListTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

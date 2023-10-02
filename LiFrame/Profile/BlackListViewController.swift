@@ -6,14 +6,15 @@
 //
 
 import UIKit
+import FirebaseStorage
 
 class BlackListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    private var blackListFromUserData = [BlackList]()
+    var blackListFromUserData = [BlackList]()
     let blackListTableView: UITableView = {
         let tableView = UITableView()
         let fullScreen = UIScreen.main.bounds
         tableView.frame = CGRect(x: 0, y: 0, width: fullScreen.width, height: fullScreen.height)
-        tableView.backgroundColor = .red
+        tableView.backgroundColor = .white
         return tableView
     }()
     override func viewDidLoad() {
@@ -24,9 +25,24 @@ class BlackListViewController: UIViewController, UITableViewDelegate, UITableVie
         blackListTableView.register(BlackListTableViewCell.self, forCellReuseIdentifier: "BlackListTableViewCell")
     }
     override func viewWillAppear(_ animated: Bool) {
-        if let blackList = UserData.shared.userDataFromUserDefault?.blackList {
-            blackListFromUserData = blackList
+        UserData.shared.getUserDataFromFirebase { user in
+            if let user = user {
+                self.blackListFromUserData = user.blackList
+                self.blackListTableView.reloadData()
+            }
         }
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        let blackListDictArray = self.blackListFromUserData.map { blackList -> [String: Any] in
+            return [
+                "blockedName": blackList.blockedName,
+                "blockedAppleID": blackList.blockedAppleID
+            ]
+        }
+        FirebaseManager().updateBlackListForFirebase(key: "blacklist", value: blackListDictArray)
+    }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "黑名單"
     }
     func numberOfSections(in tableView: UITableView) -> Int {
         1
@@ -36,7 +52,16 @@ class BlackListViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = blackListTableView.dequeueReusableCell(withIdentifier: "BlackListTableViewCell", for: indexPath) as? BlackListTableViewCell else { return BlackListTableViewCell() }
-        cell.blackName.text = "label"
+        cell.blackName.text = blackListFromUserData[indexPath.row].blockedName
         return cell
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+      if editingStyle == .delete {
+        self.blackListFromUserData.remove(at: indexPath.row)
+        self.blackListTableView.deleteRows(at: [indexPath], with: .automatic)
+      }
     }
 }

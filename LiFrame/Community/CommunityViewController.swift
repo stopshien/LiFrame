@@ -41,7 +41,7 @@ class CommunityViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         var blackLists = [BlackList(blockedName: "", blockedAppleID: "")]
         UserData.shared.getUserDataFromFirebase { user in
-            if let user = user {
+            if let user = user, !user.blackList.isEmpty {
                 blackLists = user.blackList
             }
             CMHUD.loading(in: self.view)
