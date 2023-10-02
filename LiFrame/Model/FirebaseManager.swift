@@ -28,4 +28,12 @@ class FirebaseManager {
             document.updateData(data)
         }
     }
+    func updateBlackListForFirebase(key: String, value: [[String: Any]]) {
+        let users = db.collection("users")
+        if let documentID = UserData.shared.userDataFromUserDefault?.id {
+            let document = users.document(documentID)
+            let data = [key: value]
+            document.updateData(data)
+        }
+    }
 }
