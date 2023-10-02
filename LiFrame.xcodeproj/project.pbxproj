@@ -14,6 +14,11 @@
 		6A30F7CB2AB1AAF800D5A672 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A30F7C92AB1AAF800D5A672 /* Main.storyboard */; };
 		6A30F7CD2AB1AAF900D5A672 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A30F7CC2AB1AAF900D5A672 /* Assets.xcassets */; };
 		6A30F7D02AB1AAF900D5A672 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A30F7CE2AB1AAF900D5A672 /* LaunchScreen.storyboard */; };
+		6A6F6D5F2AC7F8E5007BAB21 /* BlackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F6D5E2AC7F8E5007BAB21 /* BlackListViewController.swift */; };
+		6A6F6D622AC92AC0007BAB21 /* BlackListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F6D612AC92AC0007BAB21 /* BlackListTableViewCell.swift */; };
+		6A714EF62AC44C250019FA93 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A714EF52AC44C250019FA93 /* SignInViewController.swift */; };
+		6A7C1E7E2AC54CD800E1FAFE /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7C1E7D2AC54CD800E1FAFE /* Users.swift */; };
+		6A7C1E802AC6A4EB00E1FAFE /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7C1E7F2AC6A4EB00E1FAFE /* UserData.swift */; };
 		6A80EFA82AB3143900C90754 /* EditPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFA72AB3143900C90754 /* EditPhotoViewController.swift */; };
 		6A80EFAA2AB3162E00C90754 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFA92AB3162E00C90754 /* EditViewController.swift */; };
 		6A80EFAE2AB4684A00C90754 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A80EFAD2AB4684A00C90754 /* GoogleService-Info.plist */; };
@@ -47,6 +52,11 @@
 		6A30F7CC2AB1AAF900D5A672 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6A30F7CF2AB1AAF900D5A672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6A30F7D12AB1AAF900D5A672 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6A6F6D5E2AC7F8E5007BAB21 /* BlackListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackListViewController.swift; sourceTree = "<group>"; };
+		6A6F6D612AC92AC0007BAB21 /* BlackListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackListTableViewCell.swift; sourceTree = "<group>"; };
+		6A714EF52AC44C250019FA93 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		6A7C1E7D2AC54CD800E1FAFE /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
+		6A7C1E7F2AC6A4EB00E1FAFE /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		6A80EFA72AB3143900C90754 /* EditPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPhotoViewController.swift; sourceTree = "<group>"; };
 		6A80EFA92AB3162E00C90754 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		6A80EFAD2AB4684A00C90754 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -125,6 +135,8 @@
 				6A80EFA62AB3141D00C90754 /* EditPhoto */,
 				6A80EFBA2AB6F13B00C90754 /* Community */,
 				6AF1EC992AB8497E00071983 /* Map */,
+				6A714EF42AC44B5E0019FA93 /* SignIn */,
+				6A6F6D5D2AC7F8BE007BAB21 /* Profile */,
 				6A30F7C92AB1AAF800D5A672 /* Main.storyboard */,
 				6A30F7CC2AB1AAF900D5A672 /* Assets.xcassets */,
 				6A30F7CE2AB1AAF900D5A672 /* LaunchScreen.storyboard */,
@@ -133,6 +145,31 @@
 				6AF1ECA52AB9C6FE00071983 /* Secrets.xcconfig */,
 			);
 			path = LiFrame;
+			sourceTree = "<group>";
+		};
+		6A6F6D5D2AC7F8BE007BAB21 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				6A6F6D5E2AC7F8E5007BAB21 /* BlackListViewController.swift */,
+				6A6F6D602AC92AA6007BAB21 /* View */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		6A6F6D602AC92AA6007BAB21 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6A6F6D612AC92AC0007BAB21 /* BlackListTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6A714EF42AC44B5E0019FA93 /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				6A714EF52AC44C250019FA93 /* SignInViewController.swift */,
+			);
+			path = SignIn;
 			sourceTree = "<group>";
 		};
 		6A80EFA42AB1E45900C90754 /* Camera */ = {
@@ -178,6 +215,7 @@
 				6A80EFB82AB6AD8C00C90754 /* UIImageExt.swift */,
 				6AF1ECA82ABB253500071983 /* UIColorExt.swift */,
 				6AF1EC972AB8421C00071983 /* FirebaseManager.swift */,
+				6A7C1E7F2AC6A4EB00E1FAFE /* UserData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -208,6 +246,7 @@
 			isa = PBXGroup;
 			children = (
 				6A80EFC32AB7092000C90754 /* Posts.swift */,
+				6A7C1E7D2AC54CD800E1FAFE /* Users.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -375,14 +414,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A7C1E7E2AC54CD800E1FAFE /* Users.swift in Sources */,
 				6A80EFC12AB6F70B00C90754 /* PostViewController.swift in Sources */,
 				6A80EFC62AB70F6800C90754 /* PostDetailViewController.swift in Sources */,
 				6A80EFAA2AB3162E00C90754 /* EditViewController.swift in Sources */,
 				6A80EFBF2AB6F1E200C90754 /* CommunityTableViewCell.swift in Sources */,
 				6AF1EC962AB82A2B00071983 /* PostImageViewTableViewCell.swift in Sources */,
 				6A30F7C82AB1AAF800D5A672 /* CameraViewController.swift in Sources */,
+				6A6F6D622AC92AC0007BAB21 /* BlackListTableViewCell.swift in Sources */,
 				6AF1ECA72AB9C91E00071983 /* APIManager.swift in Sources */,
 				6A30F7C42AB1AAF800D5A672 /* AppDelegate.swift in Sources */,
+				6A714EF62AC44C250019FA93 /* SignInViewController.swift in Sources */,
 				6A80EFC42AB7092000C90754 /* Posts.swift in Sources */,
 				6A80EFB22AB4957F00C90754 /* LutManager.swift in Sources */,
 				6A30F7C62AB1AAF800D5A672 /* SceneDelegate.swift in Sources */,
@@ -391,9 +433,11 @@
 				6A80EFC82AB720DF00C90754 /* PostDetailTableViewCell.swift in Sources */,
 				6A80EFA82AB3143900C90754 /* EditPhotoViewController.swift in Sources */,
 				6AF1EC9B2AB84FE000071983 /* MapViewController.swift in Sources */,
+				6A6F6D5F2AC7F8E5007BAB21 /* BlackListViewController.swift in Sources */,
 				6A80EFB02AB46EC500C90754 /* Lut.swift in Sources */,
 				6A80EFBC2AB6F19800C90754 /* CommunityViewController.swift in Sources */,
 				6AD578AE2ABC7B5F005BE528 /* LutViewController.swift in Sources */,
+				6A7C1E802AC6A4EB00E1FAFE /* UserData.swift in Sources */,
 				6A80EFB52AB57C7500C90754 /* LutsCollectionViewCell.swift in Sources */,
 				6AF1ECA92ABB253500071983 /* UIColorExt.swift in Sources */,
 				6AF1EC982AB8421C00071983 /* FirebaseManager.swift in Sources */,

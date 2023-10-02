@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseFirestore
 import CMHUD
+import AuthenticationServices
 
 class CommunityViewController: UIViewController {
     var postsArray: [Posts] = [] {
@@ -15,6 +16,7 @@ class CommunityViewController: UIViewController {
             communityTableView.reloadData()
         }
     }
+    let dformatter = DateFormatter()
     @IBOutlet weak var communityTableView: UITableView!
     let addPostButton: UIButton = {
         let button = UIButton()
@@ -22,7 +24,7 @@ class CommunityViewController: UIViewController {
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.tintColor = .white
         button.backgroundColor = .black
-        button.addTarget(self, action: #selector(tappedButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(tappedPostButton), for: .touchUpInside)
         let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 30))
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         return button
@@ -33,39 +35,70 @@ class CommunityViewController: UIViewController {
         communityTableView.delegate = self
         view.addSubview(addPostButton)
         setButtonUI()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Profile", style: .plain, target: self, action: #selector(tappedProfile))
+        dformatter.dateFormat = "yyyy.MM.dd HH:mm"
     }
     override func viewWillAppear(_ animated: Bool) {
-        CMHUD.loading(in: view)
-        postsArray = []
-        let db = FirebaseManager.shared.db
-        db.collection("posts").order(by: "createdTime").getDocuments() { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                    if let title = document.data()["title"] as? String,
-                       let author = document.data()["author"] as? [String: String],
-                       let content = document.data()["content"] as? String,
-                       let category = document.data()["category"] as? String,
-                       let time = document.data()["createdTime"] as? Double
-                    {
-                        let image = document.data()["photoURL"] as? String
-                        let timeInterval: TimeInterval = TimeInterval(time)
-                        let date = Date(timeIntervalSince1970: timeInterval)
-                        let dformatter = DateFormatter()
-                        dformatter.dateFormat = "yyyy.MM.dd HH:mm"
-                        guard let name = author["name"] else { return }
-                        let post = Posts(title: title, name: "\(name)", createdTime: "\(dformatter.string(from: date))", category: category, content: content, image: image)
-                        self.postsArray.insert(post, at: 0)
-                        CMHUD.hide(from: self.view)
+        var blackLists = [BlackList(blockedName: "", blockedAppleID: "")]
+        UserData.shared.getUserDataFromFirebase { user in
+            if let user = user, !user.blackList.isEmpty {
+                blackLists = user.blackList
+            }
+            CMHUD.loading(in: self.view)
+            self.postsArray = []
+            let db = FirebaseManager.shared.db
+            let blockedAppleIDs = blackLists.map { $0.blockedAppleID }
+            print(blackLists,blockedAppleIDs)
+            db.collection("posts").whereField("author.id", notIn: blockedAppleIDs).getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        if let title = document.data()["title"] as? String,
+                           let author = document.data()["author"] as? [String: String],
+                           let content = document.data()["content"] as? String,
+                           let category = document.data()["category"] as? String,
+                           let time = document.data()["createdTime"] as? Double {
+                            let image = document.data()["photoURL"] as? String
+                            let timeInterval: TimeInterval = TimeInterval(time)
+                            let date = Date(timeIntervalSince1970: timeInterval)
+                            guard let name = author["name"],
+                                  let appleID = author["id"] else { return }
+                            let post = Posts(appleID: appleID, title: title, name: "\(name)", createdTime: "\(self.dformatter.string(from: date))", category: category, content: content, image: image)
+                            self.postsArray.insert(post, at: 0)
+                        }
                     }
                 }
+                self.postsArray.sort { $0.createdTime > $1.createdTime }
+                CMHUD.hide(from: self.view)
             }
         }
+        
     }
-    @objc func tappedButton() {
-        guard let postVC = storyboard?.instantiateViewController(identifier: "PostViewController") else { return }
-        navigationController?.pushViewController(postVC, animated: true)
+    
+    @objc func tappedProfile() {
+        let controller = UIAlertController(title: "個人設定", message: nil, preferredStyle: .actionSheet)
+        let watchBlackListAction = UIAlertAction(title: "查看黑名單", style: .default) { action in
+            let blackListVC = BlackListViewController()
+            self.navigationController?.pushViewController(blackListVC, animated: true)
+        }
+        controller.addAction(watchBlackListAction)
+        let logOutAction = UIAlertAction(title: "登出", style: .default) { action in
+            UserDefaults.standard.removeObject(forKey: "UserAppleID")
+            // TODO: 更新頁面/黑名單文章復原/登出提醒
+        }
+        controller.addAction(logOutAction)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        controller.addAction(cancelAction)
+        present(controller, animated: true)
+    }
+    @objc func tappedPostButton() {
+        // 判斷使否已經登入,userData 都存在 UserData 中
+            if let userID = UserData.shared.userDataFromUserDefault?.id {
+                checkCredentialState(withUserID: userID)
+            } else {
+                checkCredentialState(withUserID: "")
+            }
     }
     func setButtonUI() {
         NSLayoutConstraint.activate([
@@ -76,6 +109,35 @@ class CommunityViewController: UIViewController {
         ])
         addPostButton.layer.cornerRadius = 25
         addPostButton.clipsToBounds = true
+    }
+    func checkCredentialState(withUserID userID: String) {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        appleIDProvider.getCredentialState(forUserID: userID) { (credentialState, error) in
+            switch credentialState {
+            case .authorized:
+                DispatchQueue.main.async {
+                    // 登入狀態，切換到 po 文頁面
+                    guard let postVC = self.storyboard?.instantiateViewController(identifier: "PostViewController") else { return }
+                    self.navigationController?.pushViewController(postVC, animated: true)
+                }
+                print("Login")
+            case .revoked:
+                DispatchQueue.main.async {
+                    // 尚未登入，顯示登入畫面
+                    self.navigationController?.pushViewController(SignInViewController.shared, animated: true)
+                }
+                print("not login")
+            case .notFound:
+                DispatchQueue.main.async {
+                    // 尚未登入，顯示登入畫面
+                    self.navigationController?.pushViewController(SignInViewController.shared, animated: true)
+                }
+                print("not found")
+                // 無此用戶
+            default:
+                break
+            }
+        }
     }
 }
 extension CommunityViewController: UITableViewDelegate, UITableViewDataSource {
