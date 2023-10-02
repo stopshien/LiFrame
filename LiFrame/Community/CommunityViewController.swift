@@ -73,7 +73,12 @@ class CommunityViewController: UIViewController {
                 CMHUD.hide(from: self.view)
             }
         }
-        
+        // 判斷使否已經登入,userData 都存在 UserData 中
+        if let userID = UserData.shared.userDataFromUserDefault?.id {
+            navigationItem.rightBarButtonItem?.isHidden = false
+        } else {
+            navigationItem.rightBarButtonItem?.isHidden = true
+        }
     }
     
     @objc func tappedProfile() {
@@ -85,7 +90,7 @@ class CommunityViewController: UIViewController {
         controller.addAction(watchBlackListAction)
         let logOutAction = UIAlertAction(title: "登出", style: .default) { action in
             UserDefaults.standard.removeObject(forKey: "UserAppleID")
-            // TODO: 更新頁面/黑名單文章復原/登出提醒
+            // TODO: 登出提醒
         }
         controller.addAction(logOutAction)
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
