@@ -17,6 +17,13 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         postDetailTableView.dataSource = self
         postDetailTableView.delegate = self
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "...", style: .plain, target: self, action: #selector(pressMore))
+        // 判斷使否已經登入,userData 都存在 UserData 中
+            if let userID = UserData.shared.userDataFromUserDefault?.id {
+                navigationItem.rightBarButtonItem?.isHidden = false
+            } else {
+                navigationItem.rightBarButtonItem?.isHidden = true
+            }
+        // 從 firebase 更新黑名單
         UserData.shared.getUserDataFromFirebase { user in
             if let black = user?.blackList {
                 self.blackList = black
@@ -47,10 +54,6 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                
            }
            controller.addAction(addBlackListAction)
-        let watchBlackListAction = UIAlertAction(title: "查看黑名單", style: .default) { action in
-            print(action.title)
-        }
-        controller.addAction(watchBlackListAction)
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         controller.addAction(cancelAction)
         present(controller, animated: true)

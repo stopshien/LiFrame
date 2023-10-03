@@ -12,6 +12,9 @@ extension UIColor {
     static let secondColor = UIColor.init(hexString: "#D7C4BB")
     static let PointColor = UIColor.init(hexString: "#554236")
     static let backgroundColorSet = UIColor.init(hexString: "#554236")
+    static let lutCollectionViewColor = UIColor.init(hexString: "#FCEDD6")
+    static let lutViewColor = UIColor.init(hexString: "#E6C28C")
+
 
     convenience init(hexString: String) {
         var hexString = hexString.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
