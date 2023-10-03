@@ -12,7 +12,7 @@ import CMHUD
 class LutViewController: UIViewController, PHPickerViewControllerDelegate {
     var luts = [Lut]()
     var currentLut: Lut?
-    var afterLutImage = [UIImageView]()
+    var afterLutImage: [UIImage] = []
     var configuration = PHPickerConfiguration()
     let backview: UIView = {
         let view = UIView()
@@ -33,7 +33,7 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
     let dismissButton: UIButton = {
        let button = UIButton()
         button.setTitle("X", for: .normal)
-        button.setTitleColor(.systemGray6, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .black
         button.layer.cornerRadius = 15
         button.clipsToBounds = true
@@ -43,14 +43,16 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
     }()
     let lutView: UIView = {
         let view = UIView()
-        view.backgroundColor = .black
+        view.backgroundColor = .lutViewColor
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 20
         return view
     }()
     let lutsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .gray
+        collectionView.backgroundColor = .lutCollectionViewColor
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 10 // 行之間的最小間距
@@ -83,14 +85,14 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
             backview.topAnchor.constraint(equalTo: view.topAnchor),
             backview.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1),
             backview.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
-            lutView.bottomAnchor.constraint(equalTo: backview.bottomAnchor),
-            lutView.heightAnchor.constraint(equalTo: backview.heightAnchor, multiplier: 0.35),
+            lutView.bottomAnchor.constraint(equalTo: backview.bottomAnchor, constant: 20),
+            lutView.heightAnchor.constraint(equalTo: backview.heightAnchor, multiplier: 0.3),
             lutView.widthAnchor.constraint(equalTo: backview.widthAnchor),
             // 設置 collectionView 的約束
             lutsCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor), // 水平居中
             lutsCollectionView.centerYAnchor.constraint(equalTo: lutView.centerYAnchor, constant: -20),
             lutsCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
-            lutsCollectionView.heightAnchor.constraint(equalTo: lutView.heightAnchor, multiplier: 0.55),
+            lutsCollectionView.heightAnchor.constraint(equalTo: lutView.heightAnchor, multiplier: 0.65),
             dismissButton.topAnchor.constraint(equalTo: backview.topAnchor, constant: 20),
             dismissButton.trailingAnchor.constraint(equalTo: backview.trailingAnchor, constant: -30),
             dismissButton.widthAnchor.constraint(equalToConstant: 30),
@@ -126,7 +128,7 @@ extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         if collectionView == lutsCollectionView {
             return luts.count
         } else {
-           return 5
+            return afterLutImage.count
         }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -142,7 +144,7 @@ extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSourc
             return cell
         case displayCollectionView:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DisplayCollectionViewCell", for: indexPath) as? DisplayCollectionViewCell else { return DisplayCollectionViewCell() }
-            cell.contentView.backgroundColor = .PointColor
+            cell.afterLutImageView.image = afterLutImage[indexPath.row]
             return cell
         default:
             return UICollectionViewCell()
@@ -159,17 +161,17 @@ extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSourc
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         guard !results.isEmpty else { return dismiss(animated: true) }
         var processedImages: [UIImage] = []
-        let semaphore = DispatchSemaphore(value: 1)
+        afterLutImage = []
+        let group = DispatchGroup()
         let itemProviders = results.map(\.itemProvider)
         for itemProvider in itemProviders {
             if itemProvider.canLoadObject(ofClass: UIImage.self) {
-                semaphore.wait()
+                group.enter()
                 itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
                     guard let self = self, let image = image as? UIImage else { return }
                     guard let currentLut = currentLut else { return }
                     defer {
-                        // 允許下一張圖片處理
-                        semaphore.signal()
+                        group.leave()
                     }
                     // 處理光線和對比，替換下面的數值為您想要的值
                     let brightness: Float = currentLut.bright
@@ -180,13 +182,21 @@ extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSourc
                     }
                     if processedImages.count == itemProviders.count {
                         LutManager.shared.saveImagesToPhotoLibrary(processedImages)
+                        afterLutImage.append(contentsOf: processedImages)
                     }
                 }
             }
         }
-        defer {
-            CMHUD.success(in: view)
-            dismiss(animated: true)
+        
+        // 等待所有任務完成
+        group.notify(queue: .main) {
+            CMHUD.success(in: self.view)
+            // 所有任務完成後，執行 reloadData
+            DispatchQueue.main.async {
+                self.displayCollectionView.reloadData()
+            }
+            self.dismiss(animated: true)
         }
     }
+
 }
