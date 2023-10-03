@@ -14,7 +14,6 @@ class BlackListViewController: UIViewController, UITableViewDelegate, UITableVie
         let tableView = UITableView()
         let fullScreen = UIScreen.main.bounds
         tableView.frame = CGRect(x: 0, y: 0, width: fullScreen.width, height: fullScreen.height)
-        tableView.backgroundColor = .white
         return tableView
     }()
     override func viewDidLoad() {
@@ -23,6 +22,7 @@ class BlackListViewController: UIViewController, UITableViewDelegate, UITableVie
         blackListTableView.delegate = self
         blackListTableView.dataSource = self
         blackListTableView.register(BlackListTableViewCell.self, forCellReuseIdentifier: "BlackListTableViewCell")
+        blackListTableView.allowsSelection = false
     }
     override func viewWillAppear(_ animated: Bool) {
         UserData.shared.getUserDataFromFirebase { user in
