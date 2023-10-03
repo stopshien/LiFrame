@@ -130,6 +130,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         liFrameCamera.addTarget(self, action: #selector(choosePhoto), for: .touchUpInside)
         originalCamera.addTarget(self, action: #selector(intoOriginalCamera), for: .touchUpInside)
         seePhotoLibrary.addTarget(self, action: #selector(intoLibaray), for: .touchUpInside)
+        print(UserData.shared.getUserAppleID())
     }
     @objc func intoLibaray() {
         configuration.selectionLimit = 0

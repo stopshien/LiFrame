@@ -9,28 +9,54 @@ import Foundation
 import FirebaseFirestore
 class UserData {
     static let shared = UserData()
-    var userDataFromUserDefault: Users? {
-        let userDefaults = UserDefaults.standard
-        if let userData = userDefaults.dictionary(forKey: "UserDataFromApple"),
-           let userID = userDefaults.dictionary(forKey: "UserAppleID"){
-            if let userEmail = userData["email"] as? String,
-               let userFullName = userData["fullName"] as? String,
-               let ID = userID["appleID"] as? String {
-                if let blackList = userDefaults.dictionary(forKey: "blackList"),
-                   let blackListName = blackList["blockedName"] as? String,
-                   let blackListAppleID = blackList["blockedAppleID"] as? String {
-                    return Users(name: userFullName, email: userEmail, id: ID, documentID: ID, blackList: [BlackList(blockedName: blackListName, blockedAppleID: blackListAppleID)])
-                } else {
-                    return Users(name: userFullName, email: userEmail, id: ID, documentID: ID)
-                }
-            }
+    let userDefaults = UserDefaults.standard
+    // 定義一個方法來獲取 userAppleID
+    func getUserAppleID() -> String? {
+        if let appleID = UserDefaults.standard.object(forKey: "UserAppleID") as? [String: String],
+           let ID = appleID["appleID"] {
+            return ID
+        } else {
+            return nil
         }
-        return nil
     }
+    var userAppleID: String? = {
+        if let appleID = UserDefaults.standard.object(forKey: "UserAppleID") as? [String: String],
+           let ID = appleID["appleID"] {
+            return ID
+        } else {
+            return nil
+        }
+    }()
+
+    lazy var userAppleName: String = {
+        if let userData = userDefaults.dictionary(forKey: "UserDataFromApple"),
+           let userName = userData["fullName"] as? String {
+            return userName
+        }
+        return "匿名"
+    }()
+
+    lazy var userAppleEmail: String = {
+        if let userData = userDefaults.dictionary(forKey: "UserDataFromApple"),
+           let userEmail = userData["email"] as? String {
+            return userEmail
+        }
+        return "未提供email"
+    }()
+
+    lazy var userDataFromUserDefault: Users? = {
+        if let appleID = userAppleID {
+            return Users(name: userAppleName, email: userAppleEmail, id: appleID, documentID: appleID)
+        } else {
+            print("User data could not be created")
+            return nil
+        }
+    }()
+
     func getUserDataFromFirebase(completion: @escaping (Users?) -> Void) {
         var blackLists = [BlackList]()
         let db = FirebaseManager.shared.db
-        guard let appleIDFromUserDefault = UserData.shared.userDataFromUserDefault?.id else {
+        guard let appleIDFromUserDefault = UserData.shared.getUserAppleID() else {
             completion(nil)
             print("UserDefault apple doesn't exist")
             return
@@ -59,7 +85,7 @@ class UserData {
                         blackLists.append(blackList)
                     }
                     let userData = Users(name: name, email: email, id: appleID, documentID: appleID, blackList: blackLists)
-                    completion(userData) // 在获取数据后调用闭包，传递 Users 对象
+                    completion(userData)
                 } else {
                     completion(nil)
                 }

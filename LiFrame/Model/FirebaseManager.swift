@@ -22,16 +22,16 @@ class FirebaseManager {
     }
     func editUserDataForFirebase(key: String, value: String) {
         let users = db.collection("users")
-        if let documentID = UserData.shared.userDataFromUserDefault?.id {
-            let document = users.document(documentID)
+        if let userAppleID = UserData.shared.getUserAppleID() {
+            let document = users.document(userAppleID)
             let data = [key: value]
             document.updateData(data)
         }
     }
     func updateBlackListForFirebase(key: String, value: [[String: Any]]) {
         let users = db.collection("users")
-        if let documentID = UserData.shared.userDataFromUserDefault?.id {
-            let document = users.document(documentID)
+        if let userAppleID = UserData.shared.getUserAppleID() {
+            let document = users.document(userAppleID)
             let data = [key: value]
             document.updateData(data)
         }

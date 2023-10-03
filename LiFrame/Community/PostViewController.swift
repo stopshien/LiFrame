@@ -94,9 +94,9 @@ class PostViewController: UIViewController {
                 } else {
                     imageRef.downloadURL { (url, error) in
                         if let downloadURL = url?.absoluteString {
-                            guard let userNameFromApple = UserData.shared.userDataFromUserDefault?.name,
-                                  let emailFromApple = UserData.shared.userDataFromUserDefault?.email,
-                                  let idFromApple = UserData.shared.userDataFromUserDefault?.id else { return }
+                            guard let idFromApple = UserData.shared.getUserAppleID() else { return }
+                            let userNameFromApple = UserData.shared.userAppleName
+                            let emailFromApple = UserData.shared.userAppleEmail
                             let data: [String: Any] = [
                                 "author": [
                                     "email": emailFromApple,

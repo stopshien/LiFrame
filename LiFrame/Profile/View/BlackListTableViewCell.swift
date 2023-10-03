@@ -10,7 +10,7 @@ import UIKit
 class BlackListTableViewCell: UITableViewCell {
     let blackName: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .tertiaryLabel
         label.font = UIFont.systemFont(ofSize: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
