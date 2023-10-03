@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 import WeatherKit
 class MapViewController: UIViewController {
-    lazy var constraint = miniView.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 0)
+    lazy var constraint = miniView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 300)
     let weatherService = WeatherService()
     var citiesArray = [City]()
     let dateFormatter = DateFormatter()
@@ -104,7 +104,6 @@ class MapViewController: UIViewController {
         moonImage.isHidden = true
         cloudImage.isHidden = true
         tempImage.isHidden = true
-        
         NSLayoutConstraint.activate([
         constraint,
         miniView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 0),
@@ -190,12 +189,11 @@ extension MapViewController: MKMapViewDelegate {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         mapView.resignFirstResponder()
         UIView.animate(withDuration: 0.6) {
-            self.constraint.constant = 0
+            self.constraint.constant = 300
             self.mapView.layoutIfNeeded()
         }
     }
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
- 
         if let annotaiotn = view.annotation,
            let title = annotaiotn.title,
            let newTitle = title {
@@ -209,7 +207,7 @@ extension MapViewController: MKMapViewDelegate {
 
             mapView.layoutIfNeeded()
             UIView.animate(withDuration: 0.6) {
-                self.constraint.constant = -300
+                self.constraint.constant = -30
                 self.mapView.layoutIfNeeded()
             }
         }

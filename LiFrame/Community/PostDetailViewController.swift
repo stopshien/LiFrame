@@ -51,7 +51,6 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                    FirebaseManager().updateBlackListForFirebase(key: "blacklist", value: blackListDictArray)
                    print(UserData.shared.userDataFromUserDefault?.blackList)
                }
-               
            }
            controller.addAction(addBlackListAction)
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
