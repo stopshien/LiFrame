@@ -31,7 +31,6 @@ class PostViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-//        navigationItem.hidesBackButton = true
     }
     // 點空白處收鍵盤
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -95,11 +94,14 @@ class PostViewController: UIViewController {
                 } else {
                     imageRef.downloadURL { (url, error) in
                         if let downloadURL = url?.absoluteString {
+                            guard let userNameFromApple = UserData.shared.userDataFromUserDefault?.name,
+                                  let emailFromApple = UserData.shared.userDataFromUserDefault?.email,
+                                  let idFromApple = UserData.shared.userDataFromUserDefault?.id else { return }
                             let data: [String: Any] = [
                                 "author": [
-                                    "email": "angus@gmail.com",
-                                    "id": "angus",
-                                    "name": "Angus"
+                                    "email": emailFromApple,
+                                    "id": idFromApple,
+                                    "name": userNameFromApple
                                 ],
                                 "title": title,
                                 "content": content,

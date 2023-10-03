@@ -7,6 +7,7 @@
 
 import Foundation
 struct Posts {
+    let appleID: String
     let title: String
     let name: String
     let createdTime: String

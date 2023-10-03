@@ -17,7 +17,8 @@ class LutsCollectionViewCell: UICollectionViewCell {
     }()
     let lutLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = .darkGray
+        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
