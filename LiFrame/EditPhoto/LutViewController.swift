@@ -12,13 +12,23 @@ import CMHUD
 class LutViewController: UIViewController, PHPickerViewControllerDelegate {
     var luts = [Lut]()
     var currentLut: Lut?
+    var afterLutImage = [UIImageView]()
     var configuration = PHPickerConfiguration()
     let backview: UIView = {
         let view = UIView()
-        view.backgroundColor = .gray
+        view.backgroundColor = .clear
         view.alpha = 0.7
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    let displayCollectionView: UICollectionView = {
+        let layout = CardLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        // 註冊 cell 類型
+        collectionView.backgroundColor = .clear
+        collectionView.register(DisplayCollectionViewCell.self, forCellWithReuseIdentifier: "DisplayCollectionViewCell")
+        return collectionView
     }()
     let dismissButton: UIButton = {
        let button = UIButton()
@@ -62,11 +72,13 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
         super.viewDidLoad()
         lutsCollectionView.delegate = self
         lutsCollectionView.dataSource = self
+        displayCollectionView.dataSource = self
         view.addSubview(backview)
         view.addSubview(lutView)
         view.addSubview(lutsCollectionView) // 將 collectionView 添加到視圖中
-        backview.addSubview(dismissButton)
+        view.addSubview(displayCollectionView)
         lutsCollectionView.addSubview(haveNoLutsLabel)
+        view.addSubview(dismissButton)
         NSLayoutConstraint.activate([
             backview.topAnchor.constraint(equalTo: view.topAnchor),
             backview.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1),
@@ -79,12 +91,15 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
             lutsCollectionView.centerYAnchor.constraint(equalTo: lutView.centerYAnchor, constant: -20),
             lutsCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
             lutsCollectionView.heightAnchor.constraint(equalTo: lutView.heightAnchor, multiplier: 0.55),
-            dismissButton.topAnchor.constraint(equalTo: backview.topAnchor, constant: 50),
+            dismissButton.topAnchor.constraint(equalTo: backview.topAnchor, constant: 20),
             dismissButton.trailingAnchor.constraint(equalTo: backview.trailingAnchor, constant: -30),
             dismissButton.widthAnchor.constraint(equalToConstant: 30),
             dismissButton.heightAnchor.constraint(equalToConstant: 30),
             haveNoLutsLabel.centerXAnchor.constraint(equalTo: lutsCollectionView.centerXAnchor),
-            haveNoLutsLabel.centerYAnchor.constraint(equalTo: lutsCollectionView.centerYAnchor)
+            haveNoLutsLabel.centerYAnchor.constraint(equalTo: lutsCollectionView.centerYAnchor),
+            displayCollectionView.topAnchor.constraint(equalTo: backview.topAnchor),
+            displayCollectionView.widthAnchor.constraint(equalTo: backview.widthAnchor, multiplier: 1),
+            displayCollectionView.bottomAnchor.constraint(equalTo: lutView.topAnchor)
         ])
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -105,20 +120,33 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
 }
 extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
+       1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        luts.count
+        if collectionView == lutsCollectionView {
+            return luts.count
+        } else {
+           return 5
+        }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LutsCollectionViewCell", for: indexPath) as? LutsCollectionViewCell,
-              let demoImage = UIImage(named: "mianImage")else { return LutsCollectionViewCell() }
-        let demoForLutImage = LutManager.shared.applyLutToImage(demoImage, brightness: luts[indexPath.row].bright, contrast: luts[indexPath.row].contrast, saturation: luts[indexPath.row].saturation)
-        cell.lutImageView.image = demoForLutImage
-        cell.lutLabel.text = luts[indexPath.row].name
-        cell.backgroundColor = .clear
-        cell.lutImageView.layer.cornerRadius = 10
-        return cell
+        switch collectionView {
+        case lutsCollectionView:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LutsCollectionViewCell", for: indexPath) as? LutsCollectionViewCell,
+                  let demoImage = UIImage(named: "mianImage") else { return LutsCollectionViewCell() }
+            let demoForLutImage = LutManager.shared.applyLutToImage(demoImage, brightness: luts[indexPath.row].bright, contrast: luts[indexPath.row].contrast, saturation: luts[indexPath.row].saturation)
+            cell.lutImageView.image = demoForLutImage
+            cell.lutLabel.text = luts[indexPath.row].name
+            cell.backgroundColor = .clear
+            cell.lutImageView.layer.cornerRadius = 10
+            return cell
+        case displayCollectionView:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DisplayCollectionViewCell", for: indexPath) as? DisplayCollectionViewCell else { return DisplayCollectionViewCell() }
+            cell.contentView.backgroundColor = .PointColor
+            return cell
+        default:
+            return UICollectionViewCell()
+        }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         currentLut = luts[indexPath.row]

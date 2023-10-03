@@ -80,7 +80,6 @@ class CommunityViewController: UIViewController {
             navigationItem.rightBarButtonItem?.isHidden = true
         }
     }
-    
     @objc func tappedProfile() {
         let controller = UIAlertController(title: "個人設定", message: nil, preferredStyle: .actionSheet)
         let watchBlackListAction = UIAlertAction(title: "查看黑名單", style: .default) { action in
