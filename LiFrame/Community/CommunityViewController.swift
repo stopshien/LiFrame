@@ -74,7 +74,7 @@ class CommunityViewController: UIViewController {
             }
         }
         // 判斷使否已經登入,userData 都存在 UserData 中
-        if let userID = UserData.shared.userDataFromUserDefault?.id {
+        if let userID = UserData.shared.getUserAppleID() {
             navigationItem.rightBarButtonItem?.isHidden = false
         } else {
             navigationItem.rightBarButtonItem?.isHidden = true
@@ -89,6 +89,7 @@ class CommunityViewController: UIViewController {
         controller.addAction(watchBlackListAction)
         let logOutAction = UIAlertAction(title: "登出", style: .default) { action in
             UserDefaults.standard.removeObject(forKey: "UserAppleID")
+            print(UserData.shared.getUserAppleID())
             // TODO: 登出提醒
         }
         controller.addAction(logOutAction)
@@ -98,10 +99,11 @@ class CommunityViewController: UIViewController {
     }
     @objc func tappedPostButton() {
         // 判斷使否已經登入,userData 都存在 UserData 中
-            if let userID = UserData.shared.userDataFromUserDefault?.id {
+            if let userID = UserData.shared.getUserAppleID() {
                 checkCredentialState(withUserID: userID)
             } else {
                 checkCredentialState(withUserID: "")
+                communityTableView.reloadData()
             }
     }
     func setButtonUI() {

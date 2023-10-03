@@ -18,7 +18,7 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         postDetailTableView.delegate = self
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "...", style: .plain, target: self, action: #selector(pressMore))
         // 判斷使否已經登入,userData 都存在 UserData 中
-            if let userID = UserData.shared.userDataFromUserDefault?.id {
+            if let userID = UserData.shared.getUserAppleID() {
                 navigationItem.rightBarButtonItem?.isHidden = false
             } else {
                 navigationItem.rightBarButtonItem?.isHidden = true
@@ -49,7 +49,7 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                        ]
                    }
                    FirebaseManager().updateBlackListForFirebase(key: "blacklist", value: blackListDictArray)
-                   print(UserData.shared.userDataFromUserDefault?.blackList)
+//                   print(UserData.shared.userDataFromUserDefault?.blackList)
                }
            }
            controller.addAction(addBlackListAction)
