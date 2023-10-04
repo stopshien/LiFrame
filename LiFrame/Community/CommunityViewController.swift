@@ -89,10 +89,26 @@ class CommunityViewController: UIViewController {
         controller.addAction(watchBlackListAction)
         let logOutAction = UIAlertAction(title: "登出", style: .default) { action in
             UserDefaults.standard.removeObject(forKey: "UserAppleID")
-            print(UserData.shared.getUserAppleID())
-            // TODO: 登出提醒
+            self.navigationItem.rightBarButtonItem?.isHidden = true
+            guard let image = UIImage(systemName: "door.left.hand.closed") else { return }
+            CMHUD.show(image: image, in: self.view, identifier: "Log Out", imageSize: CGSize(width: 80, height: 80))
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                CMHUD.hide(from: self.view)
+            }
         }
         controller.addAction(logOutAction)
+        let removeAction = UIAlertAction(title: "刪除帳號", style: .default) { action in
+            UserDefaults.standard.removeObject(forKey: "UserAppleID")
+            // 刪除 firebase 黑名單
+            FirebaseManager().updateBlackListForFirebase(key: "blacklist", value: [])
+            self.navigationItem.rightBarButtonItem?.isHidden = true
+            guard let image = UIImage(systemName: "door.left.hand.closed") else { return }
+            CMHUD.show(image: image, in: self.view, identifier: "Log Out", imageSize: CGSize(width: 80, height: 80))
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                CMHUD.hide(from: self.view)
+            }
+        }
+        controller.addAction(removeAction)
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         controller.addAction(cancelAction)
         present(controller, animated: true)

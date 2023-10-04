@@ -7,6 +7,7 @@
 
 import UIKit
 import AuthenticationServices
+import CMHUD
 
 class SignInViewController: UIViewController {
 
@@ -65,14 +66,17 @@ extension SignInViewController: ASAuthorizationControllerDelegate {
                             "email": appleEmail
                         ]
                         userDefaults.set(userDataFromApple, forKey: "UserDataFromApple")
-                        
                             FirebaseManager.shared.editUserDataForFirebase(key: "fullName", value: name)
                             FirebaseManager.shared.editUserDataForFirebase(key: "email", value: appleEmail)
                     }
-                    self.navigationController?.popToRootViewController(animated: true)
-
                 }
             }
+        }
+        guard let image = UIImage(systemName: "door.left.hand.open") else { return }
+        CMHUD.show(image: image, in: view, identifier: "Log Out", imageSize: CGSize(width: 100, height: 100))
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            CMHUD.hide(from: self.view)
+            self.navigationController?.popToRootViewController(animated: true)
         }
     }
          /// 授權失敗

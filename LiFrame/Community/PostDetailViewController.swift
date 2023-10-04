@@ -49,7 +49,6 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                        ]
                    }
                    FirebaseManager().updateBlackListForFirebase(key: "blacklist", value: blackListDictArray)
-//                   print(UserData.shared.userDataFromUserDefault?.blackList)
                }
            }
            controller.addAction(addBlackListAction)
