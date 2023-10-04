@@ -54,20 +54,25 @@ extension SignInViewController: ASAuthorizationControllerDelegate {
             //因為apple除了第一次登入後只會提供 ID，所以獨立存取日後提供登入登出。
             let userAppleID = ["appleID": appleIDCredential.user]
             userDefaults.set(userAppleID, forKey: "UserAppleID")
-            FirebaseManager.shared.pushToFirebaseForUser(documentData: userAppleID, appleID: appleIDCredential.user)
-            //存取來自 apple 的姓名、信箱
-            if let fullName = appleIDCredential.fullName,
-               let appleEmail = appleIDCredential.email,
-               let name = fullName.givenName {
-                let userDataFromApple: [String: String] = [
-                    "fullName": name,
-                    "email": appleEmail
-                ]
-                userDefaults.set(userDataFromApple, forKey: "UserDataFromApple")
-                FirebaseManager.shared.editUserDataForFirebase(key: "fullName", value: name)
-                FirebaseManager.shared.editUserDataForFirebase(key: "email", value: appleEmail)
+            FirebaseManager.shared.pushToFirebaseForUser(documentData: userAppleID, appleID: appleIDCredential.user) { err in
+                if err == nil {
+                    //存取來自 apple 的姓名、信箱
+                    if let fullName = appleIDCredential.fullName,
+                       let appleEmail = appleIDCredential.email,
+                       let name = fullName.givenName {
+                        let userDataFromApple: [String: String] = [
+                            "fullName": name,
+                            "email": appleEmail
+                        ]
+                        userDefaults.set(userDataFromApple, forKey: "UserDataFromApple")
+                        
+                            FirebaseManager.shared.editUserDataForFirebase(key: "fullName", value: name)
+                            FirebaseManager.shared.editUserDataForFirebase(key: "email", value: appleEmail)
+                    }
+                    self.navigationController?.popToRootViewController(animated: true)
+
+                }
             }
-            navigationController?.popToRootViewController(animated: true)
         }
     }
          /// 授權失敗
