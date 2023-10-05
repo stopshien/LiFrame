@@ -16,7 +16,7 @@ class MapViewController: UIViewController {
     let miniView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .backgroundColorSet
+        view.backgroundColor = .mainLabelColor
         view.clipsToBounds = true
         view.alpha = 0.9
         view.layer.cornerRadius = 30

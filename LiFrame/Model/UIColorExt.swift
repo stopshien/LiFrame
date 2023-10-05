@@ -8,10 +8,11 @@
 import Foundation
 import UIKit
 extension UIColor {
-    static let mainColor = UIColor.init(hexString: "#FC9F4D")
-    static let secondColor = UIColor.init(hexString: "#D7C4BB")
-    static let PointColor = UIColor.init(hexString: "#554236")
-    static let backgroundColorSet = UIColor.init(hexString: "#554236")
+    static let mainColor = UIColor.init(hexString: "#FDF4DE")
+    static let secondColor = UIColor.init(hexString: "#FEF9EA")
+    static let PointColor = UIColor.init(hexString: "#E8DBC5")
+    static let backgroundColorSet = UIColor.init(hexString: "#BC9F77")
+    static let mainLabelColor = UIColor.init(hexString: "#5C4223")
     static let lutCollectionViewColor = UIColor.init(hexString: "#FCEDD6")
     static let lutViewColor = UIColor.init(hexString: "#E6C28C")
     convenience init(hexString: String) {

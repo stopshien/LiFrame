@@ -11,7 +11,7 @@ class PostImageViewTableViewCell: UITableViewCell {
     @IBOutlet weak var postImageView: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        contentView.backgroundColor = .PointColor
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

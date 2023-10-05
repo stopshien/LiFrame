@@ -14,7 +14,11 @@ class PostDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var contentLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-
+        contentView.backgroundColor = .PointColor
+        titleLabel.textColor = .mainLabelColor
+        contentLabel.textColor = .mainLabelColor
+        createTimeLabel.textColor = .backgroundColorSet
+        posterNameLabel.textColor = .backgroundColorSet
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

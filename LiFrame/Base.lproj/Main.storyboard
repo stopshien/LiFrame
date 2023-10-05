@@ -90,7 +90,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="cbU-Tg-tdT">
                                 <rect key="frame" x="0.0" y="103" width="393" height="666"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CommunityTableViewCell" rowHeight="70" id="WTn-wz-QOo" customClass="CommunityTableViewCell" customModule="LiFrame" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="393" height="70"/>
@@ -111,7 +111,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ccl-Gx-X8O">
                                                             <rect key="frame" x="0.0" y="8" width="365" height="30"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                            <nil key="textColor"/>
+                                                            <color key="textColor" red="0.36078431372549019" green="0.25882352941176467" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -133,6 +133,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="qCn-Ob-7V7" secondAttribute="bottom" constant="5" id="da1-ig-qcr"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="backgroundViewForCell" destination="qCn-Ob-7V7" id="MZC-YU-cfc"/>
                                             <outlet property="createTimeLabel" destination="2dJ-Wt-nx8" id="w7g-tY-8f8"/>
@@ -151,7 +152,9 @@
                             <constraint firstItem="dDh-iQ-5wP" firstAttribute="bottom" secondItem="cbU-Tg-tdT" secondAttribute="bottom" id="sqH-A7-ejS"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="y5c-ax-8UE"/>
+                    <navigationItem key="navigationItem" id="y5c-ax-8UE">
+                        <barButtonItem key="backBarButtonItem" title=" " id="OZZ-jZ-RgT"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="communityTableView" destination="cbU-Tg-tdT" id="4xr-Jg-tsT"/>
                     </connections>

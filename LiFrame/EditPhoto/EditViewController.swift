@@ -73,7 +73,7 @@ class EditViewController: UIViewController {
         button.setTitle("儲存照片", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .backgroundColorSet
+        button.backgroundColor = .mainLabelColor
         button.layer.borderColor = UIColor.gray.cgColor
         button.layer.borderWidth = 1
         button.layer.cornerRadius = 5
@@ -170,6 +170,9 @@ class EditViewController: UIViewController {
     @objc func savePhoto() {
         if let image = finalImage {
             LutManager.shared.saveImagesToPhotoLibrary([image])
+            CMHUD.success(in: view)
+        } else if let editImage = editImage {
+            LutManager.shared.saveImagesToPhotoLibrary([editImage])
             CMHUD.success(in: view)
         }
     }
