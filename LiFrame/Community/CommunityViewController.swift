@@ -39,6 +39,9 @@ class CommunityViewController: UIViewController {
         dformatter.dateFormat = "yyyy.MM.dd HH:mm"
     }
     override func viewWillAppear(_ animated: Bool) {
+        updatePost()
+    }
+    func updatePost() {
         var blackLists = [BlackList(blockedName: "", blockedAppleID: "")]
         UserData.shared.getUserDataFromFirebase { user in
             if let user = user, !user.blackList.isEmpty {
@@ -89,13 +92,53 @@ class CommunityViewController: UIViewController {
         controller.addAction(watchBlackListAction)
         let logOutAction = UIAlertAction(title: "登出", style: .default) { action in
             UserDefaults.standard.removeObject(forKey: "UserAppleID")
-            print(UserData.shared.getUserAppleID())
-            // TODO: 登出提醒
+//            self.navigationItem.rightBarButtonItem?.isHidden = true
+            self.updatePost()
+            guard let image = UIImage(systemName: "door.left.hand.closed") else { return }
+            CMHUD.show(image: image, in: self.view, identifier: "Log Out", imageSize: CGSize(width: 80, height: 80))
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                CMHUD.hide(from: self.view,delay: 2)
+            }
         }
         controller.addAction(logOutAction)
+        let removeAction = UIAlertAction(title: "刪除帳號", style: .default) { action in
+            self.checkDeleteAlert()
+        }
+        controller.addAction(removeAction)
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         controller.addAction(cancelAction)
         present(controller, animated: true)
+    }
+    func checkDeleteAlert() {
+        let alertController = UIAlertController(
+            title: "確認是否刪除此帳號",
+            message: "請留意帳號刪除後將遺失所有資料",
+            preferredStyle: .alert)
+        // 建立[確認]按鈕
+        let okAction = UIAlertAction(
+            title: "刪除",
+            style: .default,
+            handler: {
+            (action: UIAlertAction!) -> Void in
+                // 刪除 firebase 黑名單
+                FirebaseManager().updateBlackListForFirebase(key: "blacklist", value: [])
+                UserDefaults.standard.removeObject(forKey: "UserAppleID")
+//                self.navigationItem.rightBarButtonItem?.isHidden = true
+                self.updatePost()
+                guard let image = UIImage(systemName: "door.left.hand.closed") else { return }
+                CMHUD.show(image: image, in: self.view, identifier: "Log Out", imageSize: CGSize(width: 80, height: 80))
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    CMHUD.hide(from: self.view)
+                }
+        })
+       let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+       alertController.addAction(okAction)
+       alertController.addAction(cancelAction)
+        // 顯示提示框
+       self.present(
+          alertController,
+          animated: true,
+          completion: nil)
     }
     @objc func tappedPostButton() {
         // 判斷使否已經登入,userData 都存在 UserData 中
@@ -130,13 +173,27 @@ class CommunityViewController: UIViewController {
             case .revoked:
                 DispatchQueue.main.async {
                     // 尚未登入，顯示登入畫面
-                    self.navigationController?.pushViewController(SignInViewController.shared, animated: true)
+                    let signInVC = SignInViewController.shared
+                    if let sheetPresentationController = signInVC.sheetPresentationController {
+                        sheetPresentationController.detents = [.custom(resolver: { context in
+                            context.maximumDetentValue * 0.2
+                        })]
+                        sheetPresentationController.preferredCornerRadius = 50
+                        self.present(signInVC, animated: true)
+                    }
                 }
                 print("not login")
             case .notFound:
                 DispatchQueue.main.async {
-                    // 尚未登入，顯示登入畫面
-                    self.navigationController?.pushViewController(SignInViewController.shared, animated: true)
+                    let signInVC = SignInViewController.shared
+                    if let sheetPresentationController = signInVC.sheetPresentationController {
+                        sheetPresentationController.detents = [.custom(resolver: { context in
+                            context.maximumDetentValue * 0.2
+                        })]
+                        sheetPresentationController.preferredCornerRadius = 50
+                        self.present(signInVC, animated: true)
+                    }
+
                 }
                 print("not found")
                 // 無此用戶
