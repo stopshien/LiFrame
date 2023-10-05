@@ -135,7 +135,7 @@ extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         switch collectionView {
         case lutsCollectionView:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LutsCollectionViewCell", for: indexPath) as? LutsCollectionViewCell,
-                  let demoImage = UIImage(named: "mianImage") else { return LutsCollectionViewCell() }
+                  let demoImage = UIImage(named: "lutDisplayImage") else { return LutsCollectionViewCell() }
             let demoForLutImage = LutManager.shared.applyLutToImage(demoImage, brightness: luts[indexPath.row].bright, contrast: luts[indexPath.row].contrast, saturation: luts[indexPath.row].saturation)
             cell.lutImageView.image = demoForLutImage
             cell.lutLabel.text = luts[indexPath.row].name
@@ -187,7 +187,6 @@ extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSourc
                 }
             }
         }
-        
         // 等待所有任務完成
         group.notify(queue: .main) {
             CMHUD.success(in: self.view)
