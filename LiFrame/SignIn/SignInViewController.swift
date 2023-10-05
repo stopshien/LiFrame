@@ -14,11 +14,9 @@ class SignInViewController: UIViewController {
     static let shared = SignInViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .lutCollectionViewColor
         view.addSubview(signInButton)
-        NSLayoutConstraint.activate([
-            signInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            signInButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
+        setSignInWithAppleButtonLayout()
         signInButton.addTarget(self, action: #selector(signInWithApple), for: .touchUpInside)
     }
     let signInButton: ASAuthorizationAppleIDButton = {
@@ -36,6 +34,14 @@ class SignInViewController: UIViewController {
         controller.presentationContextProvider = self
 
         controller.performRequests()
+    }
+    func setSignInWithAppleButtonLayout() {
+        NSLayoutConstraint.activate([
+            signInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            signInButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
+            signInButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
+            signInButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
     }
 }
 
@@ -73,7 +79,7 @@ extension SignInViewController: ASAuthorizationControllerDelegate {
             }
         }
         guard let image = UIImage(systemName: "door.left.hand.open") else { return }
-        CMHUD.show(image: image, in: view, identifier: "Log Out", imageSize: CGSize(width: 100, height: 100))
+        CMHUD.show(image: image, in: view, identifier: "Log in", imageSize: CGSize(width: 100, height: 100))
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             CMHUD.hide(from: self.view)
             self.navigationController?.popToRootViewController(animated: true)
