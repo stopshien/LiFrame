@@ -11,6 +11,7 @@ import FirebaseFirestore
 import FirebaseStorage
 import Kingfisher
 import CMHUD
+import IQKeyboardManagerSwift
 
 class PostViewController: UIViewController {
     let semaphore = DispatchSemaphore(value: 0)
@@ -35,6 +36,7 @@ class PostViewController: UIViewController {
         titleTextField.textColor = .mainLabelColor
         categoryTextField.textColor = .mainLabelColor
         contentTextView.textColor = .mainLabelColor
+        IQKeyboardManager.shared.enable = true
     }
     // 點空白處收鍵盤
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
