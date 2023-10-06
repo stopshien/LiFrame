@@ -20,17 +20,17 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     let editPhotoButton: UIButton = {
         let button = UIButton()
         button.isSelected = false
-        button.setTitle("    Edit Photo", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 25)
-//        button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
+        button.setTitle("    編輯相片", for: .normal)
+//        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 25)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.gray, for: .highlighted)
         button.titleLabel?.textAlignment = .center
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .PointColor
-        button.tintColor = .white
-        button.layer.borderColor = UIColor.systemGray5.cgColor
-        button.layer.borderWidth = 5
+        button.backgroundColor = .mainLabelColor
+//        button.tintColor = .white
+        button.layer.borderColor = UIColor.mainLabelColor.cgColor
+        button.layer.borderWidth = 3.5
         let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 50))
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         return button
@@ -38,17 +38,17 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     let syncEditButton: UIButton = {
         let button = UIButton()
         button.isSelected = false
-        button.setTitle("Lut Photos", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 20)
-//        button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
-        button.setTitleColor(UIColor.PointColor, for: .normal)
+        button.setTitle("套用濾鏡", for: .normal)
+//        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 20)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
+        button.setTitleColor(.mainLabelColor, for: .normal)
         button.setTitleColor(.systemGray6, for: .highlighted)
         button.titleLabel?.textAlignment = .center
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .mainColor
         button.tintColor = .PointColor
-        button.layer.borderColor = UIColor.systemGray5.cgColor
-        button.layer.borderWidth = 5
+        button.layer.borderColor = UIColor.mainLabelColor.cgColor
+        button.layer.borderWidth = 3.5
         let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 50))
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         return button
@@ -59,15 +59,15 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
 //        button.setTitle("Album", for: .normal)
         button.setImage(UIImage(systemName: "photo"), for: .normal)
 //        button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
-        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 18)
+//        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 18)
         button.setTitleColor(.PointColor, for: .normal)
         button.setTitleColor(.gray, for: .highlighted)
-        button.titleLabel?.textAlignment = .center
+//        button.titleLabel?.textAlignment = .center
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .secondColor
-        button.tintColor = .white
-        button.layer.borderColor = UIColor.systemGray5.cgColor
-        button.layer.borderWidth = 5
+        button.tintColor = UIColor(hexString: "#CFB5A1")
+        button.layer.borderColor = UIColor.mainLabelColor.cgColor
+        button.layer.borderWidth = 3.5
         let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 50))
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         return button
@@ -75,7 +75,6 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     // 生命週期
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(backgroundView)
         navigationItem.title = ""
         view.backgroundColor = .mainColor
         configuration.filter = .images
@@ -83,6 +82,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         setEditPhotoViewLayout()
     }
     func setEditPhotoViewLayout() {
+        view.addSubview(backgroundView)
         view.addSubview(editPhotoButton)
         view.addSubview(seeLibraryButton)
         view.addSubview(syncEditButton)

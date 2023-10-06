@@ -16,8 +16,8 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
     var configuration = PHPickerConfiguration()
     let backview: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
-        view.alpha = 0.7
+        view.backgroundColor = .PointColor
+        view.alpha = 0.8
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -34,7 +34,7 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
        let button = UIButton()
         button.setTitle("X", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .black
+        button.backgroundColor = UIColor(hexString: "#9E8A7B")
         button.layer.cornerRadius = 15
         button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false

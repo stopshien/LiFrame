@@ -41,7 +41,7 @@ final public class CMHUD: UIView {
     private enum Constants {
 
         /// HUD side size
-        static let size: CGFloat = 80
+        static let size: CGFloat = 100
 
         /// Current view's corner radius
         static let cornerRadius: CGFloat = 13
@@ -228,7 +228,7 @@ final public class CMHUD: UIView {
         removingCurrent: Bool = false
     ) {
         let imageWrappingView = UIView()
-        let imageWrappingViewSize: CGFloat = 44
+        let imageWrappingViewSize: CGFloat = 80
         imageWrappingView.layer.cornerRadius = imageWrappingViewSize / 2
         let imageView = UIImageView(image: image.withRenderingMode(.alwaysTemplate))
         imageView.frame.size = imageSize

@@ -14,8 +14,10 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var postDetailTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .PointColor
         postDetailTableView.dataSource = self
         postDetailTableView.delegate = self
+        postDetailTableView.backgroundColor = .clear
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "...", style: .plain, target: self, action: #selector(pressMore))
         // 判斷使否已經登入,userData 都存在 UserData 中
             if let userID = UserData.shared.getUserAppleID() {
