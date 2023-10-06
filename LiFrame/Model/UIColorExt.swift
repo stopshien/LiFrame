@@ -12,7 +12,7 @@ extension UIColor {
     static let secondColor = UIColor.init(hexString: "#FEF9EA")
     static let PointColor = UIColor.init(hexString: "#E8DBC5")
     static let backgroundColorSet = UIColor.init(hexString: "#BC9F77")
-    static let mainLabelColor = UIColor.init(hexString: "#5C4223")
+    static let mainLabelColor = UIColor.init(hexString: "#73645A")
     static let lutCollectionViewColor = UIColor.init(hexString: "#FCEDD6")
     static let lutViewColor = UIColor.init(hexString: "#E6C28C")
     convenience init(hexString: String) {

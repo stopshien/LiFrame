@@ -23,7 +23,7 @@ class CommunityViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.tintColor = .white
-        button.backgroundColor = .black
+        button.backgroundColor = .mainLabelColor
         button.addTarget(self, action: #selector(tappedPostButton), for: .touchUpInside)
         let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 30))
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
@@ -36,7 +36,8 @@ class CommunityViewController: UIViewController {
         communityTableView.delegate = self
         view.addSubview(addPostButton)
         setButtonUI()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Profile", style: .plain, target: self, action: #selector(tappedProfile))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle"), style: .plain, target: self, action: #selector(tappedProfile))
+        
         dformatter.dateFormat = "yyyy.MM.dd HH:mm"
         NotificationCenter.default.addObserver(self, selector: #selector(updatePostData), name: Notification.Name("updatePostData"), object: nil)
     }

@@ -44,14 +44,15 @@ class SignInViewController: UIViewController {
     }
     func setSignInWithAppleButtonLayout() {
         NSLayoutConstraint.activate([
-            signInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            signInButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
-            signInButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
-            signInButton.heightAnchor.constraint(equalToConstant: 50)
+            signInLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
+            signInLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         NSLayoutConstraint.activate([
-            signInLabel.topAnchor.constraint(equalTo: signInButton.bottomAnchor, constant: 10),
-            signInLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            signInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            signInButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+            signInButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
+            signInButton.heightAnchor.constraint(equalToConstant: 50),
+            signInButton.bottomAnchor.constraint(equalTo: signInLabel.topAnchor, constant: -10)
         ])
     }
 }

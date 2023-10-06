@@ -31,6 +31,10 @@ class PostViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .PointColor
+        titleTextField.textColor = .mainLabelColor
+        categoryTextField.textColor = .mainLabelColor
+        contentTextView.textColor = .mainLabelColor
     }
     // 點空白處收鍵盤
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

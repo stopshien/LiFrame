@@ -27,8 +27,8 @@ class MapViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 25, weight: .bold)
         label.textColor = .white
-        label.shadowColor = .black
-        label.shadowOffset = CGSize(width: 0.3, height: 1.5)
+//        label.shadowColor = .black
+//        label.shadowOffset = CGSize(width: 0.3, height: 1.5)
         return label
     }()
     let moonLabel: UILabel = {
@@ -36,8 +36,8 @@ class MapViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textColor = .white
-        label.shadowColor = .black
-        label.shadowOffset = CGSize(width: 0.3, height: 1.5)
+//        label.shadowColor = .black
+//        label.shadowOffset = CGSize(width: 0.3, height: 1.5)
         return label
     }()
     let moonImage: UIImageView = {
@@ -55,8 +55,8 @@ class MapViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textColor = .white
-        label.shadowColor = .black
-        label.shadowOffset = CGSize(width: 0.3, height: 1.5)
+//        label.shadowColor = .black
+//        label.shadowOffset = CGSize(width: 0.3, height: 1.5)
         return label
     }()
     let tempImage: UIImageView = {
@@ -73,8 +73,8 @@ class MapViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textColor = .white
-        label.shadowColor = .black
-        label.shadowOffset = CGSize(width: 0.3, height: 1.5)
+//        label.shadowColor = .black
+//        label.shadowOffset = CGSize(width: 0.3, height: 1.5)
         return label
     }()
     let cloudImage: UIImageView = {

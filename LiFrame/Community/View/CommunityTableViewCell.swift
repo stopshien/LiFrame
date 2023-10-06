@@ -23,6 +23,7 @@ class CommunityTableViewCell: UITableViewCell {
         titleLabel.textColor = .mainLabelColor
         createTimeLabel.font = UIFont.systemFont(ofSize: 10, weight: .light)
         createTimeLabel.textColor = .gray
+        selectionStyle = .none
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
