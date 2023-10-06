@@ -22,6 +22,8 @@ class BlackListTableViewCell: UITableViewCell {
             blackName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             blackName.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
+        backgroundColor = .PointColor
+        selectionStyle = .none
     }
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

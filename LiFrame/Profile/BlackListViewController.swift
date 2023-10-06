@@ -12,6 +12,7 @@ class BlackListViewController: UIViewController, UITableViewDelegate, UITableVie
     var blackListFromUserData = [BlackList]()
     let blackListTableView: UITableView = {
         let tableView = UITableView()
+        tableView.backgroundColor = .PointColor
         let fullScreen = UIScreen.main.bounds
         tableView.frame = CGRect(x: 0, y: 0, width: fullScreen.width, height: fullScreen.height)
         return tableView
