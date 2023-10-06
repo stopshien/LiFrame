@@ -37,12 +37,19 @@ class CommunityViewController: UIViewController {
         view.addSubview(addPostButton)
         setButtonUI()
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle"), style: .plain, target: self, action: #selector(tappedProfile))
-        
+
         dformatter.dateFormat = "yyyy.MM.dd HH:mm"
         NotificationCenter.default.addObserver(self, selector: #selector(updatePostData), name: Notification.Name("updatePostData"), object: nil)
+        communityTableView.addRefreshHeader(refreshingBlock: { [weak self] in
+            self?.updatePost()
+            self?.headerLoader()
+        })
     }
     override func viewWillAppear(_ animated: Bool) {
         updatePost()
+    }
+    func headerLoader() {
+        communityTableView.endHeaderRefreshing()
     }
     @objc func updatePostData() {
         guard let image = UIImage(systemName: "door.left.hand.open") else { return }
