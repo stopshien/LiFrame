@@ -19,6 +19,7 @@ class CommunityTableViewCell: UITableViewCell {
         backgroundViewForCell.layer.borderColor = UIColor.systemGray4.cgColor
         backgroundViewForCell.layer.borderWidth = 1
         backgroundViewForCell.backgroundColor = .secondColor
+        backgroundViewForCell.addShadow()
         titleLabel.font = UIFont.systemFont(ofSize: 25, weight: .bold)
         titleLabel.textColor = .mainLabelColor
         createTimeLabel.font = UIFont.systemFont(ofSize: 10, weight: .light)
