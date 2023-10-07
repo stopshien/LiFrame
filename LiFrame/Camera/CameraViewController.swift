@@ -13,6 +13,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     var configuration = PHPickerConfiguration()
     static let fullScreenSize = UIScreen.main.bounds
     var layerImageView: UIImageView?
+    var alphaValue: Float = 0.3
     let seePhotoLibrary: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -123,6 +124,16 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         button.layer.borderWidth = 5
         return button
     }()
+    let alphaSlider: UISlider = {
+        let slider = UISlider()
+        slider.translatesAutoresizingMaskIntoConstraints = false
+        slider.minimumValue = 0
+        slider.maximumValue = 1
+        slider.value = 0.3
+        slider.isContinuous = true
+        slider.minimumTrackTintColor = .mainLabelColor
+        return slider
+    }()
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,7 +147,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         liFrameCamera.addTarget(self, action: #selector(choosePhoto), for: .touchUpInside)
         originalCamera.addTarget(self, action: #selector(intoOriginalCamera), for: .touchUpInside)
         seePhotoLibrary.addTarget(self, action: #selector(intoLibaray), for: .touchUpInside)
-        print(UserData.shared.getUserAppleID())
+        alphaSlider.addTarget(self, action: #selector(alphaMove), for: .valueChanged)
     }
     override func viewWillAppear(_ animated: Bool) {
         for subview in backgroundImageView.subviews {
@@ -166,11 +177,14 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
 
                backgroundImageView.addSubview(circleView)
 
-         UIView.animate(withDuration: 0.6, delay: Double(index) * 0.5, animations: {
+         UIView.animate(withDuration: 0.6, delay: Double(index) * 0.2, animations: {
                    circleView.alpha = 0.5 // 將透明度漸變為 0.5
                })
            }
        }
+    @objc func alphaMove() {
+        alphaValue = alphaSlider.value
+    }
     @objc func intoLibaray() {
         configuration.selectionLimit = 0
         let pickerForLibrary = PHPickerViewController(configuration: configuration)
@@ -234,12 +248,12 @@ extension CameraViewController: PHPickerViewControllerDelegate {
                 [weak self] (image, error) in
                 DispatchQueue.main.async {
                     guard let self = self, let image = image as? UIImage else { return }
-                    // 假設您有一個 UIImage 的實例叫做 image
-                    var unrotatedImage = image.rotateImage(image, withOrientation: .left)
-                    if image.imageOrientation == .left {
-                        unrotatedImage = image.rotateImage(image, withOrientation: .left)
-                    } else if image.imageOrientation == .right {
-                        unrotatedImage = image.rotateImage(image, withOrientation: .right)
+                    var unrotatedImage = image
+
+                    if image.size.width > image.size.height {
+                        unrotatedImage = image.rotateToCorrectOrientation(.right)
+                    } else {
+                        unrotatedImage = image.rotateToCorrectOrientation(.up)
                     }
                     if picker.view.tag == 1 {
                     // 設定相機
@@ -253,10 +267,12 @@ extension CameraViewController: PHPickerViewControllerDelegate {
                             let screenSize = UIScreen.main.bounds
                             self.layerImageView = imageView
                             guard let layerImageView = self.layerImageView else { return }
-                            layerImageView.alpha = 0.5
+                            layerImageView.alpha = CGFloat(self.alphaValue)
                             // 開啟相機
                             if let layer = self.imageCameraPicker.cameraOverlayView {
                                 layer.addSubview(layerImageView)
+                                layerImageView.contentMode = .scaleAspectFill
+                                layerImageView.clipsToBounds = true
                                 layerImageView.translatesAutoresizingMaskIntoConstraints = false
                                 layerImageView.topAnchor.constraint(equalTo: layer.topAnchor).isActive = true
                                 layerImageView.widthAnchor.constraint(equalTo: layer.widthAnchor).isActive = true
@@ -283,6 +299,7 @@ extension CameraViewController: PHPickerViewControllerDelegate {
         imageCameraPicker.view.addSubview(shutterButton)
         imageCameraPicker.view.addSubview(flashButton)
         imageCameraPicker.view.addSubview(cancelButton)
+        imageCameraPicker.view.addSubview(alphaSlider)
     }
     func setCameraLayout() {
         NSLayoutConstraint.activate([
@@ -296,7 +313,10 @@ extension CameraViewController: PHPickerViewControllerDelegate {
             cancelButton.leadingAnchor.constraint(equalTo: shutterButton.trailingAnchor, constant: 40),
             cancelButton.bottomAnchor.constraint(equalTo: shutterButton.bottomAnchor),
             cancelButton.widthAnchor.constraint(equalTo: imageCameraPicker.view.widthAnchor, multiplier: 0.15),
-            cancelButton.heightAnchor.constraint(equalTo: imageCameraPicker.view.widthAnchor, multiplier: 0.15)
+            cancelButton.heightAnchor.constraint(equalTo: imageCameraPicker.view.widthAnchor, multiplier: 0.15),
+            alphaSlider.bottomAnchor.constraint(equalTo: imageCameraPicker.view.bottomAnchor , constant: -30),
+            alphaSlider.widthAnchor.constraint(equalTo: imageCameraPicker.view.widthAnchor, multiplier: 0.6),
+            alphaSlider.centerXAnchor.constraint(equalTo: imageCameraPicker.view.centerXAnchor)
         ])
     }
     @objc func tappedShutter() {

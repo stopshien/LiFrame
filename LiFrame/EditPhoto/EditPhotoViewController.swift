@@ -114,7 +114,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
 
                backgroundView.addSubview(circleView)
 
-               UIView.animate(withDuration: 1.0, delay: Double(index) * 0.5, animations: {
+               UIView.animate(withDuration: 1.0, delay: Double(index) * 0.4, animations: {
                    circleView.alpha = 0.6 // 將透明度漸變為 0.6
                })
            }

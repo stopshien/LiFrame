@@ -63,20 +63,20 @@ extension UIImage {
                 return self
             }
         }
-        func rotated(by radians: CGFloat) -> UIImage {
-            guard let cgImage = self.cgImage else {
-                return self
-            }
-            let rotatedSize = CGSize(width: self.size.height, height: self.size.width)
-            let rotatedRect = CGRect(origin: .zero, size: rotatedSize)
-            UIGraphicsBeginImageContext(rotatedSize)
-            let context = UIGraphicsGetCurrentContext()!
-            context.translateBy(x: rotatedSize.width / 2, y: rotatedSize.height / 2)
-            context.rotate(by: radians)
-            context.scaleBy(x: 1.0, y: -1.0)
-            context.draw(cgImage, in: CGRect(x: -self.size.width / 2, y: -self.size.height / 2, width: self.size.width, height: self.size.height))
-            let rotatedImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            return rotatedImage ?? self
+    func rotated(by radians: CGFloat) -> UIImage {
+        guard let cgImage = self.cgImage else {
+            return self
         }
+        let rotatedSize = CGSize(width: self.size.height, height: self.size.width)
+        let rotatedRect = CGRect(origin: .zero, size: rotatedSize)
+        UIGraphicsBeginImageContext(rotatedSize)
+        let context = UIGraphicsGetCurrentContext()!
+        context.translateBy(x: rotatedSize.width / 2, y: rotatedSize.height / 2)
+        context.rotate(by: radians)
+        context.scaleBy(x: 1.0, y: -1.0)
+        context.draw(cgImage, in: CGRect(x: -self.size.width / 2, y: -self.size.height / 2, width: self.size.width, height: self.size.height))
+        let rotatedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return rotatedImage ?? self
+    }
 }
