@@ -24,6 +24,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         button.layer.borderColor = UIColor.mainLabelColor.cgColor
         button.layer.borderWidth = 1.3
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        button.addShadow()
         return button
     }()
     let originalCamera: UIButton = {
@@ -36,6 +37,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         button.layer.cornerRadius = 10
         button.layer.borderColor = UIColor.mainLabelColor.cgColor
         button.layer.borderWidth = 1.3
+        button.addShadow()
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return button
     }()
@@ -54,6 +56,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     }()
     let liFrameCamera: UIButton = {
         let button = UIButton()
+        button.addShadow()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("+", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 70, weight: .bold)
@@ -135,6 +138,39 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         seePhotoLibrary.addTarget(self, action: #selector(intoLibaray), for: .touchUpInside)
         print(UserData.shared.getUserAppleID())
     }
+    override func viewWillAppear(_ animated: Bool) {
+        for subview in backgroundImageView.subviews {
+                subview.removeFromSuperview()
+        }
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        addFadingCircles()
+    }
+    func addFadingCircles() {
+        let circleColors: [UIColor] = [.mainLabelColor, .PointColor, .mainColor, .mainLabelColor, .PointColor]
+        let circleSizes: [CGFloat] = [40, 150, 80, 300, 200]
+        let xposition: [CGFloat] = [80, 250, 80, 300, -10]
+        let yposition: [CGFloat] = [80, 100, 300, 600, 470]
+     for (index, color) in circleColors.enumerated() {
+         let circleView = UIView()
+         let circleSize = circleSizes[index]
+         let xPoint = xposition[index]
+         let yPoint = yposition[index]
+         circleView.frame = CGRect(x: xPoint,
+                                   y: yPoint,
+                                   width: circleSize, height: circleSize)
+
+               circleView.backgroundColor = color
+               circleView.layer.cornerRadius = circleSize / 2
+               circleView.alpha = 0.0 // 設置初始透明度為 0
+
+               backgroundImageView.addSubview(circleView)
+
+         UIView.animate(withDuration: 0.6, delay: Double(index) * 0.5, animations: {
+                   circleView.alpha = 0.5 // 將透明度漸變為 0.5
+               })
+           }
+       }
     @objc func intoLibaray() {
         configuration.selectionLimit = 0
         let pickerForLibrary = PHPickerViewController(configuration: configuration)

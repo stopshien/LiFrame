@@ -19,6 +19,7 @@
 		6A6F6D642ACAF1ED007BAB21 /* CardLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F6D632ACAF1ED007BAB21 /* CardLayout.swift */; };
 		6A6F6D662ACAF39D007BAB21 /* DisplayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F6D652ACAF39D007BAB21 /* DisplayCollectionViewCell.swift */; };
 		6A6F6D6C2ACFEAFA007BAB21 /* MJRefreshWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F6D6B2ACFEAFA007BAB21 /* MJRefreshWrapper.swift */; };
+		6A6F6D6E2AD01381007BAB21 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F6D6D2AD01381007BAB21 /* UIView+Extension.swift */; };
 		6A714EF62AC44C250019FA93 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A714EF52AC44C250019FA93 /* SignInViewController.swift */; };
 		6A7C1E7E2AC54CD800E1FAFE /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7C1E7D2AC54CD800E1FAFE /* Users.swift */; };
 		6A7C1E802AC6A4EB00E1FAFE /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7C1E7F2AC6A4EB00E1FAFE /* UserData.swift */; };
@@ -60,6 +61,7 @@
 		6A6F6D632ACAF1ED007BAB21 /* CardLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardLayout.swift; sourceTree = "<group>"; };
 		6A6F6D652ACAF39D007BAB21 /* DisplayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayCollectionViewCell.swift; sourceTree = "<group>"; };
 		6A6F6D6B2ACFEAFA007BAB21 /* MJRefreshWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MJRefreshWrapper.swift; sourceTree = "<group>"; };
+		6A6F6D6D2AD01381007BAB21 /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		6A714EF52AC44C250019FA93 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		6A7C1E7D2AC54CD800E1FAFE /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		6A7C1E7F2AC6A4EB00E1FAFE /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 		6A80EFB72AB5912100C90754 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6A6F6D6D2AD01381007BAB21 /* UIView+Extension.swift */,
 				6A80EFB82AB6AD8C00C90754 /* UIImageExt.swift */,
 				6AF1ECA82ABB253500071983 /* UIColorExt.swift */,
 				6AF1EC972AB8421C00071983 /* FirebaseManager.swift */,
@@ -423,6 +426,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A6F6D6E2AD01381007BAB21 /* UIView+Extension.swift in Sources */,
 				6A7C1E7E2AC54CD800E1FAFE /* Users.swift in Sources */,
 				6A80EFC12AB6F70B00C90754 /* PostViewController.swift in Sources */,
 				6A80EFC62AB70F6800C90754 /* PostDetailViewController.swift in Sources */,

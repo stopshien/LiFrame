@@ -20,6 +20,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     let editPhotoButton: UIButton = {
         let button = UIButton()
         button.isSelected = false
+        button.addShadow()
         button.setTitle("    編輯相片", for: .normal)
 //        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 25)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
@@ -37,6 +38,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     }()
     let syncEditButton: UIButton = {
         let button = UIButton()
+        button.addShadow()
         button.isSelected = false
         button.setTitle("套用濾鏡", for: .normal)
 //        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 20)
@@ -55,6 +57,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     }()
     let seeLibraryButton: UIButton = {
         let button = UIButton()
+        button.addShadow()
         button.isSelected = false
 //        button.setTitle("Album", for: .normal)
         button.setImage(UIImage(systemName: "photo"), for: .normal)
@@ -81,6 +84,41 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         singleEditPicker.delegate = self
         setEditPhotoViewLayout()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        for subview in backgroundView.subviews {
+            if subview.backgroundColor != nil {
+                subview.removeFromSuperview()
+            }
+        }
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        addFadingCircles()
+    }
+    func addFadingCircles() {
+        let circleColors: [UIColor] = [.PointColor, .mainLabelColor]
+           let circleSizes: [CGFloat] = [40.0, 300]
+           let xposition: [CGFloat] = [200, 125]
+           let yposition: [CGFloat] = [80, 500]
+        for (index, color) in circleColors.enumerated() {
+            let circleView = UIView()
+            let circleSize = circleSizes[index]
+            let xPoint = xposition[index]
+            let yPoint = yposition[index]
+            circleView.frame = CGRect(x: xPoint,
+                                      y: yPoint,
+                                      width: circleSize, height: circleSize)
+
+               circleView.backgroundColor = color
+               circleView.layer.cornerRadius = circleSize / 2
+               circleView.alpha = 0.0 // 設置初始透明度為 0
+
+               backgroundView.addSubview(circleView)
+
+               UIView.animate(withDuration: 1.0, delay: Double(index) * 0.5, animations: {
+                   circleView.alpha = 0.6 // 將透明度漸變為 0.6
+               })
+           }
+       }
     func setEditPhotoViewLayout() {
         view.addSubview(backgroundView)
         view.addSubview(editPhotoButton)

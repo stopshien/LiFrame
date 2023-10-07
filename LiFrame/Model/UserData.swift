@@ -92,5 +92,33 @@ class UserData {
             }
         }
     }
+    func getDataFromFirebase(completion: @escaping (Users?) -> Void) {
+        let db = FirebaseManager.shared.db
+        guard let appleIDFromUserDefault = UserData.shared.getUserAppleID() else {
+            completion(nil)
+            print("UserDefault apple doesn't exist")
+            return
+        }
+        db.collection("users").document(appleIDFromUserDefault).getDocument() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+                completion(nil)
+                return
+            } else {
+                guard let querySnapshot = querySnapshot?.data() else {
+                    completion(nil)
+                    return
+                }
+                if let appleID = querySnapshot["appleID"] as? String,
+                   let email = querySnapshot["email"] as? String,
+                   let name = querySnapshot["fullName"] as? String {
+                    let userData = Users(name: name, email: email, id: appleID, documentID: appleID)
+                    completion(userData)
+                } else {
+                    completion(nil)
+                }
+            }
+        }
+    }
     private init() {}
 }
