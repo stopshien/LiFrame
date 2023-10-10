@@ -20,54 +20,57 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     let editPhotoButton: UIButton = {
         let button = UIButton()
         button.isSelected = false
-        button.setTitle("    Edit Photo", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 25)
-//        button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
+        button.addShadow()
+        button.setTitle("    編輯相片", for: .normal)
+//        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 25)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.gray, for: .highlighted)
         button.titleLabel?.textAlignment = .center
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .PointColor
-        button.tintColor = .white
-        button.layer.borderColor = UIColor.systemGray5.cgColor
-        button.layer.borderWidth = 5
+        button.backgroundColor = .mainLabelColor
+//        button.tintColor = .white
+        button.layer.borderColor = UIColor.mainLabelColor.cgColor
+        button.layer.borderWidth = 3.5
         let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 50))
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         return button
     }()
     let syncEditButton: UIButton = {
         let button = UIButton()
+        button.addShadow()
         button.isSelected = false
-        button.setTitle("Lut Photos", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 20)
-//        button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
-        button.setTitleColor(UIColor.PointColor, for: .normal)
+        button.setTitle("套用濾鏡", for: .normal)
+//        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 20)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
+        button.setTitleColor(.mainLabelColor, for: .normal)
         button.setTitleColor(.systemGray6, for: .highlighted)
         button.titleLabel?.textAlignment = .center
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .mainColor
         button.tintColor = .PointColor
-        button.layer.borderColor = UIColor.systemGray5.cgColor
-        button.layer.borderWidth = 5
+        button.layer.borderColor = UIColor.mainLabelColor.cgColor
+        button.layer.borderWidth = 3.5
         let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 50))
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         return button
     }()
     let seeLibraryButton: UIButton = {
         let button = UIButton()
+        button.addShadow()
         button.isSelected = false
 //        button.setTitle("Album", for: .normal)
         button.setImage(UIImage(systemName: "photo"), for: .normal)
 //        button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
-        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 18)
+//        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 18)
         button.setTitleColor(.PointColor, for: .normal)
         button.setTitleColor(.gray, for: .highlighted)
-        button.titleLabel?.textAlignment = .center
+//        button.titleLabel?.textAlignment = .center
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .secondColor
-        button.tintColor = .white
-        button.layer.borderColor = UIColor.systemGray5.cgColor
-        button.layer.borderWidth = 5
+        button.tintColor = UIColor(hexString: "#CFB5A1")
+        button.layer.borderColor = UIColor.mainLabelColor.cgColor
+        button.layer.borderWidth = 3.5
         let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 50))
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         return button
@@ -75,14 +78,49 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     // 生命週期
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(backgroundView)
         navigationItem.title = ""
         view.backgroundColor = .mainColor
         configuration.filter = .images
         singleEditPicker.delegate = self
         setEditPhotoViewLayout()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        for subview in backgroundView.subviews {
+            if subview.backgroundColor != nil {
+                subview.removeFromSuperview()
+            }
+        }
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        addFadingCircles()
+    }
+    func addFadingCircles() {
+        let circleColors: [UIColor] = [.PointColor, .mainLabelColor]
+           let circleSizes: [CGFloat] = [40.0, 300]
+           let xposition: [CGFloat] = [200, 125]
+           let yposition: [CGFloat] = [80, 500]
+        for (index, color) in circleColors.enumerated() {
+            let circleView = UIView()
+            let circleSize = circleSizes[index]
+            let xPoint = xposition[index]
+            let yPoint = yposition[index]
+            circleView.frame = CGRect(x: xPoint,
+                                      y: yPoint,
+                                      width: circleSize, height: circleSize)
+
+               circleView.backgroundColor = color
+               circleView.layer.cornerRadius = circleSize / 2
+               circleView.alpha = 0.0 // 設置初始透明度為 0
+
+               backgroundView.addSubview(circleView)
+
+               UIView.animate(withDuration: 1.0, delay: Double(index) * 0.4, animations: {
+                   circleView.alpha = 0.6 // 將透明度漸變為 0.6
+               })
+           }
+       }
     func setEditPhotoViewLayout() {
+        view.addSubview(backgroundView)
         view.addSubview(editPhotoButton)
         view.addSubview(seeLibraryButton)
         view.addSubview(syncEditButton)

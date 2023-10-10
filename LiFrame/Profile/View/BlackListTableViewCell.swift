@@ -10,7 +10,7 @@ import UIKit
 class BlackListTableViewCell: UITableViewCell {
     let blackName: UILabel = {
         let label = UILabel()
-        label.textColor = .tertiaryLabel
+        label.textColor = .mainLabelColor
         label.font = UIFont.systemFont(ofSize: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -22,6 +22,8 @@ class BlackListTableViewCell: UITableViewCell {
             blackName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             blackName.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
+        backgroundColor = .PointColor
+        selectionStyle = .none
     }
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

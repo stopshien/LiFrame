@@ -24,4 +24,6 @@ pod 'Kingfisher', '~> 7.0'
 
 pod "CMHUD"
 
+pod 'IQKeyboardManagerSwift'
+pod 'MJRefresh'
 end

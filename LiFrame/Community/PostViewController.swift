@@ -11,6 +11,7 @@ import FirebaseFirestore
 import FirebaseStorage
 import Kingfisher
 import CMHUD
+import IQKeyboardManagerSwift
 
 class PostViewController: UIViewController {
     let semaphore = DispatchSemaphore(value: 0)
@@ -31,6 +32,11 @@ class PostViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .PointColor
+        titleTextField.textColor = .mainLabelColor
+        categoryTextField.textColor = .mainLabelColor
+        contentTextView.textColor = .mainLabelColor
+        IQKeyboardManager.shared.enable = true
     }
     // 點空白處收鍵盤
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -95,29 +101,32 @@ class PostViewController: UIViewController {
                     imageRef.downloadURL { (url, error) in
                         if let downloadURL = url?.absoluteString {
                             guard let idFromApple = UserData.shared.getUserAppleID() else { return }
-                            let userNameFromApple = UserData.shared.userAppleName
-                            let emailFromApple = UserData.shared.userAppleEmail
-                            let data: [String: Any] = [
-                                "author": [
-                                    "email": emailFromApple,
-                                    "id": idFromApple,
-                                    "name": userNameFromApple
-                                ],
-                                "title": title,
-                                "content": content,
-                                "createdTime": Date().timeIntervalSince1970,
-                                "id": document.documentID,
-                                "category": category,
-                                "photoURL": downloadURL // 存儲照片的下載 URL
-                            ]
-                            // 儲存資料至 Firestore
-                            document.setData(data) { (error) in
-                                if let error = error {
-                                    print("Error adding document: \(error.localizedDescription)")
-                                } else {
-                                    self.navigationController?.popViewController(animated: true)
-                                    CMHUD.hide(from: self.view)
-                                    print("Document added successfully!")
+
+                            UserData.shared.getDataFromFirebase { user in
+                               guard let userNameFromApple = user?.name,
+                                     let emailFromApple = user?.email else { return }
+                                let data: [String: Any] = [
+                                    "author": [
+                                        "email": emailFromApple,
+                                        "id": idFromApple,
+                                        "name": userNameFromApple
+                                    ],
+                                    "title": title,
+                                    "content": content,
+                                    "createdTime": Date().timeIntervalSince1970,
+                                    "id": document.documentID,
+                                    "category": category,
+                                    "photoURL": downloadURL // 存儲照片的下載 URL
+                                ]
+                                // 儲存資料至 Firestore
+                                document.setData(data) { (error) in
+                                    if let error = error {
+                                        print("Error adding document: \(error.localizedDescription)")
+                                    } else {
+                                        self.navigationController?.popViewController(animated: true)
+                                        CMHUD.hide(from: self.view)
+                                        print("Document added successfully!")
+                                    }
                                 }
                             }
                         }

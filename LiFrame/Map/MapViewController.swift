@@ -16,10 +16,11 @@ class MapViewController: UIViewController {
     let miniView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .backgroundColorSet
+        view.backgroundColor = .mainLabelColor
         view.clipsToBounds = true
         view.alpha = 0.9
         view.layer.cornerRadius = 30
+        view.addShadow(offset: CGSize(width: 1, height: 1))
         return view
     }()
     let cityNameLabel: UILabel = {
@@ -27,8 +28,8 @@ class MapViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 25, weight: .bold)
         label.textColor = .white
-        label.shadowColor = .black
-        label.shadowOffset = CGSize(width: 0.3, height: 1.5)
+//        label.shadowColor = .black
+//        label.shadowOffset = CGSize(width: 0.3, height: 1.5)
         return label
     }()
     let moonLabel: UILabel = {
@@ -36,8 +37,8 @@ class MapViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textColor = .white
-        label.shadowColor = .black
-        label.shadowOffset = CGSize(width: 0.3, height: 1.5)
+//        label.shadowColor = .black
+//        label.shadowOffset = CGSize(width: 0.3, height: 1.5)
         return label
     }()
     let moonImage: UIImageView = {
@@ -55,8 +56,8 @@ class MapViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textColor = .white
-        label.shadowColor = .black
-        label.shadowOffset = CGSize(width: 0.3, height: 1.5)
+//        label.shadowColor = .black
+//        label.shadowOffset = CGSize(width: 0.3, height: 1.5)
         return label
     }()
     let tempImage: UIImageView = {
@@ -73,8 +74,8 @@ class MapViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textColor = .white
-        label.shadowColor = .black
-        label.shadowOffset = CGSize(width: 0.3, height: 1.5)
+//        label.shadowColor = .black
+//        label.shadowOffset = CGSize(width: 0.3, height: 1.5)
         return label
     }()
     let cloudImage: UIImageView = {
@@ -99,7 +100,7 @@ class MapViewController: UIViewController {
         miniView.addSubview(cloudLabel)
         miniView.addSubview(cloudImage)
         setMiniViewLayout()
-        cityNameLabel.text = "請點選城市"
+//        cityNameLabel.text = "請點選城市"
         citiesToMap()
         moonImage.isHidden = true
         cloudImage.isHidden = true
@@ -149,8 +150,13 @@ class MapViewController: UIViewController {
                         DispatchQueue.main.async {
                             let moonRiseTime = result.records.locations.location[0].time[0].moonRiseTime
                             let moonSetTime = result.records.locations.location[0].time[0].moonSetTime
-                            self.moonLabel.text = "\(moonRiseTime) - " + "\(moonSetTime)    "
+                            if moonSetTime != "", moonRiseTime != "" {
+                                self.moonLabel.text = "\(moonRiseTime) - " + "\(moonSetTime)    "
+                            } else {
+                                self.moonLabel.text = "未提供今日資訊    "
+                            }
                             self.cityNameLabel.text = city
+
                         }
                         print("===",result.records.locations.location[0].time[0])
                     } catch {
@@ -202,8 +208,7 @@ extension MapViewController: MKMapViewDelegate {
             mapView.centerToLocation(coordinate)
             getWeather(location: coordinate)
             moonImage.isHidden = false
-            cloudImage.isHidden = false
-            tempImage.isHidden = false
+
 
             mapView.layoutIfNeeded()
             UIView.animate(withDuration: 0.6) {
@@ -216,6 +221,8 @@ extension MapViewController: MKMapViewDelegate {
         Task {
             do {
                 let result = try await weatherService.weather(for: location)
+                cloudImage.isHidden = false
+                tempImage.isHidden = false
                 tempLabel.text = result.currentWeather.temperature.description
                 cloudLabel.text = result.currentWeather.condition.description
             } catch {

@@ -12,35 +12,47 @@ import CMHUD
 class SignInViewController: UIViewController {
 
     static let shared = SignInViewController()
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .lutCollectionViewColor
-        view.addSubview(signInButton)
-        setSignInWithAppleButtonLayout()
-        signInButton.addTarget(self, action: #selector(signInWithApple), for: .touchUpInside)
-    }
+    let signInLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "發文前請先登入"
+        label.textColor = .mainLabelColor
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 15, weight: .light)
+        return label
+    }()
     let signInButton: ASAuthorizationAppleIDButton = {
         let button = ASAuthorizationAppleIDButton(authorizationButtonType: .default, authorizationButtonStyle: .black)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .lutCollectionViewColor
+        view.addSubview(signInButton)
+        view.addSubview(signInLabel)
+        setSignInWithAppleButtonLayout()
+        signInButton.addTarget(self, action: #selector(signInWithApple), for: .touchUpInside)
+    }
     @objc func signInWithApple() {
         let signInWithAppleRequest: ASAuthorizationAppleIDRequest = ASAuthorizationAppleIDProvider().createRequest()
         signInWithAppleRequest.requestedScopes = [.fullName, .email]
-
         let controller: ASAuthorizationController = ASAuthorizationController(authorizationRequests: [signInWithAppleRequest])
-
         controller.delegate = self
         controller.presentationContextProvider = self
-
         controller.performRequests()
     }
     func setSignInWithAppleButtonLayout() {
         NSLayoutConstraint.activate([
+            signInLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
+            signInLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+        NSLayoutConstraint.activate([
             signInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            signInButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
+            signInButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
             signInButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
-            signInButton.heightAnchor.constraint(equalToConstant: 50)
+            signInButton.heightAnchor.constraint(equalToConstant: 50),
+            signInButton.bottomAnchor.constraint(equalTo: signInLabel.topAnchor, constant: -10)
         ])
     }
 }
@@ -78,12 +90,9 @@ extension SignInViewController: ASAuthorizationControllerDelegate {
                 }
             }
         }
-        guard let image = UIImage(systemName: "door.left.hand.open") else { return }
-        CMHUD.show(image: image, in: view, identifier: "Log in", imageSize: CGSize(width: 100, height: 100))
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            CMHUD.hide(from: self.view)
-            self.navigationController?.popToRootViewController(animated: true)
-        }
+
+            self.dismiss(animated: true)
+            NotificationCenter.default.post(name: NSNotification.Name("updatePostData"), object: nil)
     }
          /// 授權失敗
          /// - Parameters:

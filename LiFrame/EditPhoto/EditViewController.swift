@@ -32,6 +32,7 @@ class EditViewController: UIViewController {
         slider.maximumValue = 1
         slider.value = 0
         slider.isContinuous = true
+        slider.minimumTrackTintColor = .mainLabelColor
         return slider
     }()
     // 調整對比的 slider
@@ -42,6 +43,7 @@ class EditViewController: UIViewController {
         slider.maximumValue = 4
         slider.value = 1
         slider.isContinuous = true
+        slider.minimumTrackTintColor = .mainLabelColor
         return slider
     }()
     // 調整飽和的 slider
@@ -52,16 +54,17 @@ class EditViewController: UIViewController {
         slider.maximumValue = 2
         slider.value = 1
         slider.isContinuous = true
+        slider.minimumTrackTintColor = .mainLabelColor
         return slider
     }()
 
     let lutSaveButton: UIButton = {
        let button = UIButton()
         button.setTitle("儲存風格檔", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.mainLabelColor, for: .normal)
         button.tintColor = .black
         button.backgroundColor = .white
-        button.layer.borderColor = UIColor.gray.cgColor
+        button.layer.borderColor = UIColor.mainLabelColor.cgColor
         button.layer.borderWidth = 1
         button.layer.cornerRadius = 5
         button.clipsToBounds = true
@@ -73,8 +76,8 @@ class EditViewController: UIViewController {
         button.setTitle("儲存照片", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .backgroundColorSet
-        button.layer.borderColor = UIColor.gray.cgColor
+        button.backgroundColor = .mainLabelColor
+        button.layer.borderColor = UIColor.mainLabelColor.cgColor
         button.layer.borderWidth = 1
         button.layer.cornerRadius = 5
         button.clipsToBounds = true
@@ -85,7 +88,7 @@ class EditViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "亮度"
         label.textAlignment = .center
-        label.textColor = .black
+        label.textColor = .mainLabelColor
         return label
     }()
     let contrastLabel: UILabel = {
@@ -93,7 +96,7 @@ class EditViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "對比"
         label.textAlignment = .center
-        label.textColor = .black
+        label.textColor = .mainLabelColor
         return label
     }()
     let saturationLabel: UILabel = {
@@ -101,7 +104,7 @@ class EditViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "飽和度"
         label.textAlignment = .center
-        label.textColor = .black
+        label.textColor = .mainLabelColor
         return label
     }()
     override func viewDidLoad() {
@@ -136,40 +139,42 @@ class EditViewController: UIViewController {
         editImageView.image = editImage
         editImageView.contentMode = .scaleAspectFit
         NSLayoutConstraint.activate([
-            editImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 120),
-            editImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            editImageView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: 100),
-            editImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-            editLightSlider.topAnchor.constraint(greaterThanOrEqualTo: editImageView.bottomAnchor, constant: 20),
-            editLightSlider.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 30),
-            editLightSlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
-            editSaturationSlider.topAnchor.constraint(equalTo: editLightSlider.bottomAnchor, constant: 20),
-            editSaturationSlider.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 30),
-            editSaturationSlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
-            editContrastSlider.topAnchor.constraint(equalTo: editSaturationSlider.bottomAnchor, constant: 20),
-            editContrastSlider.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 30),
-            editContrastSlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
-            lutSaveButton.topAnchor.constraint(equalTo: editContrastSlider.bottomAnchor, constant: 30),
-            lutSaveButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60),
             lutSaveButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -110),
             lutSaveButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
+            lutSaveButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60),
             saveButton.centerYAnchor.constraint(equalTo: lutSaveButton.centerYAnchor),
             saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -60),
             saveButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
-            brightLabel.centerYAnchor.constraint(equalTo: editLightSlider.centerYAnchor),
-            brightLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
-            brightLabel.trailingAnchor.constraint(equalTo: editLightSlider.leadingAnchor, constant: -10),
+            editContrastSlider.bottomAnchor.constraint(equalTo: saveButton.topAnchor, constant: -25),
+            editContrastSlider.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 30),
+            editContrastSlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
             contrastLabel.centerYAnchor.constraint(equalTo: editContrastSlider.centerYAnchor),
             contrastLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
             contrastLabel.trailingAnchor.constraint(equalTo: editContrastSlider.leadingAnchor, constant: -10),
+            editSaturationSlider.bottomAnchor.constraint(equalTo: editContrastSlider.topAnchor, constant: -20),
+            editSaturationSlider.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 30),
+            editSaturationSlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
             saturationLabel.centerYAnchor.constraint(equalTo: editSaturationSlider.centerYAnchor),
             saturationLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
-            saturationLabel.trailingAnchor.constraint(equalTo: editSaturationSlider.leadingAnchor, constant: -10)
+            saturationLabel.trailingAnchor.constraint(equalTo: editSaturationSlider.leadingAnchor, constant: -10),
+            editLightSlider.bottomAnchor.constraint(equalTo: editSaturationSlider.topAnchor, constant: -20),
+            editLightSlider.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 30),
+            editLightSlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
+            brightLabel.centerYAnchor.constraint(equalTo: editLightSlider.centerYAnchor),
+            brightLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+            brightLabel.trailingAnchor.constraint(equalTo: editLightSlider.leadingAnchor, constant: -10),
+            editImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            editImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            editImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+            editImageView.bottomAnchor.constraint(equalTo: editLightSlider.topAnchor, constant: -50)
         ])
     }
     @objc func savePhoto() {
         if let image = finalImage {
             LutManager.shared.saveImagesToPhotoLibrary([image])
+            CMHUD.success(in: view)
+        } else if let editImage = editImage {
+            LutManager.shared.saveImagesToPhotoLibrary([editImage])
             CMHUD.success(in: view)
         }
     }
