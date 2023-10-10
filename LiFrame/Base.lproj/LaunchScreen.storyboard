@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LiFrameIcon" translatesAutoresizingMaskIntoConstraints="NO" id="MwQ-Tj-xA1">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LiFrame_Logo_07" translatesAutoresizingMaskIntoConstraints="NO" id="MwQ-Tj-xA1">
                                 <rect key="frame" x="120" y="362" width="153" height="153"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="MwQ-Tj-xA1" secondAttribute="height" multiplier="1:1" id="LTQ-iL-bH8"/>
@@ -24,7 +24,7 @@
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.43921568989999998" green="0.39607840779999998" blue="0.35686278339999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="MwQ-Tj-xA1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="120" id="MnA-G6-KzF"/>
                             <constraint firstItem="MwQ-Tj-xA1" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="VYk-ba-sjR"/>
@@ -38,6 +38,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LiFrameIcon" width="1024" height="1024"/>
+        <image name="LiFrame_Logo_07" width="1024" height="1024"/>
     </resources>
 </document>

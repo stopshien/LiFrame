@@ -16,7 +16,7 @@ class CommunityTableViewCell: UITableViewCell {
         // Initialization code
         backgroundViewForCell.clipsToBounds = true
         backgroundViewForCell.layer.cornerRadius = 8
-        backgroundViewForCell.layer.borderColor = UIColor.systemGray4.cgColor
+        backgroundViewForCell.layer.borderColor = UIColor.mainLabelColor.cgColor
         backgroundViewForCell.layer.borderWidth = 1
         backgroundViewForCell.backgroundColor = .secondColor
         backgroundViewForCell.addShadow()

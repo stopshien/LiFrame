@@ -14,7 +14,7 @@ class CardLayout: UICollectionViewFlowLayout {
       return collectionView!.frame.width
     }
     private var cellWidth: CGFloat {
-      return collectionViewWidth*0.7
+      return collectionViewWidth*0.8
     }
     private var cellMargin: CGFloat {
       return (collectionViewWidth - cellWidth)/7
