@@ -200,12 +200,15 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         setCameraLayout()
         imageCameraPicker.delegate = self
         imageCameraPicker.showsCameraControls = false
+        alphaSlider.isHidden = true
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             // 開啟相機
             self.show(self.imageCameraPicker, sender: self)
         }
     }
     @objc func choosePhoto() {
+        alphaSlider.isHidden = false
+        alphaSlider.value = 0.5
         configuration.selectionLimit = 1
         let liFramePicker = PHPickerViewController(configuration: configuration)
         liFramePicker.view.tag = 1
@@ -317,8 +320,8 @@ extension CameraViewController: PHPickerViewControllerDelegate {
             cancelButton.heightAnchor.constraint(equalTo: imageCameraPicker.view.widthAnchor, multiplier: 0.15),
             alphaSlider.topAnchor.constraint(lessThanOrEqualTo: shutterButton.bottomAnchor, constant: 50),
             alphaSlider.bottomAnchor.constraint(lessThanOrEqualTo: imageCameraPicker.view.bottomAnchor, constant: -10),
-            alphaSlider.leadingAnchor.constraint(equalTo: imageCameraPicker.view.leadingAnchor, constant: 50),
-            alphaSlider.trailingAnchor.constraint(equalTo: imageCameraPicker.view.trailingAnchor, constant: -50)
+            alphaSlider.leadingAnchor.constraint(equalTo: imageCameraPicker.view.leadingAnchor, constant: 40),
+            alphaSlider.trailingAnchor.constraint(equalTo: imageCameraPicker.view.trailingAnchor, constant: -70)
         ])
     }
     @objc func tappedShutter() {
