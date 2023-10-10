@@ -17,14 +17,14 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("查看相簿", for: .normal)
-        button.setTitleColor(.mainLabelColor, for: .normal)
-        button.backgroundColor = .white
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .mainLabelColor
         button.clipsToBounds = true
         button.layer.cornerRadius = 10
-        button.layer.borderColor = UIColor.mainLabelColor.cgColor
+        button.layer.borderColor = UIColor.PointColor.cgColor
         button.layer.borderWidth = 1.3
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        button.addShadow()
+//        button.addShadow()
         return button
     }()
     let originalCamera: UIButton = {
@@ -90,9 +90,9 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .black
         button.tintColor = .white
-        button.layer.cornerRadius = 20
+        button.layer.cornerRadius = 30
         button.layer.borderColor = UIColor.white.cgColor
-        button.layer.borderWidth = 5
+        button.layer.borderWidth = 4
         let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 20))
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         return button
@@ -106,8 +106,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         button.tintColor = .white
         button.layer.cornerRadius = 20
         button.layer.borderColor = UIColor.white.cgColor
-        button.layer.borderWidth = 5
-        let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 100))
+        button.layer.borderWidth = 0
+        let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 120))
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         return button
     }()
@@ -118,10 +118,22 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         button.setImage(UIImage(systemName: "figure.wave"), for: .highlighted)
         button.backgroundColor = .black
         button.tintColor = .white
-        button.layer.cornerRadius = 20
+        button.layer.cornerRadius = 30
         button.layer.borderColor = UIColor.white.cgColor
-        button.layer.borderWidth = 5
+        button.layer.borderWidth = 4
         return button
+    }()
+    let alphaSlider: UISlider = {
+        let slider = UISlider()
+        slider.translatesAutoresizingMaskIntoConstraints = false
+        slider.minimumValue = 0
+        slider.maximumValue = 1
+        slider.value = 0.5
+        slider.isContinuous = true
+        slider.minimumTrackTintColor = .white
+        slider.minimumValueImage = UIImage(systemName: "slider.horizontal.below.square.and.square.filled")
+        slider.tintColor = .white
+        return slider
     }()
     // MARK: Life Cycle
     override func viewDidLoad() {
@@ -136,7 +148,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         liFrameCamera.addTarget(self, action: #selector(choosePhoto), for: .touchUpInside)
         originalCamera.addTarget(self, action: #selector(intoOriginalCamera), for: .touchUpInside)
         seePhotoLibrary.addTarget(self, action: #selector(intoLibaray), for: .touchUpInside)
-        print(UserData.shared.getUserAppleID())
+        alphaSlider.addTarget(self, action: #selector(alphaMove), for: .valueChanged)
     }
     override func viewWillAppear(_ animated: Bool) {
         for subview in backgroundImageView.subviews {
@@ -166,11 +178,14 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
 
                backgroundImageView.addSubview(circleView)
 
-         UIView.animate(withDuration: 0.6, delay: Double(index) * 0.5, animations: {
+         UIView.animate(withDuration: 0.6, delay: Double(index) * 0.2, animations: {
                    circleView.alpha = 0.5 // 將透明度漸變為 0.5
                })
            }
        }
+    @objc func alphaMove() {
+        layerImageView?.alpha = CGFloat(alphaSlider.value)
+    }
     @objc func intoLibaray() {
         configuration.selectionLimit = 0
         let pickerForLibrary = PHPickerViewController(configuration: configuration)
@@ -185,12 +200,15 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         setCameraLayout()
         imageCameraPicker.delegate = self
         imageCameraPicker.showsCameraControls = false
+        alphaSlider.isHidden = true
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             // 開啟相機
             self.show(self.imageCameraPicker, sender: self)
         }
     }
     @objc func choosePhoto() {
+        alphaSlider.isHidden = false
+        alphaSlider.value = 0.5
         configuration.selectionLimit = 1
         let liFramePicker = PHPickerViewController(configuration: configuration)
         liFramePicker.view.tag = 1
@@ -234,12 +252,12 @@ extension CameraViewController: PHPickerViewControllerDelegate {
                 [weak self] (image, error) in
                 DispatchQueue.main.async {
                     guard let self = self, let image = image as? UIImage else { return }
-                    // 假設您有一個 UIImage 的實例叫做 image
-                    var unrotatedImage = image.rotateImage(image, withOrientation: .left)
-                    if image.imageOrientation == .left {
-                        unrotatedImage = image.rotateImage(image, withOrientation: .left)
-                    } else if image.imageOrientation == .right {
-                        unrotatedImage = image.rotateImage(image, withOrientation: .right)
+                    var unrotatedImage = image
+
+                    if image.size.width > image.size.height {
+                        unrotatedImage = image.rotateToCorrectOrientation(.right)
+                    } else {
+                        unrotatedImage = image.rotateToCorrectOrientation(.up)
                     }
                     if picker.view.tag == 1 {
                     // 設定相機
@@ -249,7 +267,7 @@ extension CameraViewController: PHPickerViewControllerDelegate {
                     self.imageCameraPicker.delegate = self
                     self.imageCameraPicker.showsCameraControls = false
                         if UIImagePickerController.isSourceTypeAvailable(.camera) {
-                            let imageView =  UIImageView(image: unrotatedImage)
+                            let imageView = UIImageView(image: unrotatedImage)
                             let screenSize = UIScreen.main.bounds
                             self.layerImageView = imageView
                             guard let layerImageView = self.layerImageView else { return }
@@ -257,6 +275,8 @@ extension CameraViewController: PHPickerViewControllerDelegate {
                             // 開啟相機
                             if let layer = self.imageCameraPicker.cameraOverlayView {
                                 layer.addSubview(layerImageView)
+                                layerImageView.contentMode = .scaleAspectFill
+                                layerImageView.clipsToBounds = true
                                 layerImageView.translatesAutoresizingMaskIntoConstraints = false
                                 layerImageView.topAnchor.constraint(equalTo: layer.topAnchor).isActive = true
                                 layerImageView.widthAnchor.constraint(equalTo: layer.widthAnchor).isActive = true
@@ -283,20 +303,25 @@ extension CameraViewController: PHPickerViewControllerDelegate {
         imageCameraPicker.view.addSubview(shutterButton)
         imageCameraPicker.view.addSubview(flashButton)
         imageCameraPicker.view.addSubview(cancelButton)
+        imageCameraPicker.view.addSubview(alphaSlider)
     }
     func setCameraLayout() {
         NSLayoutConstraint.activate([
             shutterButton.centerYAnchor.constraint(equalTo: imageCameraPicker.view.centerYAnchor, constant: 250),
             shutterButton.centerXAnchor.constraint(equalTo: imageCameraPicker.view.centerXAnchor),
-            shutterButton.widthAnchor.constraint(equalTo: imageCameraPicker.view.widthAnchor, multiplier: 0.3),
-            flashButton.trailingAnchor.constraint(equalTo: shutterButton.leadingAnchor, constant: -40),
-            flashButton.bottomAnchor.constraint(equalTo: shutterButton.bottomAnchor),
+            shutterButton.widthAnchor.constraint(equalTo: imageCameraPicker.view.widthAnchor, multiplier: 0.35),
+            flashButton.trailingAnchor.constraint(equalTo: shutterButton.leadingAnchor, constant: -30),
+            flashButton.bottomAnchor.constraint(equalTo: alphaSlider.topAnchor, constant: -20),
             flashButton.widthAnchor.constraint(equalTo: imageCameraPicker.view.widthAnchor, multiplier: 0.15),
             flashButton.heightAnchor.constraint(equalTo: imageCameraPicker.view.widthAnchor, multiplier: 0.15),
-            cancelButton.leadingAnchor.constraint(equalTo: shutterButton.trailingAnchor, constant: 40),
-            cancelButton.bottomAnchor.constraint(equalTo: shutterButton.bottomAnchor),
+            cancelButton.leadingAnchor.constraint(equalTo: shutterButton.trailingAnchor, constant: 30),
+            cancelButton.bottomAnchor.constraint(equalTo: alphaSlider.topAnchor, constant: -20),
             cancelButton.widthAnchor.constraint(equalTo: imageCameraPicker.view.widthAnchor, multiplier: 0.15),
-            cancelButton.heightAnchor.constraint(equalTo: imageCameraPicker.view.widthAnchor, multiplier: 0.15)
+            cancelButton.heightAnchor.constraint(equalTo: imageCameraPicker.view.widthAnchor, multiplier: 0.15),
+            alphaSlider.topAnchor.constraint(lessThanOrEqualTo: shutterButton.bottomAnchor, constant: 50),
+            alphaSlider.bottomAnchor.constraint(lessThanOrEqualTo: imageCameraPicker.view.bottomAnchor, constant: -10),
+            alphaSlider.leadingAnchor.constraint(equalTo: imageCameraPicker.view.leadingAnchor, constant: 40),
+            alphaSlider.trailingAnchor.constraint(equalTo: imageCameraPicker.view.trailingAnchor, constant: -70)
         ])
     }
     @objc func tappedShutter() {

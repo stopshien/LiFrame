@@ -232,10 +232,10 @@
             </objects>
             <point key="canvasLocation" x="1907.6335877862596" y="2084.5070422535214"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Li Frame Tab Bar Controller-->
         <scene sceneID="7oY-Fr-Vra">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="7cz-e6-Vjn" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="7cz-e6-Vjn" customClass="LiFrameTabBarController" customModule="LiFrame" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Lyf-Qk-bHT">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
