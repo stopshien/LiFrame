@@ -18,6 +18,7 @@ pod 'FirebaseAnalytics'
 pod 'FirebaseAuth'
 pod 'FirebaseFirestore'
 pod 'FirebaseStorage'
+pod 'FirebaseCrashlytics'
 
 pod 'SwiftLint'
 pod 'Kingfisher', '~> 7.0'
