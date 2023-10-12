@@ -8,7 +8,9 @@
 import UIKit
 import MapKit
 import WeatherKit
-class MapViewController: UIViewController {
+import SafariServices
+
+class MapViewController: UIViewController, SFSafariViewControllerDelegate {
     lazy var constraint = miniView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 300)
     let weatherService = WeatherService()
     var citiesArray = [City]()
@@ -87,6 +89,15 @@ class MapViewController: UIViewController {
         imageView.image = UIImage(systemName: "smoke")
         return imageView
     }()
+    let appleWeatherButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.tintColor = .white
+        button.setImage(UIImage(systemName: "apple.logo"), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        button.setTitle(" Weather", for: .normal)
+        return button
+    }()
     @IBOutlet weak var mapView: MKMapView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,9 +110,10 @@ class MapViewController: UIViewController {
         miniView.addSubview(tempImage)
         miniView.addSubview(cloudLabel)
         miniView.addSubview(cloudImage)
+        miniView.addSubview(appleWeatherButton)
         setMiniViewLayout()
-//        cityNameLabel.text = "請點選城市"
         citiesToMap()
+        appleWeatherButton.addTarget(self, action: #selector(weatherKitWebsite), for: .touchUpInside)
         moonImage.isHidden = true
         cloudImage.isHidden = true
         tempImage.isHidden = true
@@ -111,6 +123,13 @@ class MapViewController: UIViewController {
         miniView.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: 0),
         miniView.heightAnchor.constraint(equalTo: mapView.heightAnchor, multiplier: 0.3)
         ])
+    }
+    @objc func weatherKitWebsite() {
+        if let url = URL(string: "https://developer.apple.com/weatherkit/data-source-attribution/"){
+        let safari = SFSafariViewController(url: url)
+        safari.delegate = self
+        present(safari, animated: true, completion: nil)
+        }
     }
     func setMiniViewLayout() {
         let screenSize = UIScreen.main.bounds
@@ -129,6 +148,11 @@ class MapViewController: UIViewController {
             cloudImage.centerXAnchor.constraint(equalTo: miniView.centerXAnchor, constant: -screenSize.width/4.5),
             cloudLabel.centerYAnchor.constraint(equalTo: cloudImage.centerYAnchor),
             cloudLabel.centerXAnchor.constraint(equalTo: miniView.centerXAnchor, constant: screenSize.width/6)
+        ])
+        NSLayoutConstraint.activate([
+            appleWeatherButton.leadingAnchor.constraint(equalTo: miniView.leadingAnchor, constant: 3),
+            appleWeatherButton.bottomAnchor.constraint(equalTo: miniView.bottomAnchor, constant: -55),
+            appleWeatherButton.topAnchor.constraint(greaterThanOrEqualTo: cloudImage.bottomAnchor, constant: 0)
         ])
     }
     func fetchMoonApi(city: String) {
@@ -208,7 +232,6 @@ extension MapViewController: MKMapViewDelegate {
             mapView.centerToLocation(coordinate)
             getWeather(location: coordinate)
             moonImage.isHidden = false
-
 
             mapView.layoutIfNeeded()
             UIView.animate(withDuration: 0.6) {
