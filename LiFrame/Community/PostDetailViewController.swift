@@ -35,7 +35,7 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     // TODO: - 從firebase 拿黑名單
     @objc func pressMore() {
         let controller = UIAlertController(title: "黑名單", message: nil, preferredStyle: .actionSheet)
-           let addBlackListAction = UIAlertAction(title: "加入黑名單", style: .default) { action in
+        let addBlackListAction = UIAlertAction(title: "加入黑名單", style: .default) { action in
                if let blockUserAppleID = self.postDetail?.appleID,
                   let userName = self.postDetail?.name {
                    let wannaBlockUser = BlackList(blockedName: userName, blockedAppleID: blockUserAppleID)
@@ -54,6 +54,8 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                    self.navigationController?.popViewController(animated: true)
                }
            }
+        // 判斷文章是不是自己的，自己的不能加入黑名單
+        addBlackListAction.isEnabled = postDetail?.appleID != UserData.shared.getUserAppleID()
            controller.addAction(addBlackListAction)
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         controller.addAction(cancelAction)

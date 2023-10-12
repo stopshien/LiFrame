@@ -211,7 +211,6 @@ class CommunityViewController: UIViewController {
                         sheetPresentationController.preferredCornerRadius = 50
                         self.present(signInVC, animated: true)
                     }
-
                 }
                 print("not found")
                 // 無此用戶
