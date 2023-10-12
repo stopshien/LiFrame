@@ -149,11 +149,17 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         present(singleEditPicker, animated: true)
     }
     @objc func tappedSeeLibrary() {
-        configuration.selectionLimit = 0
-        let pickerForLibrary = PHPickerViewController(configuration: configuration)
-        pickerForLibrary.view.tag = 2
-        pickerForLibrary.delegate = self
-        present(pickerForLibrary, animated: true)
+//        configuration.selectionLimit = 0
+//        let pickerForLibrary = PHPickerViewController(configuration: configuration)
+//        pickerForLibrary.view.tag = 2
+//        pickerForLibrary.delegate = self
+//        present(pickerForLibrary, animated: true)
+        let imagePickerController = UIImagePickerController()
+        ///資料來源為圖片庫
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.delegate = self
+        ///開啟ImagePickerController
+        present(imagePickerController, animated: true, completion: nil)
     }
     @objc func tappedSyncEdit() {
         let lutVC = LutViewController()
@@ -178,3 +184,11 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     }
 }
 
+extension EditPhotoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.originalImage] as? UIImage else { return }
+        let detailImageVC = DetailImageViewController()
+        detailImageVC.detailImage = image
+        picker.present(detailImageVC, animated: true)
+    }
+}
