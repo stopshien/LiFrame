@@ -59,11 +59,11 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         let button = UIButton()
         button.addShadow()
         button.isSelected = false
-//        button.setTitle("Album", for: .normal)
-        button.setImage(UIImage(systemName: "photo"), for: .normal)
-//        button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
+        button.setTitle("相簿", for: .normal)
+//        button.setImage(UIImage(systemName: "photo"), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
 //        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 18)
-        button.setTitleColor(.PointColor, for: .normal)
+        button.setTitleColor(.backgroundColorSet, for: .normal)
         button.setTitleColor(.gray, for: .highlighted)
 //        button.titleLabel?.textAlignment = .center
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -96,9 +96,9 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     }
     func addFadingCircles() {
         let circleColors: [UIColor] = [.PointColor, .mainLabelColor]
-           let circleSizes: [CGFloat] = [40.0, 300]
-           let xposition: [CGFloat] = [200, 125]
-           let yposition: [CGFloat] = [80, 500]
+           let circleSizes: [CGFloat] = [40.0, 400]
+           let xposition: [CGFloat] = [200, 280]
+           let yposition: [CGFloat] = [80, 700]
         for (index, color) in circleColors.enumerated() {
             let circleView = UIView()
             let circleSize = circleSizes[index]
