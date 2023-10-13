@@ -23,7 +23,7 @@ class PostViewController: UIViewController {
     @IBOutlet weak var contentTextView: UITextView!
     @IBOutlet weak var tapButtonOutlet: UIButton! {
         didSet {
-            tapButtonOutlet.backgroundColor = .gray
+            tapButtonOutlet.backgroundColor = .mainLabelColor
             tapButtonOutlet.setTitleColor(.white, for: .normal)
             tapButtonOutlet.tintColor = .white
             tapButtonOutlet.clipsToBounds = true

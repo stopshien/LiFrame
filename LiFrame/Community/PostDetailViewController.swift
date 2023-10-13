@@ -33,7 +33,6 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             }
         }
     }
-    // TODO: - 從firebase 拿黑名單
     @objc func pressMore() {
         let controller = UIAlertController(title: "設定", message: nil, preferredStyle: .actionSheet)
         let alertTitle = postDetail?.appleID != UserData.shared.getUserAppleID() ? "加入黑名單" : "刪除文章"
