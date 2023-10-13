@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import FirebaseStorage
 
 class PostDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var postDetail: Posts?
@@ -32,30 +33,38 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             }
         }
     }
-    // TODO: - 從firebase 拿黑名單
     @objc func pressMore() {
-        let controller = UIAlertController(title: "黑名單", message: nil, preferredStyle: .actionSheet)
-        let addBlackListAction = UIAlertAction(title: "加入黑名單", style: .default) { action in
-               if let blockUserAppleID = self.postDetail?.appleID,
-                  let userName = self.postDetail?.name {
-                   let wannaBlockUser = BlackList(blockedName: userName, blockedAppleID: blockUserAppleID)
-                   if !self.blackList.contains(where: { $0.blockedName == wannaBlockUser.blockedName && $0.blockedAppleID == wannaBlockUser.blockedAppleID }) {
-                       self.blackList.append(wannaBlockUser)
-                       print("加進黑名單")
-                       print(self.blackList)
-                   }
-                   let blackListDictArray = self.blackList.map { blackList -> [String: Any] in
-                       return [
-                           "blockedName": blackList.blockedName,
-                           "blockedAppleID": blackList.blockedAppleID
-                       ]
-                   }
-                   FirebaseManager().updateBlackListForFirebase(key: "blacklist", value: blackListDictArray)
-                   self.navigationController?.popViewController(animated: true)
-               }
-           }
-        // 判斷文章是不是自己的，自己的不能加入黑名單
-        addBlackListAction.isEnabled = postDetail?.appleID != UserData.shared.getUserAppleID()
+        let controller = UIAlertController(title: "設定", message: nil, preferredStyle: .actionSheet)
+        let alertTitle = postDetail?.appleID != UserData.shared.getUserAppleID() ? "加入黑名單" : "刪除文章"
+        let addBlackListAction = UIAlertAction(title: alertTitle, style: .destructive) { action in
+            if self.postDetail?.appleID != UserData.shared.getUserAppleID() {
+                self.addIntoBlackList()
+            } else {
+                // 刪除 storge 上的照片 10/12 以前的 firestore 沒有imageName紀錄
+                if let imageNameForStorage = self.postDetail?.imageNameForStorage {
+                    let storageRef = Storage.storage().reference().child("images")
+                    let desertRef = storageRef.child(imageNameForStorage)
+                    desertRef.delete { error in
+                      if let error = error {
+                        print("Firebase storage cannot delete image")
+                      } else {
+                        print("Storage image successfully removed!")
+                      }
+                    }
+                }
+                // 刪除 firestore 中 posts 的文章
+                let db = FirebaseManager.shared.db
+                guard let documentID = self.postDetail?.id else { return print("not found documentID in postDetail") }
+                db.collection("posts").document(documentID).delete() { err in
+                    if let err = err {
+                        print("Error removing document: \(err)")
+                    } else {
+                        print("Document successfully removed!")
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }
+            }
+        }
            controller.addAction(addBlackListAction)
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         controller.addAction(cancelAction)
@@ -86,5 +95,24 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             }
         }
         return UITableViewCell()
+    }
+    func addIntoBlackList() {
+        if let blockUserAppleID = self.postDetail?.appleID,
+           let userName = self.postDetail?.name {
+            let wannaBlockUser = BlackList(blockedName: userName, blockedAppleID: blockUserAppleID)
+            if !self.blackList.contains(where: { $0.blockedName == wannaBlockUser.blockedName && $0.blockedAppleID == wannaBlockUser.blockedAppleID }) {
+                self.blackList.append(wannaBlockUser)
+                print("加進黑名單")
+                print(self.blackList)
+            }
+            let blackListDictArray = self.blackList.map { blackList -> [String: Any] in
+                return [
+                    "blockedName": blackList.blockedName,
+                    "blockedAppleID": blackList.blockedAppleID
+                ]
+            }
+            FirebaseManager().updateBlackListForFirebase(key: "blacklist", value: blackListDictArray)
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 }

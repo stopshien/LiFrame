@@ -155,10 +155,10 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
 //        pickerForLibrary.delegate = self
 //        present(pickerForLibrary, animated: true)
         let imagePickerController = UIImagePickerController()
-        ///資料來源為圖片庫
+        // 資料來源為圖片庫
         imagePickerController.sourceType = .photoLibrary
         imagePickerController.delegate = self
-        ///開啟ImagePickerController
+        // 開啟ImagePickerController
         present(imagePickerController, animated: true, completion: nil)
     }
     @objc func tappedSyncEdit() {

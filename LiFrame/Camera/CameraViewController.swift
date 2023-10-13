@@ -359,6 +359,17 @@ extension CameraViewController: PHPickerViewControllerDelegate {
     @objc func tappedShutter() {
         imageCameraPicker.cameraDevice = .rear
         imageCameraPicker.takePicture()
+        let shutterView: UIView = {
+            let view = UIView()
+            view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+            view.backgroundColor = .black
+            return view
+        }()
+        imageCameraPicker.view.addSubview(shutterView)
+        shutterView.alpha = 0.6
+        UIView.animate(withDuration: 0.2) {
+            shutterView.alpha = 0
+        }
     }
     @objc func tappedFlash() {
         flashButton.isSelected.toggle()

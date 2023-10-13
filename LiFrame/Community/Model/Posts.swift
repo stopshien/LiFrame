@@ -14,4 +14,6 @@ struct Posts {
     let category: String
     let content: String
     let image: String?
+    let id: String
+    let imageNameForStorage: String?
 }
