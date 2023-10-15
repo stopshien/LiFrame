@@ -10,7 +10,7 @@ import PhotosUI
 
 class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate {
     var configuration = PHPickerConfiguration()
-    lazy var singleEditPicker = PHPickerViewController(configuration: configuration)
+
     let backgroundView: UIImageView = {
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
@@ -81,7 +81,6 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         navigationItem.title = ""
         view.backgroundColor = .mainColor
         configuration.filter = .images
-        singleEditPicker.delegate = self
         setEditPhotoViewLayout()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -146,6 +145,9 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         seeLibraryButton.layer.cornerRadius = view.frame.width/2*0.5
     }
     @objc func tappedEdit() {
+        let singleEditPicker = PHPickerViewController(configuration: configuration)
+        singleEditPicker.delegate = self
+        singleEditPicker.view.tag = 1
         present(singleEditPicker, animated: true)
     }
     @objc func tappedSeeLibrary() {
@@ -168,7 +170,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     }
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         let itemProviders = results.map(\.itemProvider)
-        if picker == self.singleEditPicker {
+        if picker.view.tag == 1 {
             if let itemProvider = itemProviders.first, itemProvider.canLoadObject(ofClass: UIImage.self) {
                 itemProvider.loadObject(ofClass: UIImage.self) {[weak self] (image, error) in
                     DispatchQueue.main.async {
