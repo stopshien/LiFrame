@@ -10,7 +10,6 @@ import PhotosUI
 
 class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate {
     var configuration = PHPickerConfiguration()
-
     let backgroundView: UIImageView = {
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
@@ -164,9 +163,14 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         present(imagePickerController, animated: true, completion: nil)
     }
     @objc func tappedSyncEdit() {
-        let lutVC = LutViewController()
-        lutVC.modalPresentationStyle = .overFullScreen
-        present(lutVC, animated: true)
+//        let lutVC = LutViewController()
+//        lutVC.modalPresentationStyle = .overFullScreen
+//        present(lutVC, animated: true)
+        configuration.selectionLimit = 0
+        let pickerForSync = PHPickerViewController(configuration: configuration)
+        pickerForSync.delegate = self
+        pickerForSync.view.tag = 2
+        present(pickerForSync, animated: true)
     }
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         let itemProviders = results.map(\.itemProvider)
@@ -182,8 +186,33 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
                     }
                 }
             }
+        } else if picker.view.tag == 2 {
+            // 將選取的照片放到 LutViewController 的 afterLutArray
+            guard !results.isEmpty else { return dismiss(animated: true) }
+            var processedImages: [UIImage] = []
+            let group = DispatchGroup()
+            for itemProvider in itemProviders {
+                if itemProvider.canLoadObject(ofClass: UIImage.self) {
+                    group.enter()
+                    itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
+                        guard let self = self, let image = image as? UIImage else { return }
+                        processedImages.append(image)
+                        defer {
+                            group.leave()
+                        }
+                    }
+                }
+            }
+            group.notify(queue: .main) {
+                let lutVC = LutViewController()
+                lutVC.modalPresentationStyle = .overFullScreen
+                lutVC.originImage = processedImages
+                lutVC.afterLutImage = lutVC.originImage
+                print(processedImages.count)
+                self.dismiss(animated: true)
+                self.present(lutVC, animated: true)
+            }
         }
-        dismiss(animated: true)
     }
 }
 

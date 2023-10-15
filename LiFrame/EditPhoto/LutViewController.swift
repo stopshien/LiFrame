@@ -9,11 +9,11 @@ import UIKit
 import PhotosUI
 import CMHUD
 
-class LutViewController: UIViewController, PHPickerViewControllerDelegate {
+class LutViewController: UIViewController {
     var luts = [Lut]()
     var currentLut: Lut?
+    var originImage = [UIImage]()
     var afterLutImage: [UIImage] = []
-    var configuration = PHPickerConfiguration()
     let backview: UIView = {
         let view = UIView()
         view.backgroundColor = .PointColor
@@ -29,7 +29,6 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
         button.setTitleColor(.mainColor, for: .highlighted)
         button.backgroundColor = .mainLabelColor
         button.layer.cornerRadius = 10
-        button.isHidden = true
         return button
     }()
     let displayCollectionView: UICollectionView = {
@@ -88,6 +87,7 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
         label.textColor = .mainLabelColor
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textAlignment = .center
+        label.isHidden = true
         return label
     }()
     override func viewDidLoad() {
@@ -143,13 +143,13 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
         } else {
             haveNoLutsLabel.isHidden = true
         }
+        print(afterLutImage.count)
     }
     @objc func tappedDismiss() {
         dismiss(animated: true)
     }
     @objc func tappedSave() {
         LutManager.shared.saveImagesToPhotoLibrary(afterLutImage)
-        saveButton.isHidden = true
         dismiss(animated: true)
     }
 }
@@ -185,53 +185,18 @@ extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSourc
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         currentLut = luts[indexPath.row]
-        configuration.filter = .images
-        configuration.selectionLimit = 0
-        let pickerForSync = PHPickerViewController(configuration: configuration)
-        pickerForSync.delegate = self
-        present(pickerForSync, animated: true)
-    }
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        guard !results.isEmpty else { return dismiss(animated: true) }
-        var processedImages: [UIImage] = []
-        afterLutImage = []
-        let group = DispatchGroup()
-        let itemProviders = results.map(\.itemProvider)
-        for itemProvider in itemProviders {
-            if itemProvider.canLoadObject(ofClass: UIImage.self) {
-                group.enter()
-                itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
-                    guard let self = self, let image = image as? UIImage else { return }
-                    guard let currentLut = currentLut else { return }
-                    defer {
-                        group.leave()
-                    }
-                    // 處理光線和對比，替換下面的數值為您想要的值
-                    let brightness: Float = currentLut.bright
-                    let contrast: Float = currentLut.contrast
-                    let saturation: Float = currentLut.saturation
-                    if let processedImage = LutManager.shared.applyLutToImage(image, brightness: brightness, contrast: contrast, saturation: saturation) {
-                        processedImages.append(processedImage)
-                    }
-                    if processedImages.count == itemProviders.count {
-                        afterLutImage.append(contentsOf: processedImages)
-                        DispatchQueue.main.async {
-                            self.saveButton.isHidden = false
-                            self.chooseLutLabel.isHidden = true
-                        }
-                    }
-                }
+        guard let currentLut = currentLut else { return }
+        // 處理光線和對比，替換下面的數值為您想要的值
+        var newImages = [UIImage]()
+        let brightness: Float = currentLut.bright
+        let contrast: Float = currentLut.contrast
+        let saturation: Float = currentLut.saturation
+        for image in originImage {
+            if let processedImage = LutManager.shared.applyLutToImage(image, brightness: brightness, contrast: contrast, saturation: saturation) {
+                newImages.append(processedImage)
             }
         }
-        // 等待所有任務完成
-        group.notify(queue: .main) {
-            CMHUD.success(in: self.view)
-            // 所有任務完成後，執行 reloadData
-            DispatchQueue.main.async {
-                self.displayCollectionView.reloadData()
-            }
-            self.dismiss(animated: true)
-        }
+        afterLutImage = newImages
+        displayCollectionView.reloadData()
     }
-
 }
