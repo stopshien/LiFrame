@@ -167,7 +167,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
 //        let lutVC = LutViewController()
 //        lutVC.modalPresentationStyle = .overFullScreen
 //        present(lutVC, animated: true)
-        configuration.selectionLimit = 0
+        configuration.selectionLimit = 10
         let pickerForSync = PHPickerViewController(configuration: configuration)
         pickerForSync.delegate = self
         pickerForSync.view.tag = 2
