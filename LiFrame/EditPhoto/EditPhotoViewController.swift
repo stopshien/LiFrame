@@ -145,6 +145,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     }
     @objc func tappedEdit() {
         let singleEditPicker = PHPickerViewController(configuration: configuration)
+        configuration.selectionLimit = 1
         singleEditPicker.delegate = self
         singleEditPicker.view.tag = 1
         present(singleEditPicker, animated: true)
@@ -186,6 +187,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
                     }
                 }
             }
+            dismiss(animated: true)
         } else if picker.view.tag == 2 {
             // 將選取的照片放到 LutViewController 的 afterLutArray
             guard !results.isEmpty else { return dismiss(animated: true) }
