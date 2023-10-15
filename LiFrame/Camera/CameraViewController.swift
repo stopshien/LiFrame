@@ -304,11 +304,13 @@ extension CameraViewController: PHPickerViewControllerDelegate {
                         }
                         self.show(self.imageCameraPicker, sender: self)
                     } else {
+                        self.layerImageView?.removeFromSuperview()
                         self.dismiss(animated: true)
                     }
                 }
             }
         } else {
+            self.layerImageView?.removeFromSuperview()
             dismiss(animated: true)
         }
     }

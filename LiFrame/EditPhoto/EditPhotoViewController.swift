@@ -40,7 +40,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         let button = UIButton()
         button.addShadow()
         button.isSelected = false
-        button.setTitle("套用濾鏡", for: .normal)
+        button.setTitle("批量修圖", for: .normal)
 //        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 20)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
         button.setTitleColor(.mainLabelColor, for: .normal)
@@ -163,6 +163,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     }
     @objc func tappedSyncEdit() {
         let lutVC = LutViewController()
+        lutVC.modalPresentationStyle = .overFullScreen
         present(lutVC, animated: true)
     }
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {

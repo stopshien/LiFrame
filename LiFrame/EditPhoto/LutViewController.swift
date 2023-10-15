@@ -21,6 +21,17 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    let saveButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("儲存", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.mainColor, for: .highlighted)
+        button.backgroundColor = .mainLabelColor
+        button.layer.cornerRadius = 10
+        button.isHidden = true
+        return button
+    }()
     let displayCollectionView: UICollectionView = {
         let layout = CardLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -70,6 +81,15 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         return label
     }()
+    let chooseLutLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "請選擇濾鏡"
+        label.textColor = .mainLabelColor
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textAlignment = .center
+        return label
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         lutsCollectionView.delegate = self
@@ -81,6 +101,9 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
         view.addSubview(displayCollectionView)
         lutsCollectionView.addSubview(haveNoLutsLabel)
         view.addSubview(dismissButton)
+        view.addSubview(chooseLutLabel)
+        displayCollectionView.addSubview(saveButton)
+        saveButton.addTarget(self, action: #selector(tappedSave), for: .touchUpInside)
         NSLayoutConstraint.activate([
             backview.topAnchor.constraint(equalTo: view.topAnchor),
             backview.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1),
@@ -93,15 +116,20 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
             lutsCollectionView.centerYAnchor.constraint(equalTo: lutView.centerYAnchor, constant: -20),
             lutsCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
             lutsCollectionView.heightAnchor.constraint(equalTo: lutView.heightAnchor, multiplier: 0.65),
-            dismissButton.topAnchor.constraint(equalTo: backview.topAnchor, constant: 20),
+            dismissButton.topAnchor.constraint(equalTo: backview.topAnchor, constant: 50),
             dismissButton.trailingAnchor.constraint(equalTo: backview.trailingAnchor, constant: -30),
             dismissButton.widthAnchor.constraint(equalToConstant: 30),
             dismissButton.heightAnchor.constraint(equalToConstant: 30),
             haveNoLutsLabel.centerXAnchor.constraint(equalTo: lutsCollectionView.centerXAnchor),
             haveNoLutsLabel.centerYAnchor.constraint(equalTo: lutsCollectionView.centerYAnchor),
-            displayCollectionView.topAnchor.constraint(equalTo: backview.topAnchor),
+            displayCollectionView.topAnchor.constraint(equalTo: backview.topAnchor, constant: 20),
             displayCollectionView.widthAnchor.constraint(equalTo: backview.widthAnchor, multiplier: 1),
-            displayCollectionView.bottomAnchor.constraint(equalTo: lutView.topAnchor)
+            displayCollectionView.bottomAnchor.constraint(equalTo: lutView.topAnchor),
+            saveButton.bottomAnchor.constraint(lessThanOrEqualTo: lutView.topAnchor, constant: -15),
+            saveButton.centerXAnchor.constraint(equalTo: lutView.centerXAnchor),
+            saveButton.widthAnchor.constraint(equalTo: lutView.widthAnchor, multiplier: 0.3),
+            chooseLutLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            chooseLutLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50)
         ])
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -117,6 +145,11 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
         }
     }
     @objc func tappedDismiss() {
+        dismiss(animated: true)
+    }
+    @objc func tappedSave() {
+        LutManager.shared.saveImagesToPhotoLibrary(afterLutImage)
+        saveButton.isHidden = true
         dismiss(animated: true)
     }
 }
@@ -181,8 +214,11 @@ extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSourc
                         processedImages.append(processedImage)
                     }
                     if processedImages.count == itemProviders.count {
-                        LutManager.shared.saveImagesToPhotoLibrary(processedImages)
                         afterLutImage.append(contentsOf: processedImages)
+                        DispatchQueue.main.async {
+                            self.saveButton.isHidden = false
+                            self.chooseLutLabel.isHidden = true
+                        }
                     }
                 }
             }
