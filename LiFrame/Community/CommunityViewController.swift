@@ -79,14 +79,20 @@ class CommunityViewController: UIViewController {
                            let author = document.data()["author"] as? [String: String],
                            let content = document.data()["content"] as? String,
                            let category = document.data()["category"] as? String,
-                           let time = document.data()["createdTime"] as? Double {
+                           let time = document.data()["createdTime"] as? Double,
+                           let documentID = document.data()["id"] as? String {
                             let image = document.data()["photoURL"] as? String
                             let timeInterval: TimeInterval = TimeInterval(time)
                             let date = Date(timeIntervalSince1970: timeInterval)
                             guard let name = author["name"],
                                   let appleID = author["id"] else { return }
-                            let post = Posts(appleID: appleID, title: title, name: "\(name)", createdTime: "\(self.dformatter.string(from: date))", category: category, content: content, image: image)
-                            self.postsArray.insert(post, at: 0)
+                            if let imageNameForStorage = document.data()["imageNameForStorage"] as? String {
+                                let post = Posts(appleID: appleID, title: title, name: "\(name)", createdTime: "\(self.dformatter.string(from: date))", category: category, content: content, image: image, id: documentID, imageNameForStorage: imageNameForStorage)
+                                self.postsArray.insert(post, at: 0)
+                            } else {
+                                let post = Posts(appleID: appleID, title: title, name: "\(name)", createdTime: "\(self.dformatter.string(from: date))", category: category, content: content, image: image, id: documentID, imageNameForStorage: nil)
+                                self.postsArray.insert(post, at: 0)
+                            }
                         }
                     }
                 }
@@ -141,7 +147,6 @@ class CommunityViewController: UIViewController {
                 // 刪除 firebase 黑名單
                 FirebaseManager().updateBlackListForFirebase(key: "blacklist", value: [])
                 UserDefaults.standard.removeObject(forKey: "UserAppleID")
-//                self.navigationItem.rightBarButtonItem?.isHidden = true
                 self.updatePost()
                 guard let image = UIImage(systemName: "door.left.hand.closed") else { return }
                 CMHUD.show(image: image, in: self.view, identifier: "Log Out", imageSize: CGSize(width: 80, height: 80))
@@ -211,7 +216,6 @@ class CommunityViewController: UIViewController {
                         sheetPresentationController.preferredCornerRadius = 50
                         self.present(signInVC, animated: true)
                     }
-
                 }
                 print("not found")
                 // 無此用戶

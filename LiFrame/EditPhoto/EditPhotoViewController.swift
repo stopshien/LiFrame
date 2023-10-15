@@ -10,7 +10,6 @@ import PhotosUI
 
 class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate {
     var configuration = PHPickerConfiguration()
-    lazy var singleEditPicker = PHPickerViewController(configuration: configuration)
     let backgroundView: UIImageView = {
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
@@ -40,7 +39,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         let button = UIButton()
         button.addShadow()
         button.isSelected = false
-        button.setTitle("套用濾鏡", for: .normal)
+        button.setTitle("批量修圖", for: .normal)
 //        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 20)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
         button.setTitleColor(.mainLabelColor, for: .normal)
@@ -59,11 +58,11 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         let button = UIButton()
         button.addShadow()
         button.isSelected = false
-//        button.setTitle("Album", for: .normal)
-        button.setImage(UIImage(systemName: "photo"), for: .normal)
-//        button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
+        button.setTitle("相簿", for: .normal)
+//        button.setImage(UIImage(systemName: "photo"), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
 //        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 18)
-        button.setTitleColor(.PointColor, for: .normal)
+        button.setTitleColor(.backgroundColorSet, for: .normal)
         button.setTitleColor(.gray, for: .highlighted)
 //        button.titleLabel?.textAlignment = .center
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -81,7 +80,6 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         navigationItem.title = ""
         view.backgroundColor = .mainColor
         configuration.filter = .images
-        singleEditPicker.delegate = self
         setEditPhotoViewLayout()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -96,9 +94,9 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     }
     func addFadingCircles() {
         let circleColors: [UIColor] = [.PointColor, .mainLabelColor]
-           let circleSizes: [CGFloat] = [40.0, 300]
-           let xposition: [CGFloat] = [200, 125]
-           let yposition: [CGFloat] = [80, 500]
+           let circleSizes: [CGFloat] = [40.0, 400]
+           let xposition: [CGFloat] = [200, 280]
+           let yposition: [CGFloat] = [80, 700]
         for (index, color) in circleColors.enumerated() {
             let circleView = UIView()
             let circleSize = circleSizes[index]
@@ -146,22 +144,38 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         seeLibraryButton.layer.cornerRadius = view.frame.width/2*0.5
     }
     @objc func tappedEdit() {
+        let singleEditPicker = PHPickerViewController(configuration: configuration)
+        configuration.selectionLimit = 1
+        singleEditPicker.delegate = self
+        singleEditPicker.view.tag = 1
         present(singleEditPicker, animated: true)
     }
     @objc func tappedSeeLibrary() {
-        configuration.selectionLimit = 0
-        let pickerForLibrary = PHPickerViewController(configuration: configuration)
-        pickerForLibrary.view.tag = 2
-        pickerForLibrary.delegate = self
-        present(pickerForLibrary, animated: true)
+//        configuration.selectionLimit = 0
+//        let pickerForLibrary = PHPickerViewController(configuration: configuration)
+//        pickerForLibrary.view.tag = 2
+//        pickerForLibrary.delegate = self
+//        present(pickerForLibrary, animated: true)
+        let imagePickerController = UIImagePickerController()
+        // 資料來源為圖片庫
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.delegate = self
+        // 開啟ImagePickerController
+        present(imagePickerController, animated: true, completion: nil)
     }
     @objc func tappedSyncEdit() {
-        let lutVC = LutViewController()
-        present(lutVC, animated: true)
+//        let lutVC = LutViewController()
+//        lutVC.modalPresentationStyle = .overFullScreen
+//        present(lutVC, animated: true)
+        configuration.selectionLimit = 10
+        let pickerForSync = PHPickerViewController(configuration: configuration)
+        pickerForSync.delegate = self
+        pickerForSync.view.tag = 2
+        present(pickerForSync, animated: true)
     }
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         let itemProviders = results.map(\.itemProvider)
-        if picker == self.singleEditPicker {
+        if picker.view.tag == 1 {
             if let itemProvider = itemProviders.first, itemProvider.canLoadObject(ofClass: UIImage.self) {
                 itemProvider.loadObject(ofClass: UIImage.self) {[weak self] (image, error) in
                     DispatchQueue.main.async {
@@ -173,8 +187,42 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
                     }
                 }
             }
+            dismiss(animated: true)
+        } else if picker.view.tag == 2 {
+            // 將選取的照片放到 LutViewController 的 afterLutArray
+            guard !results.isEmpty else { return dismiss(animated: true) }
+            var processedImages: [UIImage] = []
+            let group = DispatchGroup()
+            for itemProvider in itemProviders {
+                if itemProvider.canLoadObject(ofClass: UIImage.self) {
+                    group.enter()
+                    itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
+                        guard let self = self, let image = image as? UIImage else { return }
+                        processedImages.append(image)
+                        defer {
+                            group.leave()
+                        }
+                    }
+                }
+            }
+            group.notify(queue: .main) {
+                let lutVC = LutViewController()
+                lutVC.modalPresentationStyle = .overFullScreen
+                lutVC.originImage = processedImages
+                lutVC.afterLutImage = lutVC.originImage
+                print(processedImages.count)
+                self.dismiss(animated: true)
+                self.present(lutVC, animated: true)
+            }
         }
-        dismiss(animated: true)
     }
 }
 
+extension EditPhotoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.originalImage] as? UIImage else { return }
+        let detailImageVC = DetailImageViewController()
+        detailImageVC.detailImage = image
+        picker.present(detailImageVC, animated: true)
+    }
+}

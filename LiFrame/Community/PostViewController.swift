@@ -23,7 +23,7 @@ class PostViewController: UIViewController {
     @IBOutlet weak var contentTextView: UITextView!
     @IBOutlet weak var tapButtonOutlet: UIButton! {
         didSet {
-            tapButtonOutlet.backgroundColor = .gray
+            tapButtonOutlet.backgroundColor = .mainLabelColor
             tapButtonOutlet.setTitleColor(.white, for: .normal)
             tapButtonOutlet.tintColor = .white
             tapButtonOutlet.clipsToBounds = true
@@ -89,7 +89,8 @@ class PostViewController: UIViewController {
         let document = posts.document()
         // 上傳照片至 Firebase Cloud Storage
         let storageRef = Storage.storage().reference().child("images")
-        let imageRef = storageRef.child(UUID().uuidString + ".jpg")
+        let imageName = UUID().uuidString + ".jpg"
+        let imageRef = storageRef.child(imageName)
         if let image = image,
            let imageData = image.jpegData(compressionQuality: 0.8) {
             let metadata = StorageMetadata()
@@ -116,7 +117,8 @@ class PostViewController: UIViewController {
                                     "createdTime": Date().timeIntervalSince1970,
                                     "id": document.documentID,
                                     "category": category,
-                                    "photoURL": downloadURL // 存儲照片的下載 URL
+                                    "photoURL": downloadURL,// 存儲照片的下載 URL
+                                    "imageNameForStorage": imageName
                                 ]
                                 // 儲存資料至 Firestore
                                 document.setData(data) { (error) in
