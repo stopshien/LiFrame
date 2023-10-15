@@ -10,7 +10,6 @@ import PhotosUI
 
 class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate {
     var configuration = PHPickerConfiguration()
-    lazy var singleEditPicker = PHPickerViewController(configuration: configuration)
     let backgroundView: UIImageView = {
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
@@ -40,7 +39,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         let button = UIButton()
         button.addShadow()
         button.isSelected = false
-        button.setTitle("套用濾鏡", for: .normal)
+        button.setTitle("批量修圖", for: .normal)
 //        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 20)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
         button.setTitleColor(.mainLabelColor, for: .normal)
@@ -81,7 +80,6 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         navigationItem.title = ""
         view.backgroundColor = .mainColor
         configuration.filter = .images
-        singleEditPicker.delegate = self
         setEditPhotoViewLayout()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -146,6 +144,9 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         seeLibraryButton.layer.cornerRadius = view.frame.width/2*0.5
     }
     @objc func tappedEdit() {
+        let singleEditPicker = PHPickerViewController(configuration: configuration)
+        singleEditPicker.delegate = self
+        singleEditPicker.view.tag = 1
         present(singleEditPicker, animated: true)
     }
     @objc func tappedSeeLibrary() {
@@ -162,12 +163,18 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         present(imagePickerController, animated: true, completion: nil)
     }
     @objc func tappedSyncEdit() {
-        let lutVC = LutViewController()
-        present(lutVC, animated: true)
+//        let lutVC = LutViewController()
+//        lutVC.modalPresentationStyle = .overFullScreen
+//        present(lutVC, animated: true)
+        configuration.selectionLimit = 0
+        let pickerForSync = PHPickerViewController(configuration: configuration)
+        pickerForSync.delegate = self
+        pickerForSync.view.tag = 2
+        present(pickerForSync, animated: true)
     }
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         let itemProviders = results.map(\.itemProvider)
-        if picker == self.singleEditPicker {
+        if picker.view.tag == 1 {
             if let itemProvider = itemProviders.first, itemProvider.canLoadObject(ofClass: UIImage.self) {
                 itemProvider.loadObject(ofClass: UIImage.self) {[weak self] (image, error) in
                     DispatchQueue.main.async {
@@ -179,8 +186,33 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
                     }
                 }
             }
+        } else if picker.view.tag == 2 {
+            // 將選取的照片放到 LutViewController 的 afterLutArray
+            guard !results.isEmpty else { return dismiss(animated: true) }
+            var processedImages: [UIImage] = []
+            let group = DispatchGroup()
+            for itemProvider in itemProviders {
+                if itemProvider.canLoadObject(ofClass: UIImage.self) {
+                    group.enter()
+                    itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
+                        guard let self = self, let image = image as? UIImage else { return }
+                        processedImages.append(image)
+                        defer {
+                            group.leave()
+                        }
+                    }
+                }
+            }
+            group.notify(queue: .main) {
+                let lutVC = LutViewController()
+                lutVC.modalPresentationStyle = .overFullScreen
+                lutVC.originImage = processedImages
+                lutVC.afterLutImage = lutVC.originImage
+                print(processedImages.count)
+                self.dismiss(animated: true)
+                self.present(lutVC, animated: true)
+            }
         }
-        dismiss(animated: true)
     }
 }
 

@@ -9,17 +9,27 @@ import UIKit
 import PhotosUI
 import CMHUD
 
-class LutViewController: UIViewController, PHPickerViewControllerDelegate {
+class LutViewController: UIViewController {
     var luts = [Lut]()
     var currentLut: Lut?
+    var originImage = [UIImage]()
     var afterLutImage: [UIImage] = []
-    var configuration = PHPickerConfiguration()
     let backview: UIView = {
         let view = UIView()
         view.backgroundColor = .PointColor
         view.alpha = 0.8
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    let saveButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("儲存", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.mainColor, for: .highlighted)
+        button.backgroundColor = .mainLabelColor
+        button.layer.cornerRadius = 10
+        return button
     }()
     let displayCollectionView: UICollectionView = {
         let layout = CardLayout()
@@ -70,6 +80,16 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         return label
     }()
+    let chooseLutLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "請選擇濾鏡"
+        label.textColor = .mainLabelColor
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textAlignment = .center
+        label.isHidden = true
+        return label
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         lutsCollectionView.delegate = self
@@ -81,6 +101,9 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
         view.addSubview(displayCollectionView)
         lutsCollectionView.addSubview(haveNoLutsLabel)
         view.addSubview(dismissButton)
+        view.addSubview(chooseLutLabel)
+        displayCollectionView.addSubview(saveButton)
+        saveButton.addTarget(self, action: #selector(tappedSave), for: .touchUpInside)
         NSLayoutConstraint.activate([
             backview.topAnchor.constraint(equalTo: view.topAnchor),
             backview.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1),
@@ -93,15 +116,20 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
             lutsCollectionView.centerYAnchor.constraint(equalTo: lutView.centerYAnchor, constant: -20),
             lutsCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
             lutsCollectionView.heightAnchor.constraint(equalTo: lutView.heightAnchor, multiplier: 0.65),
-            dismissButton.topAnchor.constraint(equalTo: backview.topAnchor, constant: 20),
+            dismissButton.topAnchor.constraint(equalTo: backview.topAnchor, constant: 50),
             dismissButton.trailingAnchor.constraint(equalTo: backview.trailingAnchor, constant: -30),
             dismissButton.widthAnchor.constraint(equalToConstant: 30),
             dismissButton.heightAnchor.constraint(equalToConstant: 30),
             haveNoLutsLabel.centerXAnchor.constraint(equalTo: lutsCollectionView.centerXAnchor),
             haveNoLutsLabel.centerYAnchor.constraint(equalTo: lutsCollectionView.centerYAnchor),
-            displayCollectionView.topAnchor.constraint(equalTo: backview.topAnchor),
+            displayCollectionView.topAnchor.constraint(equalTo: backview.topAnchor, constant: 20),
             displayCollectionView.widthAnchor.constraint(equalTo: backview.widthAnchor, multiplier: 1),
-            displayCollectionView.bottomAnchor.constraint(equalTo: lutView.topAnchor)
+            displayCollectionView.bottomAnchor.constraint(equalTo: lutView.topAnchor),
+            saveButton.bottomAnchor.constraint(lessThanOrEqualTo: lutView.topAnchor, constant: -15),
+            saveButton.centerXAnchor.constraint(equalTo: lutView.centerXAnchor),
+            saveButton.widthAnchor.constraint(equalTo: lutView.widthAnchor, multiplier: 0.3),
+            chooseLutLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            chooseLutLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50)
         ])
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -115,8 +143,13 @@ class LutViewController: UIViewController, PHPickerViewControllerDelegate {
         } else {
             haveNoLutsLabel.isHidden = true
         }
+        print(afterLutImage.count)
     }
     @objc func tappedDismiss() {
+        dismiss(animated: true)
+    }
+    @objc func tappedSave() {
+        LutManager.shared.saveImagesToPhotoLibrary(afterLutImage)
         dismiss(animated: true)
     }
 }
@@ -152,50 +185,18 @@ extension LutViewController: UICollectionViewDelegate, UICollectionViewDataSourc
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         currentLut = luts[indexPath.row]
-        configuration.filter = .images
-        configuration.selectionLimit = 0
-        let pickerForSync = PHPickerViewController(configuration: configuration)
-        pickerForSync.delegate = self
-        present(pickerForSync, animated: true)
-    }
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        guard !results.isEmpty else { return dismiss(animated: true) }
-        var processedImages: [UIImage] = []
-        afterLutImage = []
-        let group = DispatchGroup()
-        let itemProviders = results.map(\.itemProvider)
-        for itemProvider in itemProviders {
-            if itemProvider.canLoadObject(ofClass: UIImage.self) {
-                group.enter()
-                itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
-                    guard let self = self, let image = image as? UIImage else { return }
-                    guard let currentLut = currentLut else { return }
-                    defer {
-                        group.leave()
-                    }
-                    // 處理光線和對比，替換下面的數值為您想要的值
-                    let brightness: Float = currentLut.bright
-                    let contrast: Float = currentLut.contrast
-                    let saturation: Float = currentLut.saturation
-                    if let processedImage = LutManager.shared.applyLutToImage(image, brightness: brightness, contrast: contrast, saturation: saturation) {
-                        processedImages.append(processedImage)
-                    }
-                    if processedImages.count == itemProviders.count {
-                        LutManager.shared.saveImagesToPhotoLibrary(processedImages)
-                        afterLutImage.append(contentsOf: processedImages)
-                    }
-                }
+        guard let currentLut = currentLut else { return }
+        // 處理光線和對比，替換下面的數值為您想要的值
+        var newImages = [UIImage]()
+        let brightness: Float = currentLut.bright
+        let contrast: Float = currentLut.contrast
+        let saturation: Float = currentLut.saturation
+        for image in originImage {
+            if let processedImage = LutManager.shared.applyLutToImage(image, brightness: brightness, contrast: contrast, saturation: saturation) {
+                newImages.append(processedImage)
             }
         }
-        // 等待所有任務完成
-        group.notify(queue: .main) {
-            CMHUD.success(in: self.view)
-            // 所有任務完成後，執行 reloadData
-            DispatchQueue.main.async {
-                self.displayCollectionView.reloadData()
-            }
-            self.dismiss(animated: true)
-        }
+        afterLutImage = newImages
+        displayCollectionView.reloadData()
     }
-
 }
