@@ -52,11 +52,8 @@ class PostViewController: UIViewController {
         guard let titleText = titleTextField.text,
               let categoryText = categoryTextField.text,
               let contentText = contentTextView.text else { return }
-        if titleText != "", categoryText != "", contentText != "",
-        let image = postImage {
-            addData(title: titleText, content: contentText, category: categoryText, image: image)
-        } else {
-            showAlert()
+        if titleText != "", categoryText != "", contentText != "" {
+            addData(title: titleText, content: contentText, category: categoryText, image: postImage)
         }
     }
     func showAlert() {
@@ -91,36 +88,36 @@ class PostViewController: UIViewController {
         let storageRef = Storage.storage().reference().child("images")
         let imageName = UUID().uuidString + ".jpg"
         let imageRef = storageRef.child(imageName)
-        if let image = image,
-           let imageData = image.jpegData(compressionQuality: 0.8) {
-            let metadata = StorageMetadata()
-            metadata.contentType = "image/jpeg"
-            imageRef.putData(imageData, metadata: metadata) { (metadata, error) in
-                if let error = error {
-                    print("Error uploading image: \(error.localizedDescription)")
-                } else {
-                    imageRef.downloadURL { (url, error) in
-                        if let downloadURL = url?.absoluteString {
-                            guard let idFromApple = UserData.shared.getUserAppleID() else { return }
-
-                            UserData.shared.getDataFromFirebase { user in
-                               guard let userNameFromApple = user?.name,
-                                     let emailFromApple = user?.email else { return }
-                                let data: [String: Any] = [
-                                    "author": [
-                                        "email": emailFromApple,
-                                        "id": idFromApple,
-                                        "name": userNameFromApple
-                                    ],
-                                    "title": title,
-                                    "content": content,
-                                    "createdTime": Date().timeIntervalSince1970,
-                                    "id": document.documentID,
-                                    "category": category,
-                                    "photoURL": downloadURL,// 存儲照片的下載 URL
-                                    "imageNameForStorage": imageName
-                                ]
-                                // 儲存資料至 Firestore
+        // MARK: - Before refactor
+        guard let idFromApple = UserData.shared.getUserAppleID() else { return }
+        UserData.shared.getDataFromFirebase { user in
+            guard let userNameFromApple = user?.name,
+                  let emailFromApple = user?.email else { return }
+            var data: [String: Any] = [
+                "author": [
+                    "email": emailFromApple,
+                    "id": idFromApple,
+                    "name": userNameFromApple
+                ],
+                "title": title,
+                "content": content,
+                "createdTime": Date().timeIntervalSince1970,
+                "id": document.documentID,
+                "category": category
+            ]
+            if let image = image,
+               let imageData = image.jpegData(compressionQuality: 0.8) {
+                let metadata = StorageMetadata()
+                metadata.contentType = "image/jpeg"
+                imageRef.putData(imageData, metadata: metadata) { (metadata, error) in
+                    if let error = error {
+                        print("Error uploading image: \(error.localizedDescription)")
+                    } else {
+                        imageRef.downloadURL { (url, error) in
+                            if let downloadURL = url?.absoluteString {
+                                data.updateValue(downloadURL, forKey: "photoURL")
+                                data.updateValue(imageName, forKey: "imageNameForStorage")
+                                // 儲存含有照片的資料至 Firestore
                                 document.setData(data) { (error) in
                                     if let error = error {
                                         print("Error adding document: \(error.localizedDescription)")
@@ -132,6 +129,17 @@ class PostViewController: UIViewController {
                                 }
                             }
                         }
+                    }
+                }
+            } else {
+                // 儲存不含照片的資料至 Firestore
+                document.setData(data) { (error) in
+                    if let error = error {
+                        print("Error adding document: \(error.localizedDescription)")
+                    } else {
+                        self.navigationController?.popViewController(animated: true)
+                        CMHUD.hide(from: self.view)
+                        print("Document added successfully!")
                     }
                 }
             }

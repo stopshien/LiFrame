@@ -11,7 +11,8 @@ class PostImageViewTableViewCell: UITableViewCell {
     @IBOutlet weak var postImageView: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
-        contentView.backgroundColor = .PointColor
+        backgroundColor = .PointColor
+        postImageView.backgroundColor = .PointColor
         postImageView.image = UIImage(named: "LiFrameIcon")
     }
 
