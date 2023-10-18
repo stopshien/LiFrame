@@ -18,7 +18,7 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         view.backgroundColor = .PointColor
         postDetailTableView.dataSource = self
         postDetailTableView.delegate = self
-        postDetailTableView.backgroundColor = .clear
+        postDetailTableView.backgroundColor = .PointColor
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "...", style: .plain, target: self, action: #selector(pressMore))
         // 判斷使否已經登入,userData 都存在 UserData 中
             if let userID = UserData.shared.getUserAppleID() {
@@ -74,7 +74,11 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2
+        if let imageCount = postDetail?.image?.count {
+            return 2
+        } else {
+            return 1
+        }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
@@ -90,7 +94,7 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             if let cell = postDetailTableView.dequeueReusableCell(withIdentifier: "PostImageViewTableViewCell", for: indexPath) as? PostImageViewTableViewCell,
                let postDetail = postDetail,
                let image = postDetail.image {
-                cell.postImageView.kf.setImage(with: URL(string: image))
+                cell.postImageView.kf.setImage(with: URL(string: image),placeholder: UIImage(named: "LiFrame_Logo_06"))
                 return cell
             }
         }

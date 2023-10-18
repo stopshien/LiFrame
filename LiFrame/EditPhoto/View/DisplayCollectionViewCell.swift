@@ -44,7 +44,7 @@ class DisplayCollectionViewCell: UICollectionViewCell {
             afterLutImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
             afterLutImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             afterLutImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            addButton.bottomAnchor.constraint(equalTo: afterLutImageView.bottomAnchor, constant: -10),
+//            addButton.bottomAnchor.constraint(equalTo: afterLutImageView.bottomAnchor, constant: -10),
             addButton.trailingAnchor.constraint(equalTo: afterLutImageView.trailingAnchor, constant: -10)
         ])
     }

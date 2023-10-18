@@ -7,6 +7,7 @@
 
 import UIKit
 import PhotosUI
+import CMHUD
 
 class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate {
     var configuration = PHPickerConfiguration()
@@ -36,7 +37,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         return button
     }()
     let syncEditButton: UIButton = {
-        let button = UIButton()
+        let button = CustomButton()
         button.addShadow()
         button.isSelected = false
         button.setTitle("批量修圖", for: .normal)
@@ -50,6 +51,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         button.tintColor = .PointColor
         button.layer.borderColor = UIColor.mainLabelColor.cgColor
         button.layer.borderWidth = 3.5
+        button.hitEdgeInsets = UIEdgeInsets(top: 50, left: 30, bottom: 50, right: 0)
         let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 50))
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         return button
@@ -144,8 +146,8 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         seeLibraryButton.layer.cornerRadius = view.frame.width/2*0.5
     }
     @objc func tappedEdit() {
-        let singleEditPicker = PHPickerViewController(configuration: configuration)
         configuration.selectionLimit = 1
+        let singleEditPicker = PHPickerViewController(configuration: configuration)
         singleEditPicker.delegate = self
         singleEditPicker.view.tag = 1
         present(singleEditPicker, animated: true)
@@ -190,7 +192,11 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
             dismiss(animated: true)
         } else if picker.view.tag == 2 {
             // 將選取的照片放到 LutViewController 的 afterLutArray
-            guard !results.isEmpty else { return dismiss(animated: true) }
+            CMHUD.loading(in: self.view)
+            guard !results.isEmpty else { return dismiss(animated: true) {
+                CMHUD.hide(from: self.view)
+            }
+        }
             var processedImages: [UIImage] = []
             let group = DispatchGroup()
             for itemProvider in itemProviders {
@@ -212,7 +218,9 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
                 lutVC.afterLutImage = lutVC.originImage
                 print(processedImages.count)
                 self.dismiss(animated: true)
-                self.present(lutVC, animated: true)
+                self.present(lutVC, animated: true) {
+                    CMHUD.hide(from: self.view)
+                }
             }
         }
     }
