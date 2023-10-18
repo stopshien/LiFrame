@@ -15,6 +15,7 @@
 		6A30F7CD2AB1AAF900D5A672 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A30F7CC2AB1AAF900D5A672 /* Assets.xcassets */; };
 		6A30F7D02AB1AAF900D5A672 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A30F7CE2AB1AAF900D5A672 /* LaunchScreen.storyboard */; };
 		6A355AB12AD7EEC900F8A658 /* DetailImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A355AB02AD7EEC900F8A658 /* DetailImageViewController.swift */; };
+		6A355AB32AE0040600F8A658 /* UIButtonExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A355AB22AE0040600F8A658 /* UIButtonExt.swift */; };
 		6A6F6D5F2AC7F8E5007BAB21 /* BlackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F6D5E2AC7F8E5007BAB21 /* BlackListViewController.swift */; };
 		6A6F6D622AC92AC0007BAB21 /* BlackListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F6D612AC92AC0007BAB21 /* BlackListTableViewCell.swift */; };
 		6A6F6D642ACAF1ED007BAB21 /* CardLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F6D632ACAF1ED007BAB21 /* CardLayout.swift */; };
@@ -59,6 +60,7 @@
 		6A30F7CF2AB1AAF900D5A672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6A30F7D12AB1AAF900D5A672 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6A355AB02AD7EEC900F8A658 /* DetailImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageViewController.swift; sourceTree = "<group>"; };
+		6A355AB22AE0040600F8A658 /* UIButtonExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExt.swift; sourceTree = "<group>"; };
 		6A6F6D5E2AC7F8E5007BAB21 /* BlackListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackListViewController.swift; sourceTree = "<group>"; };
 		6A6F6D612AC92AC0007BAB21 /* BlackListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackListTableViewCell.swift; sourceTree = "<group>"; };
 		6A6F6D632ACAF1ED007BAB21 /* CardLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardLayout.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				6A6F6D6D2AD01381007BAB21 /* UIView+Extension.swift */,
 				6A80EFB82AB6AD8C00C90754 /* UIImageExt.swift */,
 				6AF1ECA82ABB253500071983 /* UIColorExt.swift */,
+				6A355AB22AE0040600F8A658 /* UIButtonExt.swift */,
 				6AF1EC972AB8421C00071983 /* FirebaseManager.swift */,
 				6A7C1E7F2AC6A4EB00E1FAFE /* UserData.swift */,
 				6A6F6D6B2ACFEAFA007BAB21 /* MJRefreshWrapper.swift */,
@@ -472,6 +475,7 @@
 				6A80EFAA2AB3162E00C90754 /* EditViewController.swift in Sources */,
 				6A80EFBF2AB6F1E200C90754 /* CommunityTableViewCell.swift in Sources */,
 				6AF1EC962AB82A2B00071983 /* PostImageViewTableViewCell.swift in Sources */,
+				6A355AB32AE0040600F8A658 /* UIButtonExt.swift in Sources */,
 				6A30F7C82AB1AAF800D5A672 /* CameraViewController.swift in Sources */,
 				6A6F6D622AC92AC0007BAB21 /* BlackListTableViewCell.swift in Sources */,
 				6AF1ECA72AB9C91E00071983 /* APIManager.swift in Sources */,

@@ -13,7 +13,6 @@ class PostImageViewTableViewCell: UITableViewCell {
         super.awakeFromNib()
         backgroundColor = .PointColor
         postImageView.backgroundColor = .PointColor
-        postImageView.image = UIImage(named: "LiFrameIcon")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

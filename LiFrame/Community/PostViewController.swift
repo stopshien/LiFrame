@@ -54,6 +54,8 @@ class PostViewController: UIViewController {
               let contentText = contentTextView.text else { return }
         if titleText != "", categoryText != "", contentText != "" {
             addData(title: titleText, content: contentText, category: categoryText, image: postImage)
+        } else {
+            showAlert()
         }
     }
     func showAlert() {

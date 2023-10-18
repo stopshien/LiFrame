@@ -94,7 +94,7 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             if let cell = postDetailTableView.dequeueReusableCell(withIdentifier: "PostImageViewTableViewCell", for: indexPath) as? PostImageViewTableViewCell,
                let postDetail = postDetail,
                let image = postDetail.image {
-                cell.postImageView.kf.setImage(with: URL(string: image))
+                cell.postImageView.kf.setImage(with: URL(string: image),placeholder: UIImage(named: "LiFrame_Logo_06"))
                 return cell
             }
         }

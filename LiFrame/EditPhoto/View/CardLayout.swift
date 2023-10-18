@@ -29,7 +29,7 @@ class CardLayout: UICollectionViewFlowLayout {
         scrollDirection = .horizontal
         sectionInset = UIEdgeInsets(top: 0, left: margin, bottom: 0, right: margin)
         minimumLineSpacing = cellMargin
-        itemSize = CGSize(width: cellWidth, height: collectionViewHeight*0.75)
+        itemSize = CGSize(width: cellWidth, height: collectionViewHeight*0.6)
     }
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         guard let collectionView = self.collectionView else { return nil }
