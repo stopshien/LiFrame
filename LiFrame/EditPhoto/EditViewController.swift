@@ -25,39 +25,11 @@ class EditViewController: UIViewController {
     return imageView
 }()
     // 調整亮度的 slider
-    let editLightSlider: UISlider = {
-        let slider = UISlider()
-        slider.translatesAutoresizingMaskIntoConstraints = false
-        slider.minimumValue = -1
-        slider.maximumValue = 1
-        slider.value = 0
-        slider.isContinuous = true
-        slider.minimumTrackTintColor = .mainLabelColor
-        return slider
-    }()
+    let editLightSlider = UISlider.customSlider(minimumValue: -1, maximumValue: 1, startVlaue: 0)
     // 調整對比的 slider
-    let editContrastSlider: UISlider = {
-        let slider = UISlider()
-        slider.translatesAutoresizingMaskIntoConstraints = false
-        slider.minimumValue = 0.25
-        slider.maximumValue = 4
-        slider.value = 1
-        slider.isContinuous = true
-        slider.minimumTrackTintColor = .mainLabelColor
-        return slider
-    }()
+    let editContrastSlider = UISlider.customSlider(minimumValue: 0.25, maximumValue: 4, startVlaue: 1)
     // 調整飽和的 slider
-    let editSaturationSlider: UISlider = {
-        let slider = UISlider()
-        slider.translatesAutoresizingMaskIntoConstraints = false
-        slider.minimumValue = 0
-        slider.maximumValue = 2
-        slider.value = 1
-        slider.isContinuous = true
-        slider.minimumTrackTintColor = .mainLabelColor
-        return slider
-    }()
-
+    let editSaturationSlider = UISlider.customSlider(minimumValue: 0, maximumValue: 2, startVlaue: 1)
     let lutSaveButton: UIButton = {
        let button = UIButton()
         button.setTitle("儲存風格檔", for: .normal)
@@ -179,67 +151,36 @@ class EditViewController: UIViewController {
         }
     }
     @objc func saturationEdit() {
-        let context = CIContext()
-        guard let editImage = editImage else { return }
-        // 要修的圖轉成CIImage
-        // 需要處理轉向設定
-        var ciImage = CIImage(image: editImage)
-            if let orientation = editImage.toCGImagePropertyOrientation() {
-                ciImage = CIImage(image: editImage, options: [CIImageOption.applyOrientationProperty: true])
-                ciImage = ciImage?.oriented(orientation)
-            } else {
-                ciImage = CIImage(image: editImage)
-            }
-        filter?.setValue(ciImage, forKey: kCIInputImageKey)
-        filter?.setValue(editSaturationSlider.value, forKey: kCIInputSaturationKey)
-        if let outputImage = filter?.outputImage, let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
-        let newImage = UIImage(cgImage: cgImage)
-        self.finalImage = newImage
-        editImageView.image = newImage
-        }
+        setCotext(filterKey: kCIInputSaturationKey, sliderValue: editSaturationSlider.value)
     }
     @objc func brightEdit() {
-        let context = CIContext()
-        guard let editImage = editImage else { return }
-        // 要修的圖轉成CIImage
-        // 需要處理轉向設定
-        var ciImage = CIImage(image: editImage)
-            if let orientation = editImage.toCGImagePropertyOrientation() {
-                ciImage = CIImage(image: editImage, options: [CIImageOption.applyOrientationProperty: true])
-                ciImage = ciImage?.oriented(orientation)
-            } else {
-                ciImage = CIImage(image: editImage)
-            }
-        filter?.setValue(ciImage, forKey: kCIInputImageKey)
-        filter?.setValue(editLightSlider.value, forKey: kCIInputBrightnessKey)
-        if let outputImage = filter?.outputImage, let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
-        let newImage = UIImage(cgImage: cgImage)
-        self.finalImage = newImage
-        editImageView.image = newImage
-        }
+        setCotext(filterKey: kCIInputBrightnessKey, sliderValue: editLightSlider.value)
     }
     @objc func contrastEdit() {
-        let context = CIContext()
-        guard let editImage = editImage else { return }
-        // 要修的圖轉成CIImage
-        // 需要處理轉向設定
-        var ciImage = CIImage(image: editImage)
-            if let orientation = editImage.toCGImagePropertyOrientation() {
-                ciImage = CIImage(image: editImage, options: [CIImageOption.applyOrientationProperty: true])
-                ciImage = ciImage?.oriented(orientation)
-            } else {
-                ciImage = CIImage(image: editImage)
-            }
-        filter?.setValue(ciImage, forKey: kCIInputImageKey)
-        filter?.setValue(editContrastSlider.value, forKey: kCIInputContrastKey)
-        if let outputImage = filter?.outputImage, let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
-        let newImage = UIImage(cgImage: cgImage)
-            self.finalImage = newImage
-        editImageView.image = newImage
-        }
+        setCotext(filterKey: kCIInputContrastKey, sliderValue: editContrastSlider.value)
     }
     @objc func saveLut() {
         showAlert()
+    }
+    func setCotext(filterKey: String, sliderValue: Float) {
+        let context = CIContext()
+        guard let editImage = editImage else { return }
+        // 要修的圖轉成CIImage
+        // 需要處理轉向設定
+        var ciImage = CIImage(image: editImage)
+            if let orientation = editImage.toCGImagePropertyOrientation() {
+                ciImage = CIImage(image: editImage, options: [CIImageOption.applyOrientationProperty: true])
+                ciImage = ciImage?.oriented(orientation)
+            } else {
+                ciImage = CIImage(image: editImage)
+            }
+        filter?.setValue(ciImage, forKey: kCIInputImageKey)
+        filter?.setValue(sliderValue, forKey: filterKey)
+        if let outputImage = filter?.outputImage, let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
+        let newImage = UIImage(cgImage: cgImage)
+        self.finalImage = newImage
+        editImageView.image = newImage
+        }
     }
     func showAlert() {
         // 建立一個提示框
@@ -251,7 +192,7 @@ class EditViewController: UIViewController {
            textField.placeholder = "名稱"
         }
          // 建立[確認]按鈕
-         let okAction = UIAlertAction(
+          let okAction = UIAlertAction(
              title: "確認",
              style: .default,
              handler: {

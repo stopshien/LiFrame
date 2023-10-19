@@ -143,7 +143,6 @@ class LutViewController: UIViewController {
         } else {
             haveNoLutsLabel.isHidden = true
         }
-        print(afterLutImage.count)
     }
     @objc func tappedDismiss() {
         dismiss(animated: true)

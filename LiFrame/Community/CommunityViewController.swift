@@ -116,7 +116,6 @@ class CommunityViewController: UIViewController {
         controller.addAction(watchBlackListAction)
         let logOutAction = UIAlertAction(title: "登出", style: .default) { action in
             UserDefaults.standard.removeObject(forKey: "UserAppleID")
-//            self.navigationItem.rightBarButtonItem?.isHidden = true
             self.updatePost()
             guard let image = UIImage(systemName: "door.left.hand.closed") else { return }
             CMHUD.show(image: image, in: self.view, identifier: "Log Out", imageSize: CGSize(width: 80, height: 80))
