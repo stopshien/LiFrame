@@ -10,7 +10,7 @@ import PhotosUI
 class LutManager {
     static let shared = LutManager()
     private init() {}
-    // 讀取 Lut 對象
+    // 讀取 Lut
     func loadLuts() -> [Lut]? {
         let userDefaults = UserDefaults.standard
         if let savedLuts = userDefaults.array(forKey: "luts") as? [[String: Any]] {
@@ -30,7 +30,6 @@ class LutManager {
     // 修圖
     func applyLutToImage(_ image: UIImage, brightness: Float, contrast: Float, saturation: Float) -> UIImage? {
         let filter = CIFilter(name: "CIColorControls")
-//        let ciImage = CIImage(image: image)
         // 需要處理轉向設定
         var ciImage = CIImage(image: image)
             if let orientation = image.toCGImagePropertyOrientation() {

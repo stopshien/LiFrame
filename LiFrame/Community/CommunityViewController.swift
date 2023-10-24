@@ -12,7 +12,7 @@ import AuthenticationServices
 
 class CommunityViewController: UIViewController {
     var postsArray: [Posts] = [] {
-        didSet{
+        didSet {
             communityTableView.reloadData()
         }
     }
@@ -24,14 +24,13 @@ class CommunityViewController: UIViewController {
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.tintColor = .white
         button.backgroundColor = .mainLabelColor
-        button.addTarget(self, action: #selector(tappedPostButton), for: .touchUpInside)
         let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 30))
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         return button
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .PointColor
+        view.backgroundColor = .pointColor
         communityTableView.dataSource = self
         communityTableView.delegate = self
         view.addSubview(addPostButton)
@@ -44,6 +43,7 @@ class CommunityViewController: UIViewController {
             self?.updatePost()
             self?.headerLoader()
         })
+        addPostButton.addTarget(self, action: #selector(tappedPostButton), for: .touchUpInside)
     }
     override func viewWillAppear(_ animated: Bool) {
         updatePost()
@@ -60,16 +60,16 @@ class CommunityViewController: UIViewController {
         }
     }
     func updatePost() {
-        var blackLists = [BlackList(blockedName: "", blockedAppleID: "")]
+        var blockLists = [BlockList(blockedName: "", blockedAppleID: "")]
         UserData.shared.getUserDataFromFirebase { user in
             if let user = user, !user.blackList.isEmpty {
-                blackLists = user.blackList
+                blockLists = user.blackList
             }
             CMHUD.loading(in: self.view)
             self.postsArray = []
             let db = FirebaseManager.shared.db
-            let blockedAppleIDs = blackLists.map { $0.blockedAppleID }
-            print(blackLists,blockedAppleIDs)
+            let blockedAppleIDs = blockLists.map { $0.blockedAppleID }
+            print(blockLists, blockedAppleIDs)
             db.collection("posts").whereField("author.id", notIn: blockedAppleIDs).getDocuments() { (querySnapshot, err) in
                 if let err = err {
                     print("Error getting documents: \(err)")
@@ -101,7 +101,7 @@ class CommunityViewController: UIViewController {
             }
         }
         // 判斷使否已經登入,userData 都存在 UserData 中
-        if let userID = UserData.shared.getUserAppleID() {
+        if UserData.shared.getUserAppleID() != nil {
             navigationItem.rightBarButtonItem?.isHidden = false
         } else {
             navigationItem.rightBarButtonItem?.isHidden = true
@@ -109,18 +109,18 @@ class CommunityViewController: UIViewController {
     }
     @objc func tappedProfile() {
         let controller = UIAlertController(title: "個人設定", message: nil, preferredStyle: .actionSheet)
-        let watchBlackListAction = UIAlertAction(title: "查看黑名單", style: .default) { action in
-            let blackListVC = BlackListViewController()
-            self.navigationController?.pushViewController(blackListVC, animated: true)
+        let watchBlockListAction = UIAlertAction(title: "查看黑名單", style: .default) { action in
+            let blockListVC = BlockListViewController()
+            self.navigationController?.pushViewController(blockListVC, animated: true)
         }
-        controller.addAction(watchBlackListAction)
+        controller.addAction(watchBlockListAction)
         let logOutAction = UIAlertAction(title: "登出", style: .default) { action in
             UserDefaults.standard.removeObject(forKey: "UserAppleID")
             self.updatePost()
             guard let image = UIImage(systemName: "door.left.hand.closed") else { return }
             CMHUD.show(image: image, in: self.view, identifier: "Log Out", imageSize: CGSize(width: 80, height: 80))
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                CMHUD.hide(from: self.view,delay: 2)
+                CMHUD.hide(from: self.view, delay: 2)
             }
         }
         controller.addAction(logOutAction)
@@ -144,7 +144,7 @@ class CommunityViewController: UIViewController {
             handler: {
             (action: UIAlertAction!) -> Void in
                 // 刪除 firebase 黑名單
-                FirebaseManager().updateBlackListForFirebase(key: "blacklist", value: [])
+                FirebaseManager().updateBlockListForFirebase(key: "blacklist", value: [])
                 UserDefaults.standard.removeObject(forKey: "UserAppleID")
                 self.updatePost()
                 guard let image = UIImage(systemName: "door.left.hand.closed") else { return }

@@ -28,7 +28,7 @@ class FirebaseManager {
             let data = [key: value]
             document.updateData(data) { err in
                 if let err = err {
-                    print(userAppleID,document,data,"===========user")
+                    print(userAppleID, document, data, "===========user")
                     print("Error updating document: \(err)")
                 } else {
                     print("Document successfully updated")
@@ -36,14 +36,14 @@ class FirebaseManager {
             }
         }
     }
-    func updateBlackListForFirebase(key: String, value: [[String: Any]]) {
+    func updateBlockListForFirebase(key: String, value: [[String: Any]]) {
         let users = db.collection("users")
         if let userAppleID = UserData.shared.getUserAppleID() {
             let document = users.document(userAppleID)
             let data = [key: value]
-            document.updateData(data){ err in
+            document.updateData(data) { err in
                 if let err = err {
-                    print(userAppleID,document,data,"===========black")
+                    print(userAppleID, document, data, "===========black")
                     print("Error updating document: \(err)")
                 } else {
                     print("Document successfully updated")

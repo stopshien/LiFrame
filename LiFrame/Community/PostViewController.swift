@@ -32,7 +32,10 @@ class PostViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .PointColor
+        view.backgroundColor = .pointColor
+        guard let titleTextField = titleTextField,
+              let categoryTextField = categoryTextField,
+              let contentTextView = contentTextView else { return }
         titleTextField.textColor = .mainLabelColor
         categoryTextField.textColor = .mainLabelColor
         contentTextView.textColor = .mainLabelColor
@@ -53,7 +56,7 @@ class PostViewController: UIViewController {
               let categoryText = categoryTextField.text,
               let contentText = contentTextView.text else { return }
         if titleText != "", categoryText != "", contentText != "" {
-            addData(title: titleText, content: contentText, category: categoryText, image: postImage)
+            postDataToFirebase(collection: "posts", title: titleText, content: contentText, category: categoryText, image: postImage)
         } else {
             showAlert()
         }
@@ -81,10 +84,10 @@ class PostViewController: UIViewController {
            animated: true,
            completion: nil)
     }
-    func addData(title: String, content: String, category: String, image: UIImage?) {
+    func postDataToFirebase(collection: String, title: String, content: String, category: String, image: UIImage?) {
         CMHUD.loading(in: view)
         let db = FirebaseManager.shared.db
-        let posts = db.collection("posts")
+        let posts = db.collection(collection)
         let document = posts.document()
         // 上傳照片至 Firebase Cloud Storage
         let storageRef = Storage.storage().reference().child("images")
@@ -148,8 +151,8 @@ class PostViewController: UIViewController {
         }
     }
 }
-extension PostViewController: UIImagePickerControllerDelegate,UINavigationControllerDelegate{
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+extension PostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         selectPhoto = true
         let image = info[.originalImage] as? UIImage
         imageButtonOutlet.setImage(image, for: .normal)

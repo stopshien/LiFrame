@@ -16,7 +16,7 @@ class LutViewController: UIViewController {
     var afterLutImage: [UIImage] = []
     let backview: UIView = {
         let view = UIView()
-        view.backgroundColor = .PointColor
+        view.backgroundColor = .pointColor
         view.alpha = 0.8
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -48,7 +48,6 @@ class LutViewController: UIViewController {
         button.layer.cornerRadius = 15
         button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(tappedDismiss), for: .touchUpInside)
         return button
     }()
     let lutView: UIView = {
@@ -104,6 +103,7 @@ class LutViewController: UIViewController {
         view.addSubview(chooseLutLabel)
         displayCollectionView.addSubview(saveButton)
         saveButton.addTarget(self, action: #selector(tappedSave), for: .touchUpInside)
+        dismissButton.addTarget(self, action: #selector(tappedDismiss), for: .touchUpInside)
         NSLayoutConstraint.activate([
             backview.topAnchor.constraint(equalTo: view.topAnchor),
             backview.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1),

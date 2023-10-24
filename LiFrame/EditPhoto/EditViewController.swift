@@ -142,11 +142,8 @@ class EditViewController: UIViewController {
         ])
     }
     @objc func savePhoto() {
-        if let image = finalImage {
-            LutManager.shared.saveImagesToPhotoLibrary([image])
-            CMHUD.success(in: view)
-        } else if let editImage = editImage {
-            LutManager.shared.saveImagesToPhotoLibrary([editImage])
+        if let imageToSave = finalImage ?? editImage {
+            LutManager.shared.saveImagesToPhotoLibrary([imageToSave])
             CMHUD.success(in: view)
         }
     }
@@ -213,7 +210,7 @@ class EditViewController: UIViewController {
            animated: true,
            completion: nil)
     }
-    // 儲存 Lut 對象
+    // 儲存 Lut
     func saveLutToUserDefeault(_ lut: Lut) {
         let userDefaults = UserDefaults.standard
         // 將 Lut 對象轉換為字典
@@ -228,10 +225,7 @@ class EditViewController: UIViewController {
             savedLuts.append(lutData)
             userDefaults.set(savedLuts, forKey: "luts")
         } else {
-            let newLuts = [lutData]
-            userDefaults.set(newLuts, forKey: "luts")
+            userDefaults.set([lutData], forKey: "luts")
         }
-        // 保存變更
-        userDefaults.synchronize()
     }
 }

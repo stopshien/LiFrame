@@ -18,7 +18,7 @@ extension UIView {
         layer.masksToBounds = false
     }
     func addFadingCircles(view: UIView) {
-        let circleColors: [UIColor] = [.PointColor, .mainColor, .PointColor, .mainLabelColor, .mainLabelColor]
+        let circleColors: [UIColor] = [.pointColor, .mainColor, .pointColor, .mainLabelColor, .mainLabelColor]
            let circleSizes: [CGFloat] = [40.0, 200, 100, 80, 300]
            for (index, color) in circleColors.enumerated() {
                let circleView = UIView()
