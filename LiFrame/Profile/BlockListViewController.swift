@@ -8,15 +8,15 @@
 import UIKit
 import FirebaseStorage
 
-class BlackListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var blackListFromUserData = [BlackList]()
+class BlockListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    var blackListFromUserData = [BlockList]()
     let blackListTableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .PointColor
-        let fullScreen = UIScreen.main.bounds
-        tableView.frame = CGRect(x: 0, y: 0, width: fullScreen.width, height: fullScreen.height)
+        tableView.backgroundColor = .pointColor
+        tableView.frame = CGRect(x: 0, y: 0, width: UIScreen.width, height: UIScreen.height)
         return tableView
     }()
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(blackListTableView)
@@ -26,12 +26,8 @@ class BlackListViewController: UIViewController, UITableViewDelegate, UITableVie
         blackListTableView.allowsSelection = false
     }
     override func viewWillAppear(_ animated: Bool) {
-        UserData.shared.getUserDataFromFirebase { user in
-            if let user = user {
-                self.blackListFromUserData = user.blackList
-                self.blackListTableView.reloadData()
-            }
-        }
+        getBlockList()
+        self.blackListTableView.reloadData()
     }
     override func viewWillDisappear(_ animated: Bool) {
         let blackListDictArray = self.blackListFromUserData.map { blackList -> [String: Any] in
@@ -40,7 +36,14 @@ class BlackListViewController: UIViewController, UITableViewDelegate, UITableVie
                 "blockedAppleID": blackList.blockedAppleID
             ]
         }
-        FirebaseManager().updateBlackListForFirebase(key: "blacklist", value: blackListDictArray)
+        FirebaseManager().updateBlockListForFirebase(key: "blacklist", value: blackListDictArray)
+    }
+    func getBlockList() {
+        UserData.shared.getUserDataFromFirebase { user in
+            if let user = user {
+                self.blackListFromUserData = user.blackList
+            }
+        }
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "黑名單"

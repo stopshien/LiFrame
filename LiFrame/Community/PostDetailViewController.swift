@@ -11,14 +11,14 @@ import FirebaseStorage
 
 class PostDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var postDetail: Posts?
-    var blackList: [BlackList] = []
+    var blackList: [BlockList] = []
     @IBOutlet weak var postDetailTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .PointColor
+        view.backgroundColor = .pointColor
         postDetailTableView.dataSource = self
         postDetailTableView.delegate = self
-        postDetailTableView.backgroundColor = .PointColor
+        postDetailTableView.backgroundColor = .pointColor
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "...", style: .plain, target: self, action: #selector(pressMore))
         // 判斷使否已經登入,userData 都存在 UserData 中
             if let userID = UserData.shared.getUserAppleID() {
@@ -94,7 +94,7 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             if let cell = postDetailTableView.dequeueReusableCell(withIdentifier: "PostImageViewTableViewCell", for: indexPath) as? PostImageViewTableViewCell,
                let postDetail = postDetail,
                let image = postDetail.image {
-                cell.postImageView.kf.setImage(with: URL(string: image),placeholder: UIImage(named: "LiFrame_Logo_06"))
+                cell.postImageView.kf.setImage(with: URL(string: image), placeholder: UIImage(named: "LiFrame_Logo_06"))
                 return cell
             }
         }
@@ -103,7 +103,7 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     func addIntoBlackList() {
         if let blockUserAppleID = self.postDetail?.appleID,
            let userName = self.postDetail?.name {
-            let wannaBlockUser = BlackList(blockedName: userName, blockedAppleID: blockUserAppleID)
+            let wannaBlockUser = BlockList(blockedName: userName, blockedAppleID: blockUserAppleID)
             if !self.blackList.contains(where: { $0.blockedName == wannaBlockUser.blockedName && $0.blockedAppleID == wannaBlockUser.blockedAppleID }) {
                 self.blackList.append(wannaBlockUser)
                 print("加進黑名單")
@@ -115,7 +115,7 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                     "blockedAppleID": blackList.blockedAppleID
                 ]
             }
-            FirebaseManager().updateBlackListForFirebase(key: "blacklist", value: blackListDictArray)
+            FirebaseManager().updateBlockListForFirebase(key: "blacklist", value: blackListDictArray)
             self.navigationController?.popViewController(animated: true)
         }
     }
