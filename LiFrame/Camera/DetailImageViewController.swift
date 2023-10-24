@@ -26,7 +26,7 @@ class DetailImageViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("OK", for: .normal)
-        button.tintColor = .PointColor
+        button.tintColor = .pointColor
         button.backgroundColor = .mainLabelColor
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
@@ -34,12 +34,12 @@ class DetailImageViewController: UIViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .PointColor
+        view.backgroundColor = .pointColor
         view.addSubview(detailImageView)
         view.addSubview(photoInfoLabel)
         view.addSubview(OKButton)
         OKButton.addTarget(self, action: #selector(tappedOK), for: .touchUpInside)
-        if let image = detailImage {
+        if detailImage != nil {
             detailImageView.image = detailImage
         }
         NSLayoutConstraint.activate([
@@ -57,5 +57,4 @@ class DetailImageViewController: UIViewController {
     @objc func tappedOK() {
         dismiss(animated: true)
     }
-    
 }

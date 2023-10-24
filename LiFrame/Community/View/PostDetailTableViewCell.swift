@@ -14,7 +14,7 @@ class PostDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var contentLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        contentView.backgroundColor = .PointColor
+        contentView.backgroundColor = .pointColor
         titleLabel.textColor = .mainLabelColor
         contentLabel.textColor = .mainLabelColor
         createTimeLabel.textColor = .backgroundColorSet

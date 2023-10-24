@@ -54,7 +54,7 @@ class UserData {
     }()
 
     func getUserDataFromFirebase(completion: @escaping (Users?) -> Void) {
-        var blackLists = [BlackList]()
+        var blockLists = [BlockList]()
         let db = FirebaseManager.shared.db
         guard let appleIDFromUserDefault = UserData.shared.getUserAppleID() else {
             completion(nil)
@@ -81,10 +81,10 @@ class UserData {
                             completion(nil)
                             return
                         }
-                        let blackList = BlackList(blockedName: blockedName, blockedAppleID: blockedID)
-                        blackLists.append(blackList)
+                        let blackList = BlockList(blockedName: blockedName, blockedAppleID: blockedID)
+                        blockLists.append(blackList)
                     }
-                    let userData = Users(name: name, email: email, id: appleID, documentID: appleID, blackList: blackLists)
+                    let userData = Users(name: name, email: email, id: appleID, documentID: appleID, blackList: blockLists)
                     completion(userData)
                 } else {
                     completion(nil)

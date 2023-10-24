@@ -13,7 +13,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     var configuration = PHPickerConfiguration()
     let backgroundView: UIImageView = {
         let imageView = UIImageView()
-        imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.width, height: UIScreen.height)
         imageView.image = UIImage(named: "backgroundImage")
         return imageView
     }()
@@ -48,7 +48,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         button.titleLabel?.textAlignment = .center
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .mainColor
-        button.tintColor = .PointColor
+        button.tintColor = .pointColor
         button.layer.borderColor = UIColor.mainLabelColor.cgColor
         button.layer.borderWidth = 3.5
         button.hitEdgeInsets = UIEdgeInsets(top: 50, left: 30, bottom: 50, right: 0)
@@ -95,7 +95,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         addFadingCircles()
     }
     func addFadingCircles() {
-        let circleColors: [UIColor] = [.PointColor, .mainLabelColor]
+        let circleColors: [UIColor] = [.pointColor, .mainLabelColor]
            let circleSizes: [CGFloat] = [40.0, 400]
            let xposition: [CGFloat] = [200, 280]
            let yposition: [CGFloat] = [80, 700]
@@ -153,11 +153,6 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         present(singleEditPicker, animated: true)
     }
     @objc func tappedSeeLibrary() {
-//        configuration.selectionLimit = 0
-//        let pickerForLibrary = PHPickerViewController(configuration: configuration)
-//        pickerForLibrary.view.tag = 2
-//        pickerForLibrary.delegate = self
-//        present(pickerForLibrary, animated: true)
         let imagePickerController = UIImagePickerController()
         // 資料來源為圖片庫
         imagePickerController.sourceType = .photoLibrary
@@ -166,9 +161,6 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         present(imagePickerController, animated: true, completion: nil)
     }
     @objc func tappedSyncEdit() {
-//        let lutVC = LutViewController()
-//        lutVC.modalPresentationStyle = .overFullScreen
-//        present(lutVC, animated: true)
         configuration.selectionLimit = 10
         let pickerForSync = PHPickerViewController(configuration: configuration)
         pickerForSync.delegate = self
@@ -179,7 +171,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         let itemProviders = results.map(\.itemProvider)
         if picker.view.tag == 1 {
             if let itemProvider = itemProviders.first, itemProvider.canLoadObject(ofClass: UIImage.self) {
-                itemProvider.loadObject(ofClass: UIImage.self) {[weak self] (image, error) in
+                itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
                     DispatchQueue.main.async {
                         guard let self = self, let image = image as? UIImage else { return }
                         let editVC = EditViewController()
@@ -203,7 +195,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
                 if itemProvider.canLoadObject(ofClass: UIImage.self) {
                     group.enter()
                     itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
-                        guard let self = self, let image = image as? UIImage else { return }
+                        guard let image = image as? UIImage else { return }
                         processedImages.append(image)
                         defer {
                             group.leave()
@@ -227,7 +219,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
 }
 
 extension EditPhotoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.originalImage] as? UIImage else { return }
         let detailImageVC = DetailImageViewController()
         detailImageVC.detailImage = image

@@ -10,7 +10,7 @@ import UIKit
 extension UIColor {
     static let mainColor = UIColor.init(hexString: "#FDF4DE")
     static let secondColor = UIColor.init(hexString: "#FEF9EA")
-    static let PointColor = UIColor.init(hexString: "#E8DBC5")
+    static let pointColor = UIColor.init(hexString: "#E8DBC5")
     static let backgroundColorSet = UIColor.init(hexString: "#BC9F77")
     static let mainLabelColor = UIColor.init(hexString: "#73645A")
     static let lutCollectionViewColor = UIColor.init(hexString: "#FCEDD6")

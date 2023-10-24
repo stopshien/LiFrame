@@ -112,7 +112,7 @@ class MapViewController: UIViewController, SFSafariViewControllerDelegate {
         miniView.addSubview(cloudImage)
         miniView.addSubview(appleWeatherButton)
         setMiniViewLayout()
-        citiesToMap()
+        citiesToMap(citisNameFromAsset: "cities")
         appleWeatherButton.addTarget(self, action: #selector(weatherKitWebsite), for: .touchUpInside)
         moonImage.isHidden = true
         cloudImage.isHidden = true
@@ -132,22 +132,21 @@ class MapViewController: UIViewController, SFSafariViewControllerDelegate {
         }
     }
     func setMiniViewLayout() {
-        let screenSize = UIScreen.main.bounds
         NSLayoutConstraint.activate([
             cityNameLabel.topAnchor.constraint(equalTo: miniView.topAnchor, constant: 10),
             cityNameLabel.centerXAnchor.constraint(equalTo: miniView.centerXAnchor),
             moonImage.topAnchor.constraint(equalTo: cityNameLabel.bottomAnchor, constant: 10),
-            moonImage.centerXAnchor.constraint(equalTo: miniView.centerXAnchor, constant: -screenSize.width/4.5),
+            moonImage.centerXAnchor.constraint(equalTo: miniView.centerXAnchor, constant: -UIScreen.width/4.5),
             moonLabel.centerYAnchor.constraint(equalTo: moonImage.centerYAnchor),
-            moonLabel.centerXAnchor.constraint(equalTo: miniView.centerXAnchor, constant: screenSize.width/5),
+            moonLabel.centerXAnchor.constraint(equalTo: miniView.centerXAnchor, constant: UIScreen.width/5),
             tempImage.topAnchor.constraint(equalTo: moonImage.bottomAnchor, constant: 5),
-            tempImage.centerXAnchor.constraint(equalTo: miniView.centerXAnchor, constant: -screenSize.width/4.5),
+            tempImage.centerXAnchor.constraint(equalTo: miniView.centerXAnchor, constant: -UIScreen.width/4.5),
             tempLabel.centerYAnchor.constraint(equalTo: tempImage.centerYAnchor),
-            tempLabel.centerXAnchor.constraint(equalTo: miniView.centerXAnchor, constant: screenSize.width/6),
+            tempLabel.centerXAnchor.constraint(equalTo: miniView.centerXAnchor, constant: UIScreen.width/6),
             cloudImage.topAnchor.constraint(equalTo: tempImage.bottomAnchor, constant: 5),
-            cloudImage.centerXAnchor.constraint(equalTo: miniView.centerXAnchor, constant: -screenSize.width/4.5),
+            cloudImage.centerXAnchor.constraint(equalTo: miniView.centerXAnchor, constant: -UIScreen.width/4.5),
             cloudLabel.centerYAnchor.constraint(equalTo: cloudImage.centerYAnchor),
-            cloudLabel.centerXAnchor.constraint(equalTo: miniView.centerXAnchor, constant: screenSize.width/6)
+            cloudLabel.centerXAnchor.constraint(equalTo: miniView.centerXAnchor, constant: UIScreen.width/6)
         ])
         NSLayoutConstraint.activate([
             appleWeatherButton.leadingAnchor.constraint(equalTo: miniView.leadingAnchor, constant: 3),
@@ -190,8 +189,8 @@ class MapViewController: UIViewController, SFSafariViewControllerDelegate {
             }.resume()
         }
     }
-    func citiesToMap() {
-        if let data = NSDataAsset(name: "cities")?.data {
+    func citiesToMap(citisNameFromAsset: String) {
+        if let data = NSDataAsset(name: citisNameFromAsset)?.data {
                  do {
                      let decoder = JSONDecoder()
                      let cities = try decoder.decode(Cities.self, from: data)
@@ -203,7 +202,9 @@ class MapViewController: UIViewController, SFSafariViewControllerDelegate {
                              let coordinate = CLLocation(latitude: latitudinal, longitude: longitude).coordinate
                              pin.coordinate = coordinate
                              pin.title = city.name
-                             mapView.addAnnotation(pin)
+                             if let mapView = mapView {
+                                 mapView.addAnnotation(pin)
+                             }
                          }
                      }
                  } catch {

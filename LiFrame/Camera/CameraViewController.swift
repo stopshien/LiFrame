@@ -11,7 +11,6 @@ import PhotosUI
 class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     let imageCameraPicker = UIImagePickerController()
     var configuration = PHPickerConfiguration()
-    static let fullScreenSize = UIScreen.main.bounds
     var layerImageView: UIImageView?
     let seePhotoLibrary: UIButton = {
         let button = UIButton()
@@ -21,7 +20,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         button.backgroundColor = .mainLabelColor
         button.clipsToBounds = true
         button.layer.cornerRadius = 10
-        button.layer.borderColor = UIColor.PointColor.cgColor
+        button.layer.borderColor = UIColor.pointColor.cgColor
         button.layer.borderWidth = 1.3
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return button
@@ -68,7 +67,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     }()
     let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.width, height: UIScreen.height)
         imageView.image = UIImage(named: "backgroundImage")
         return imageView
     }()
@@ -78,7 +77,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         view.alpha = 1
         view.layer.cornerRadius = 0
         view.clipsToBounds = true
-        view.frame = CGRect(x: 0, y: 0 , width: Int(fullScreenSize.width), height: Int(fullScreenSize.height))
+        view.frame = CGRect(x: 0, y: 0, width: Int(UIScreen.width), height: Int(UIScreen.height))
         return view
     }()
     let flashButton: UIButton = {
@@ -123,12 +122,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         return button
     }()
     let alphaSlider: UISlider = {
-        let slider = UISlider()
-        slider.translatesAutoresizingMaskIntoConstraints = false
-        slider.minimumValue = 0
-        slider.maximumValue = 1
-        slider.value = 0.5
-        slider.isContinuous = true
+        let slider = UISlider.customSlider(minimumValue: 0, maximumValue: 1, startVlaue: 0.5)
         slider.minimumTrackTintColor = .white
         slider.minimumValueImage = UIImage(systemName: "moonphase.last.quarter.inverse")
         slider.tintColor = .white
@@ -168,7 +162,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         addFadingCircles()
     }
     func addFadingCircles() {
-        let circleColors: [UIColor] = [.mainLabelColor, .PointColor, .mainColor, .mainLabelColor, .PointColor]
+        let circleColors: [UIColor] = [.mainLabelColor, .pointColor, .mainColor, .mainLabelColor, .pointColor]
         let circleSizes: [CGFloat] = [40, 150, 80, 300, 200]
         let xposition: [CGFloat] = [80, 250, 80, 300, -10]
         let yposition: [CGFloat] = [80, 100, 300, 600, 470]
@@ -193,9 +187,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
            }
        }
     @objc func tappedImageButton() {
-        print("為了Demo方便，暫時先用可以選兩張的樣式，包板時改過來")
-        configuration.selectionLimit = 0
-        let pickerForLibrary = PHPickerViewController(configuration: configuration)
+        print("為了Demo方便，暫時先用可以選兩張的樣式，包板時改過來,這邊改成 1 了")
+        let pickerForLibrary = UIImagePickerController()
         pickerForLibrary.view.tag = 2
         pickerForLibrary.delegate = self
         imageCameraPicker.present(pickerForLibrary, animated: true)
@@ -274,7 +267,7 @@ extension CameraViewController: PHPickerViewControllerDelegate {
                     var unrotatedImage = image
 
                     if image.size.width > image.size.height {
-                        unrotatedImage = image.rotateToCorrectOrientation(.right)
+                        unrotatedImage = image.rotateToCorrectOrientation(.left)
                     } else {
                         unrotatedImage = image.rotateToCorrectOrientation(.up)
                     }
@@ -287,7 +280,6 @@ extension CameraViewController: PHPickerViewControllerDelegate {
                     self.imageCameraPicker.showsCameraControls = false
                         if UIImagePickerController.isSourceTypeAvailable(.camera) {
                             let imageView = UIImageView(image: unrotatedImage)
-                            let screenSize = UIScreen.main.bounds
                             self.layerImageView = imageView
                             guard let layerImageView = self.layerImageView else { return }
                             layerImageView.alpha = 0.45
@@ -363,7 +355,7 @@ extension CameraViewController: PHPickerViewControllerDelegate {
         imageCameraPicker.takePicture()
         let shutterView: UIView = {
             let view = UIView()
-            view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+            view.frame = CGRect(x: 0, y: 0, width: UIScreen.width, height: UIScreen.height)
             view.backgroundColor = .black
             return view
         }()
