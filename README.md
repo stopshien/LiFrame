@@ -41,7 +41,7 @@ LiFrame 是一款能夠為您的攝影構圖提供參考的 iOS 應用程式。
 ver. 1.0
 
 ## Requirement
-Xcode 16.0 or later
+iOS 16.0 or later
 
 ## Contact
 stopforxcode@gmail.com
