@@ -7,8 +7,8 @@
 
 import UIKit
 
-class BlackListTableViewCell: UITableViewCell {
-    let blackName: UILabel = {
+class BlockListTableViewCell: UITableViewCell {
+    let blockName: UILabel = {
         let label = UILabel()
         label.textColor = .mainLabelColor
         label.font = UIFont.systemFont(ofSize: 20)
@@ -17,10 +17,10 @@ class BlackListTableViewCell: UITableViewCell {
     }()
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubview(blackName)
+        addSubview(blockName)
         NSLayoutConstraint.activate([
-            blackName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-            blackName.centerYAnchor.constraint(equalTo: centerYAnchor)
+            blockName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            blockName.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
         backgroundColor = .pointColor
         selectionStyle = .none
