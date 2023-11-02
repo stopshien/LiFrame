@@ -16,14 +16,24 @@ class BlockListViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.frame = CGRect(x: 0, y: 0, width: UIScreen.width, height: UIScreen.height)
         return tableView
     }()
+    let emptyBlockListLabel: UILabel = {
+        let label = UILabel()
+        label.text = "尚無黑名單"
+        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        label.textColor = .mainLabelColor
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(blockListTableView)
+        blockListTableView.addSubview(emptyBlockListLabel)
         blockListTableView.delegate = self
         blockListTableView.dataSource = self
         blockListTableView.register(BlockListTableViewCell.self, forCellReuseIdentifier: "BlockListTableViewCell")
         blockListTableView.allowsSelection = false
+        setConstraint()
     }
     override func viewWillAppear(_ animated: Bool) {
         getBlockList()
@@ -42,9 +52,16 @@ class BlockListViewController: UIViewController, UITableViewDelegate, UITableVie
             if let user = user {
                 self.blockListFromUserData = user.blackList
                 print(self.blockListFromUserData.count,"===")
+                self.emptyBlockListLabel.isHidden = !self.blockListFromUserData.isEmpty
                 self.blockListTableView.reloadData()
             }
         }
+    }
+    func setConstraint() {
+        NSLayoutConstraint.activate([
+            emptyBlockListLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyBlockListLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50)
+        ])
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "黑名單"
