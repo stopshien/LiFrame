@@ -9,8 +9,8 @@ import UIKit
 import FirebaseStorage
 
 class BlockListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var blackListFromUserData = [BlockList]()
-    let blackListTableView: UITableView = {
+    var blockListFromUserData = [BlockList]()
+    let blockListTableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .pointColor
         tableView.frame = CGRect(x: 0, y: 0, width: UIScreen.width, height: UIScreen.height)
@@ -19,18 +19,17 @@ class BlockListViewController: UIViewController, UITableViewDelegate, UITableVie
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(blackListTableView)
-        blackListTableView.delegate = self
-        blackListTableView.dataSource = self
-        blackListTableView.register(BlackListTableViewCell.self, forCellReuseIdentifier: "BlackListTableViewCell")
-        blackListTableView.allowsSelection = false
+        view.addSubview(blockListTableView)
+        blockListTableView.delegate = self
+        blockListTableView.dataSource = self
+        blockListTableView.register(BlockListTableViewCell.self, forCellReuseIdentifier: "BlockListTableViewCell")
+        blockListTableView.allowsSelection = false
     }
     override func viewWillAppear(_ animated: Bool) {
         getBlockList()
-        self.blackListTableView.reloadData()
     }
     override func viewWillDisappear(_ animated: Bool) {
-        let blackListDictArray = self.blackListFromUserData.map { blackList -> [String: Any] in
+        let blackListDictArray = self.blockListFromUserData.map { blackList -> [String: Any] in
             return [
                 "blockedName": blackList.blockedName,
                 "blockedAppleID": blackList.blockedAppleID
@@ -41,7 +40,9 @@ class BlockListViewController: UIViewController, UITableViewDelegate, UITableVie
     func getBlockList() {
         UserData.shared.getUserDataFromFirebase { user in
             if let user = user {
-                self.blackListFromUserData = user.blackList
+                self.blockListFromUserData = user.blackList
+                print(self.blockListFromUserData.count,"===")
+                self.blockListTableView.reloadData()
             }
         }
     }
@@ -52,11 +53,11 @@ class BlockListViewController: UIViewController, UITableViewDelegate, UITableVie
         1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return blackListFromUserData.count
+        return blockListFromUserData.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = blackListTableView.dequeueReusableCell(withIdentifier: "BlackListTableViewCell", for: indexPath) as? BlackListTableViewCell else { return BlackListTableViewCell() }
-        cell.blackName.text = blackListFromUserData[indexPath.row].blockedName
+        guard let cell = blockListTableView.dequeueReusableCell(withIdentifier: "BlockListTableViewCell", for: indexPath) as? BlockListTableViewCell else { return BlockListTableViewCell() }
+        cell.blockName.text = blockListFromUserData[indexPath.row].blockedName
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -64,8 +65,8 @@ class BlockListViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
       if editingStyle == .delete {
-        self.blackListFromUserData.remove(at: indexPath.row)
-        self.blackListTableView.deleteRows(at: [indexPath], with: .automatic)
+        self.blockListFromUserData.remove(at: indexPath.row)
+        self.blockListTableView.deleteRows(at: [indexPath], with: .automatic)
       }
     }
 }

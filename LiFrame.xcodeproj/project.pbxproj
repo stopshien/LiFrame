@@ -20,7 +20,7 @@
 		6A3BC6BC2AE22894004CD891 /* UIScreen+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3BC6BB2AE22894004CD891 /* UIScreen+Extension.swift */; };
 		6A3BC6C42AE5190A004CD891 /* LiFrameUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3BC6C32AE5190A004CD891 /* LiFrameUnitTests.swift */; };
 		6A6F6D5F2AC7F8E5007BAB21 /* BlockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F6D5E2AC7F8E5007BAB21 /* BlockListViewController.swift */; };
-		6A6F6D622AC92AC0007BAB21 /* BlackListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F6D612AC92AC0007BAB21 /* BlackListTableViewCell.swift */; };
+		6A6F6D622AC92AC0007BAB21 /* BlockListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F6D612AC92AC0007BAB21 /* BlockListTableViewCell.swift */; };
 		6A6F6D642ACAF1ED007BAB21 /* CardLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F6D632ACAF1ED007BAB21 /* CardLayout.swift */; };
 		6A6F6D662ACAF39D007BAB21 /* DisplayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F6D652ACAF39D007BAB21 /* DisplayCollectionViewCell.swift */; };
 		6A6F6D6C2ACFEAFA007BAB21 /* MJRefreshWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F6D6B2ACFEAFA007BAB21 /* MJRefreshWrapper.swift */; };
@@ -79,7 +79,7 @@
 		6A3BC6C12AE5190A004CD891 /* LiFrameUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiFrameUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A3BC6C32AE5190A004CD891 /* LiFrameUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiFrameUnitTests.swift; sourceTree = "<group>"; };
 		6A6F6D5E2AC7F8E5007BAB21 /* BlockListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListViewController.swift; sourceTree = "<group>"; };
-		6A6F6D612AC92AC0007BAB21 /* BlackListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackListTableViewCell.swift; sourceTree = "<group>"; };
+		6A6F6D612AC92AC0007BAB21 /* BlockListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListTableViewCell.swift; sourceTree = "<group>"; };
 		6A6F6D632ACAF1ED007BAB21 /* CardLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardLayout.swift; sourceTree = "<group>"; };
 		6A6F6D652ACAF39D007BAB21 /* DisplayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayCollectionViewCell.swift; sourceTree = "<group>"; };
 		6A6F6D6B2ACFEAFA007BAB21 /* MJRefreshWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MJRefreshWrapper.swift; sourceTree = "<group>"; };
@@ -208,7 +208,7 @@
 		6A6F6D602AC92AA6007BAB21 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				6A6F6D612AC92AC0007BAB21 /* BlackListTableViewCell.swift */,
+				6A6F6D612AC92AC0007BAB21 /* BlockListTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -543,7 +543,7 @@
 				6AF1EC962AB82A2B00071983 /* PostImageViewTableViewCell.swift in Sources */,
 				6A355AB32AE0040600F8A658 /* CustomButton.swift in Sources */,
 				6A30F7C82AB1AAF800D5A672 /* CameraViewController.swift in Sources */,
-				6A6F6D622AC92AC0007BAB21 /* BlackListTableViewCell.swift in Sources */,
+				6A6F6D622AC92AC0007BAB21 /* BlockListTableViewCell.swift in Sources */,
 				6AF1ECA72AB9C91E00071983 /* APIManager.swift in Sources */,
 				6A30F7C42AB1AAF800D5A672 /* AppDelegate.swift in Sources */,
 				6A714EF62AC44C250019FA93 /* SignInViewController.swift in Sources */,
