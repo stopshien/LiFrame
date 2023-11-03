@@ -44,6 +44,11 @@ class UserData {
         return "未提供email"
     }()
 
+    lazy var eulaCheck: Bool = {
+      let eulaState = userDefaults.bool(forKey: "eulaState")
+        return eulaState
+    }()
+    
     lazy var userDataFromUserDefault: Users? = {
         if let appleID = userAppleID {
             return Users(name: userAppleName, email: userAppleEmail, id: appleID, documentID: appleID)
