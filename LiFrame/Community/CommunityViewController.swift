@@ -30,6 +30,7 @@ class CommunityViewController: UIViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
+//        UserDefaults.standard.removeObject(forKey: "eulaState")
         view.backgroundColor = .pointColor
         communityTableView.dataSource = self
         communityTableView.delegate = self
@@ -44,6 +45,7 @@ class CommunityViewController: UIViewController {
             self?.headerLoader()
         })
         addPostButton.addTarget(self, action: #selector(tappedPostButton), for: .touchUpInside)
+        NotificationCenter.default.addObserver(self, selector: #selector(tappedPostButton), name: Notification.Name("loginView"), object: nil)
     }
     override func viewWillAppear(_ animated: Bool) {
         updatePost()
@@ -113,7 +115,6 @@ class CommunityViewController: UIViewController {
             let blockListVC = BlockListViewController()
             self.navigationController?.pushViewController(blockListVC, animated: true)
         }
-        controller.addAction(watchBlockListAction)
         let logOutAction = UIAlertAction(title: "登出", style: .default) { action in
             UserDefaults.standard.removeObject(forKey: "UserAppleID")
             self.updatePost()
@@ -123,6 +124,7 @@ class CommunityViewController: UIViewController {
                 CMHUD.hide(from: self.view, delay: 2)
             }
         }
+        controller.addAction(watchBlockListAction)
         controller.addAction(logOutAction)
         let removeAction = UIAlertAction(title: "刪除帳號", style: .default) { action in
             self.checkDeleteAlert()
@@ -164,12 +166,17 @@ class CommunityViewController: UIViewController {
     }
     @objc func tappedPostButton() {
         // 判斷使否已經登入,userData 都存在 UserData 中
+        if UserData.shared.eulaCheck {
             if let userID = UserData.shared.getUserAppleID() {
                 checkCredentialState(withUserID: userID)
             } else {
                 checkCredentialState(withUserID: "")
                 communityTableView.reloadData()
             }
+        } else {
+            let eulaVC = EULAViewController()
+            present(eulaVC, animated: true)
+        }
     }
     func setButtonUI() {
         NSLayoutConstraint.activate([

@@ -42,6 +42,7 @@
 		6A80EFC42AB7092000C90754 /* Posts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFC32AB7092000C90754 /* Posts.swift */; };
 		6A80EFC62AB70F6800C90754 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFC52AB70F6800C90754 /* PostDetailViewController.swift */; };
 		6A80EFC82AB720DF00C90754 /* PostDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A80EFC72AB720DF00C90754 /* PostDetailTableViewCell.swift */; };
+		6ABE696F2AF41923002258C9 /* EULAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABE696E2AF41923002258C9 /* EULAViewController.swift */; };
 		6AD578AE2ABC7B5F005BE528 /* LutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD578AD2ABC7B5F005BE528 /* LutViewController.swift */; };
 		6AF1EC962AB82A2B00071983 /* PostImageViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1EC952AB82A2B00071983 /* PostImageViewTableViewCell.swift */; };
 		6AF1EC982AB8421C00071983 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1EC972AB8421C00071983 /* FirebaseManager.swift */; };
@@ -100,6 +101,7 @@
 		6A80EFC32AB7092000C90754 /* Posts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Posts.swift; sourceTree = "<group>"; };
 		6A80EFC52AB70F6800C90754 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		6A80EFC72AB720DF00C90754 /* PostDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewCell.swift; sourceTree = "<group>"; };
+		6ABE696E2AF41923002258C9 /* EULAViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EULAViewController.swift; sourceTree = "<group>"; };
 		6AD578AD2ABC7B5F005BE528 /* LutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LutViewController.swift; sourceTree = "<group>"; };
 		6AD578B72AC1C0A7005BE528 /* LiFrame.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LiFrame.entitlements; sourceTree = "<group>"; };
 		6AF1EC952AB82A2B00071983 /* PostImageViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageViewTableViewCell.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				6A714EF52AC44C250019FA93 /* SignInViewController.swift */,
+				6ABE696E2AF41923002258C9 /* EULAViewController.swift */,
 			);
 			path = SignIn;
 			sourceTree = "<group>";
@@ -554,6 +557,7 @@
 				6A80EFA82AB3143900C90754 /* EditPhotoViewController.swift in Sources */,
 				6A355AB12AD7EEC900F8A658 /* DetailImageViewController.swift in Sources */,
 				6AF1EC9B2AB84FE000071983 /* MapViewController.swift in Sources */,
+				6ABE696F2AF41923002258C9 /* EULAViewController.swift in Sources */,
 				6A6F6D5F2AC7F8E5007BAB21 /* BlockListViewController.swift in Sources */,
 				6A80EFB02AB46EC500C90754 /* Lut.swift in Sources */,
 				6A6F6D662ACAF39D007BAB21 /* DisplayCollectionViewCell.swift in Sources */,
@@ -738,7 +742,8 @@
 				DEVELOPMENT_TEAM = T2T367NW35;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LiFrame/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "需要您的同意才能使用相機";
+				INFOPLIST_KEY_NSCameraUsageDescription = "需要您的同意使用相機進行照片拍攝";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "輸入密碼區要取用您的 Face ID";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "需要您的同意才能訪問相簿";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要您的同意才能使用相簿";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -775,7 +780,8 @@
 				DEVELOPMENT_TEAM = T2T367NW35;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LiFrame/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "需要您的同意才能使用相機";
+				INFOPLIST_KEY_NSCameraUsageDescription = "需要您的同意使用相機進行照片拍攝";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "輸入密碼區要取用您的 Face ID";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "需要您的同意才能訪問相簿";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要您的同意才能使用相簿";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
