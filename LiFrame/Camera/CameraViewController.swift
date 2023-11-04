@@ -91,8 +91,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         button.layer.cornerRadius = 30
         button.layer.borderColor = UIColor.white.cgColor
         button.layer.borderWidth = 4
-        let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 20))
-        button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
+        let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 20))
+        button.setPreferredSymbolConfiguration(config, forImageIn: .normal)
         return button
     }()
     let shutterButton: UIButton = {
@@ -105,8 +105,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         button.layer.cornerRadius = 20
         button.layer.borderColor = UIColor.white.cgColor
         button.layer.borderWidth = 0
-        let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 120))
-        button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
+        let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 120))
+        button.setPreferredSymbolConfiguration(config, forImageIn: .normal)
         return button
     }()
     let cancelButton: UIButton = {
@@ -133,8 +133,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "photo"), for: .normal)
         button.tintColor = .white
-        let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 50))
-        button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
+        let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 50))
+        button.setPreferredSymbolConfiguration(config, forImageIn: .normal)
         return button
     }()
     // MARK: Life Cycle
@@ -143,6 +143,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         navigationItem.title = ""
         // 相簿選擇相片
         configuration.filter = .images
+        configuration.selectionLimit = 1
         setLayout()
         flashButton.addTarget(self, action: #selector(tappedFlash), for: .touchUpInside)
         shutterButton.addTarget(self, action: #selector(tappedShutter), for: .touchUpInside)
@@ -187,8 +188,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
            }
        }
     @objc func tappedImageButton() {
-        print("為了Demo方便，暫時先用可以選兩張的樣式，包板時改過來,這邊改成 1 了")
-        let pickerForLibrary = UIImagePickerController()
+        checkPhotoLibraryPermission()
+        let pickerForLibrary = PHPickerViewController(configuration: configuration)
         pickerForLibrary.view.tag = 2
         pickerForLibrary.delegate = self
         imageCameraPicker.present(pickerForLibrary, animated: true)
@@ -197,9 +198,9 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         layerImageView?.alpha = CGFloat(alphaSlider.value)
     }
     @objc func intoLibaray() {
-        let imagePickerController = UIImagePickerController()
+        checkPhotoLibraryPermission()
+        let imagePickerController = PHPickerViewController(configuration: configuration)
         // 資料來源為圖片庫
-        imagePickerController.sourceType = .photoLibrary
         imagePickerController.delegate = self
         imagePickerController.view.tag = 2
         // 開啟ImagePickerController
@@ -219,9 +220,10 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
     }
     @objc func choosePhoto() {
+        checkPhotoLibraryPermission()
         alphaSlider.isHidden = false
         alphaSlider.value = 0.45
-        configuration.selectionLimit = 1
+        // 與 imagePickerViewController 做修改。
         let liFramePicker = PHPickerViewController(configuration: configuration)
         liFramePicker.view.tag = 1
         liFramePicker.delegate = self
@@ -264,40 +266,45 @@ extension CameraViewController: PHPickerViewControllerDelegate {
                 [weak self] (image, error) in
                 DispatchQueue.main.async {
                     guard let self = self, let image = image as? UIImage else { return }
-                    var unrotatedImage = image
-
-                    if image.size.width > image.size.height {
-                        unrotatedImage = image.rotateToCorrectOrientation(.left)
+                    if picker.view.tag == 2 {
+                        let detailImageVC = DetailImageViewController()
+                        detailImageVC.detailImage = image
+                        picker.present(detailImageVC, animated: true)
                     } else {
-                        unrotatedImage = image.rotateToCorrectOrientation(.up)
-                    }
-                    if picker.view.tag == 1 {
-                    // 設定相機
-                    self.imageCameraPicker.sourceType = .camera
-                    self.setCameraUI()
-                    self.setCameraLayout()
-                    self.imageCameraPicker.delegate = self
-                    self.imageCameraPicker.showsCameraControls = false
-                        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-                            let imageView = UIImageView(image: unrotatedImage)
-                            self.layerImageView = imageView
-                            guard let layerImageView = self.layerImageView else { return }
-                            layerImageView.alpha = 0.45
-                            // 開啟相機
-                            if let layer = self.imageCameraPicker.cameraOverlayView {
-                                layer.addSubview(layerImageView)
-                                layerImageView.contentMode = .scaleAspectFill
-                                layerImageView.clipsToBounds = true
-                                layerImageView.translatesAutoresizingMaskIntoConstraints = false
-                                layerImageView.topAnchor.constraint(equalTo: layer.topAnchor).isActive = true
-                                layerImageView.widthAnchor.constraint(equalTo: layer.widthAnchor).isActive = true
-                                layerImageView.heightAnchor.constraint(equalTo: layer.widthAnchor, multiplier: 4/3).isActive = true
-                            }
+                        var unrotatedImage = image
+                        if image.size.width > image.size.height {
+                            unrotatedImage = image.rotateToCorrectOrientation(.left)
+                        } else {
+                            unrotatedImage = image.rotateToCorrectOrientation(.up)
                         }
-                        self.show(self.imageCameraPicker, sender: self)
-                    } else {
-                        self.layerImageView?.removeFromSuperview()
-                        self.dismiss(animated: true)
+                        if picker.view.tag == 1 {
+                            // 設定相機
+                            self.imageCameraPicker.sourceType = .camera
+                            self.setCameraUI()
+                            self.setCameraLayout()
+                            self.imageCameraPicker.delegate = self
+                            self.imageCameraPicker.showsCameraControls = false
+                            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                                let imageView = UIImageView(image: unrotatedImage)
+                                self.layerImageView = imageView
+                                guard let layerImageView = self.layerImageView else { return }
+                                layerImageView.alpha = 0.45
+                                // 開啟相機
+                                if let layer = self.imageCameraPicker.cameraOverlayView {
+                                    layer.addSubview(layerImageView)
+                                    layerImageView.contentMode = .scaleAspectFill
+                                    layerImageView.clipsToBounds = true
+                                    layerImageView.translatesAutoresizingMaskIntoConstraints = false
+                                    layerImageView.topAnchor.constraint(equalTo: layer.topAnchor).isActive = true
+                                    layerImageView.widthAnchor.constraint(equalTo: layer.widthAnchor).isActive = true
+                                    layerImageView.heightAnchor.constraint(equalTo: layer.widthAnchor, multiplier: 4/3).isActive = true
+                                }
+                            }
+                            self.show(self.imageCameraPicker, sender: self)
+                        } else {
+                            self.layerImageView?.removeFromSuperview()
+                            self.dismiss(animated: true)
+                        }
                     }
                 }
             }
@@ -308,15 +315,9 @@ extension CameraViewController: PHPickerViewControllerDelegate {
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.originalImage] as? UIImage else { return }
-        if picker.view.tag == 2 {
-            let detailImageVC = DetailImageViewController()
-            detailImageVC.detailImage = image
-            picker.present(detailImageVC, animated: true)
-        } else {
             imagesButton.setImage(image, for: .normal)
             imagesButton.layer.borderWidth = 0
             UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-        }
     }
     func setCameraUI() {
         imageCameraPicker.cameraFlashMode = .off
@@ -376,5 +377,17 @@ extension CameraViewController: PHPickerViewControllerDelegate {
     @objc func tappedCancel() {
         layerImageView?.removeFromSuperview()
         dismiss(animated: true)
+    }
+}
+
+extension CameraViewController: PhotoLibraryPermissionDelegate {
+    func onAuthorizationStatusAuthorized() {
+        return
+    }
+    func onAuthorizationStatusDenied() {
+        presentPhotoLibrarySettingsAlert()
+    }
+    func onAuthorizationStatusRestricted() {
+        presentPhotoLibrarySettingsAlert()
     }
 }
