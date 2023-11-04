@@ -154,6 +154,8 @@ class CommunityViewController: UIViewController {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     CMHUD.hide(from: self.view)
                 }
+                UserData.shared.eulaCheck = false
+                UserDefaults.standard.removeObject(forKey: "eulaState")
         })
        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
        alertController.addAction(okAction)
