@@ -35,7 +35,7 @@ class PostDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     @objc func pressMore() {
         let controller = UIAlertController(title: "設定", message: nil, preferredStyle: .actionSheet)
-        let alertTitle = postDetail?.appleID != UserData.shared.getUserAppleID() ? "加入黑名單 / 檢舉" : "刪除文章"
+        let alertTitle = postDetail?.appleID != UserData.shared.getUserAppleID() ? "檢舉作者並加入黑名單" : "刪除文章"
         let addBlackListAction = UIAlertAction(title: alertTitle, style: .destructive) { action in
             if self.postDetail?.appleID != UserData.shared.getUserAppleID() {
                 self.addIntoBlackList()

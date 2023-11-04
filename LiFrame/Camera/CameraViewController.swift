@@ -91,8 +91,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         button.layer.cornerRadius = 30
         button.layer.borderColor = UIColor.white.cgColor
         button.layer.borderWidth = 4
-        let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 20))
-        button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
+        let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 20))
+        button.setPreferredSymbolConfiguration(config, forImageIn: .normal)
         return button
     }()
     let shutterButton: UIButton = {
@@ -105,8 +105,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         button.layer.cornerRadius = 20
         button.layer.borderColor = UIColor.white.cgColor
         button.layer.borderWidth = 0
-        let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 120))
-        button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
+        let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 120))
+        button.setPreferredSymbolConfiguration(config, forImageIn: .normal)
         return button
     }()
     let cancelButton: UIButton = {
@@ -133,8 +133,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "photo"), for: .normal)
         button.tintColor = .white
-        let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 50))
-        button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
+        let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 50))
+        button.setPreferredSymbolConfiguration(config, forImageIn: .normal)
         return button
     }()
     // MARK: Life Cycle
@@ -152,6 +152,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         liFrameCamera.addTarget(self, action: #selector(choosePhoto), for: .touchUpInside)
         originalCamera.addTarget(self, action: #selector(intoOriginalCamera), for: .touchUpInside)
         seePhotoLibrary.addTarget(self, action: #selector(intoLibaray), for: .touchUpInside)
+        configuration.selectionLimit = 1
     }
     override func viewWillAppear(_ animated: Bool) {
         for subview in backgroundImageView.subviews {
@@ -187,7 +188,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
            }
        }
     @objc func tappedImageButton() {
-        print("為了Demo方便，暫時先用可以選兩張的樣式，包板時改過來,這邊改成 1 了")
+        checkPhotoLibraryPermission()
         let pickerForLibrary = UIImagePickerController()
         pickerForLibrary.view.tag = 2
         pickerForLibrary.delegate = self
@@ -197,6 +198,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         layerImageView?.alpha = CGFloat(alphaSlider.value)
     }
     @objc func intoLibaray() {
+        checkPhotoLibraryPermission()
         let imagePickerController = UIImagePickerController()
         // 資料來源為圖片庫
         imagePickerController.sourceType = .photoLibrary
@@ -219,9 +221,10 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
     }
     @objc func choosePhoto() {
+        checkPhotoLibraryPermission()
         alphaSlider.isHidden = false
         alphaSlider.value = 0.45
-        configuration.selectionLimit = 1
+        // 與 imagePickerViewController 做修改。
         let liFramePicker = PHPickerViewController(configuration: configuration)
         liFramePicker.view.tag = 1
         liFramePicker.delegate = self
@@ -376,5 +379,19 @@ extension CameraViewController: PHPickerViewControllerDelegate {
     @objc func tappedCancel() {
         layerImageView?.removeFromSuperview()
         dismiss(animated: true)
+    }
+}
+
+extension CameraViewController: PhotoLibraryPermissionDelegate {
+    func onAuthorizationStatusAuthorized() {
+        return
+    }
+    
+    func onAuthorizationStatusDenied() {
+        presentPhotoLibrarySettingsAlert()
+    }
+    
+    func onAuthorizationStatusRestricted() {
+        presentPhotoLibrarySettingsAlert()
     }
 }

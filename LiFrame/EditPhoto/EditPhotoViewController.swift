@@ -147,12 +147,14 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
     }
     @objc func tappedEdit() {
         configuration.selectionLimit = 1
+        checkPhotoLibraryPermission()
         let singleEditPicker = PHPickerViewController(configuration: configuration)
         singleEditPicker.delegate = self
         singleEditPicker.view.tag = 1
         present(singleEditPicker, animated: true)
     }
     @objc func tappedSeeLibrary() {
+        checkPhotoLibraryPermission()
         let imagePickerController = UIImagePickerController()
         // 資料來源為圖片庫
         imagePickerController.sourceType = .photoLibrary
@@ -161,6 +163,7 @@ class EditPhotoViewController: UIViewController, PHPickerViewControllerDelegate 
         present(imagePickerController, animated: true, completion: nil)
     }
     @objc func tappedSyncEdit() {
+        checkPhotoLibraryPermission()
         configuration.selectionLimit = 10
         let pickerForSync = PHPickerViewController(configuration: configuration)
         pickerForSync.delegate = self
@@ -225,4 +228,18 @@ extension EditPhotoViewController: UIImagePickerControllerDelegate, UINavigation
         detailImageVC.detailImage = image
         picker.present(detailImageVC, animated: true)
     }
+}
+
+extension EditPhotoViewController: PhotoLibraryPermissionDelegate {
+    func onAuthorizationStatusAuthorized() {
+        return
+    }
+    
+    func onAuthorizationStatusDenied() {
+        presentPhotoLibrarySettingsAlert()
+    }
+    
+    func onAuthorizationStatusRestricted() {
+        presentPhotoLibrarySettingsAlert()
+    } 
 }
